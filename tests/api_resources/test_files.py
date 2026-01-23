@@ -7,7 +7,7 @@ from typing import Any, cast
 
 import pytest
 
-from deeptable import Deeptable, AsyncDeeptable
+from deeptable import DeepTable, AsyncDeepTable
 from tests.utils import assert_matches_type
 from deeptable.types import File
 from deeptable.pagination import SyncCursorIDPage, AsyncCursorIDPage
@@ -20,7 +20,7 @@ class TestFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_retrieve(self, client: Deeptable) -> None:
+    def test_method_retrieve(self, client: DeepTable) -> None:
         file = client.files.retrieve(
             "file_01abc2def3ghjkmnpqrs4uvwxy",
         )
@@ -28,7 +28,7 @@ class TestFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_retrieve(self, client: Deeptable) -> None:
+    def test_raw_response_retrieve(self, client: DeepTable) -> None:
         response = client.files.with_raw_response.retrieve(
             "file_01abc2def3ghjkmnpqrs4uvwxy",
         )
@@ -40,7 +40,7 @@ class TestFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_retrieve(self, client: Deeptable) -> None:
+    def test_streaming_response_retrieve(self, client: DeepTable) -> None:
         with client.files.with_streaming_response.retrieve(
             "file_01abc2def3ghjkmnpqrs4uvwxy",
         ) as response:
@@ -54,7 +54,7 @@ class TestFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_retrieve(self, client: Deeptable) -> None:
+    def test_path_params_retrieve(self, client: DeepTable) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `file_id` but received ''"):
             client.files.with_raw_response.retrieve(
                 "",
@@ -62,13 +62,13 @@ class TestFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_list(self, client: Deeptable) -> None:
+    def test_method_list(self, client: DeepTable) -> None:
         file = client.files.list()
         assert_matches_type(SyncCursorIDPage[File], file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_list_with_all_params(self, client: Deeptable) -> None:
+    def test_method_list_with_all_params(self, client: DeepTable) -> None:
         file = client.files.list(
             after="file_01abc2def3ghjkmnpqrs4uvwxy",
             limit=20,
@@ -77,7 +77,7 @@ class TestFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_list(self, client: Deeptable) -> None:
+    def test_raw_response_list(self, client: DeepTable) -> None:
         response = client.files.with_raw_response.list()
 
         assert response.is_closed is True
@@ -87,7 +87,7 @@ class TestFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_list(self, client: Deeptable) -> None:
+    def test_streaming_response_list(self, client: DeepTable) -> None:
         with client.files.with_streaming_response.list() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -99,7 +99,7 @@ class TestFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_delete(self, client: Deeptable) -> None:
+    def test_method_delete(self, client: DeepTable) -> None:
         file = client.files.delete(
             "file_01abc2def3ghjkmnpqrs4uvwxy",
         )
@@ -107,7 +107,7 @@ class TestFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_delete(self, client: Deeptable) -> None:
+    def test_raw_response_delete(self, client: DeepTable) -> None:
         response = client.files.with_raw_response.delete(
             "file_01abc2def3ghjkmnpqrs4uvwxy",
         )
@@ -119,7 +119,7 @@ class TestFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_delete(self, client: Deeptable) -> None:
+    def test_streaming_response_delete(self, client: DeepTable) -> None:
         with client.files.with_streaming_response.delete(
             "file_01abc2def3ghjkmnpqrs4uvwxy",
         ) as response:
@@ -133,7 +133,7 @@ class TestFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_delete(self, client: Deeptable) -> None:
+    def test_path_params_delete(self, client: DeepTable) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `file_id` but received ''"):
             client.files.with_raw_response.delete(
                 "",
@@ -141,7 +141,7 @@ class TestFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_upload(self, client: Deeptable) -> None:
+    def test_method_upload(self, client: DeepTable) -> None:
         file = client.files.upload(
             file=b"raw file contents",
         )
@@ -149,7 +149,7 @@ class TestFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_upload(self, client: Deeptable) -> None:
+    def test_raw_response_upload(self, client: DeepTable) -> None:
         response = client.files.with_raw_response.upload(
             file=b"raw file contents",
         )
@@ -161,7 +161,7 @@ class TestFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_upload(self, client: Deeptable) -> None:
+    def test_streaming_response_upload(self, client: DeepTable) -> None:
         with client.files.with_streaming_response.upload(
             file=b"raw file contents",
         ) as response:
@@ -181,7 +181,7 @@ class TestAsyncFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_retrieve(self, async_client: AsyncDeeptable) -> None:
+    async def test_method_retrieve(self, async_client: AsyncDeepTable) -> None:
         file = await async_client.files.retrieve(
             "file_01abc2def3ghjkmnpqrs4uvwxy",
         )
@@ -189,7 +189,7 @@ class TestAsyncFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_retrieve(self, async_client: AsyncDeeptable) -> None:
+    async def test_raw_response_retrieve(self, async_client: AsyncDeepTable) -> None:
         response = await async_client.files.with_raw_response.retrieve(
             "file_01abc2def3ghjkmnpqrs4uvwxy",
         )
@@ -201,7 +201,7 @@ class TestAsyncFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_retrieve(self, async_client: AsyncDeeptable) -> None:
+    async def test_streaming_response_retrieve(self, async_client: AsyncDeepTable) -> None:
         async with async_client.files.with_streaming_response.retrieve(
             "file_01abc2def3ghjkmnpqrs4uvwxy",
         ) as response:
@@ -215,7 +215,7 @@ class TestAsyncFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_retrieve(self, async_client: AsyncDeeptable) -> None:
+    async def test_path_params_retrieve(self, async_client: AsyncDeepTable) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `file_id` but received ''"):
             await async_client.files.with_raw_response.retrieve(
                 "",
@@ -223,13 +223,13 @@ class TestAsyncFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_list(self, async_client: AsyncDeeptable) -> None:
+    async def test_method_list(self, async_client: AsyncDeepTable) -> None:
         file = await async_client.files.list()
         assert_matches_type(AsyncCursorIDPage[File], file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_list_with_all_params(self, async_client: AsyncDeeptable) -> None:
+    async def test_method_list_with_all_params(self, async_client: AsyncDeepTable) -> None:
         file = await async_client.files.list(
             after="file_01abc2def3ghjkmnpqrs4uvwxy",
             limit=20,
@@ -238,7 +238,7 @@ class TestAsyncFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_list(self, async_client: AsyncDeeptable) -> None:
+    async def test_raw_response_list(self, async_client: AsyncDeepTable) -> None:
         response = await async_client.files.with_raw_response.list()
 
         assert response.is_closed is True
@@ -248,7 +248,7 @@ class TestAsyncFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_list(self, async_client: AsyncDeeptable) -> None:
+    async def test_streaming_response_list(self, async_client: AsyncDeepTable) -> None:
         async with async_client.files.with_streaming_response.list() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -260,7 +260,7 @@ class TestAsyncFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_delete(self, async_client: AsyncDeeptable) -> None:
+    async def test_method_delete(self, async_client: AsyncDeepTable) -> None:
         file = await async_client.files.delete(
             "file_01abc2def3ghjkmnpqrs4uvwxy",
         )
@@ -268,7 +268,7 @@ class TestAsyncFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_delete(self, async_client: AsyncDeeptable) -> None:
+    async def test_raw_response_delete(self, async_client: AsyncDeepTable) -> None:
         response = await async_client.files.with_raw_response.delete(
             "file_01abc2def3ghjkmnpqrs4uvwxy",
         )
@@ -280,7 +280,7 @@ class TestAsyncFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_delete(self, async_client: AsyncDeeptable) -> None:
+    async def test_streaming_response_delete(self, async_client: AsyncDeepTable) -> None:
         async with async_client.files.with_streaming_response.delete(
             "file_01abc2def3ghjkmnpqrs4uvwxy",
         ) as response:
@@ -294,7 +294,7 @@ class TestAsyncFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_delete(self, async_client: AsyncDeeptable) -> None:
+    async def test_path_params_delete(self, async_client: AsyncDeepTable) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `file_id` but received ''"):
             await async_client.files.with_raw_response.delete(
                 "",
@@ -302,7 +302,7 @@ class TestAsyncFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_upload(self, async_client: AsyncDeeptable) -> None:
+    async def test_method_upload(self, async_client: AsyncDeepTable) -> None:
         file = await async_client.files.upload(
             file=b"raw file contents",
         )
@@ -310,7 +310,7 @@ class TestAsyncFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_upload(self, async_client: AsyncDeeptable) -> None:
+    async def test_raw_response_upload(self, async_client: AsyncDeepTable) -> None:
         response = await async_client.files.with_raw_response.upload(
             file=b"raw file contents",
         )
@@ -322,7 +322,7 @@ class TestAsyncFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_upload(self, async_client: AsyncDeeptable) -> None:
+    async def test_streaming_response_upload(self, async_client: AsyncDeepTable) -> None:
         async with async_client.files.with_streaming_response.upload(
             file=b"raw file contents",
         ) as response:

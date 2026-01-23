@@ -5,7 +5,7 @@ description = "The official Python library for the deeptable API"
 dynamic = ["readme"]
 license = "MIT"
 authors = [
-{ name = "Deeptable", email = "support@deeptable.com" },
+{ name = "DeepTable", email = "support@deeptable.com" },
 ]
 
 dependencies = [
