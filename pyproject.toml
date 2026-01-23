@@ -1,6 +1,6 @@
 [project]
 name = "deeptable"
-version = "0.0.1"
+version = "0.1.0-alpha.1"
 description = "The official Python library for the deeptable API"
 dynamic = ["readme"]
 license = "MIT"

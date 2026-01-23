@@ -17,7 +17,7 @@ The REST API documentation can be found on [docs.deeptable.com](https://docs.dee
 
 ```sh
 # install from PyPI
-pip install deeptable
+pip install '--pre deeptable'
 ```
 
 ## Usage
@@ -77,7 +77,7 @@ You can enable this by installing `aiohttp`:
 
 ```sh
 # install from PyPI
-pip install deeptable[aiohttp]
+pip install '--pre deeptable[aiohttp]'
 ```
 
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
