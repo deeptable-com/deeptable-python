@@ -19,11 +19,11 @@ import pytest
 from respx import MockRouter
 from pydantic import ValidationError
 
-from deeptable import Deeptable, AsyncDeeptable, APIResponseValidationError
+from deeptable import DeepTable, AsyncDeepTable, APIResponseValidationError
 from deeptable._types import Omit
 from deeptable._utils import asyncify
 from deeptable._models import BaseModel, FinalRequestOptions
-from deeptable._exceptions import APIStatusError, DeeptableError, APITimeoutError, APIResponseValidationError
+from deeptable._exceptions import APIStatusError, DeepTableError, APITimeoutError, APIResponseValidationError
 from deeptable._base_client import (
     DEFAULT_TIMEOUT,
     HTTPX_DEFAULT_TIMEOUT,
@@ -103,7 +103,7 @@ async def _make_async_iterator(iterable: Iterable[T], counter: Optional[Counter]
         yield item
 
 
-def _get_open_connections(client: Deeptable | AsyncDeeptable) -> int:
+def _get_open_connections(client: DeepTable | AsyncDeepTable) -> int:
     transport = client._client._transport
     assert isinstance(transport, httpx.HTTPTransport) or isinstance(transport, httpx.AsyncHTTPTransport)
 
@@ -111,9 +111,9 @@ def _get_open_connections(client: Deeptable | AsyncDeeptable) -> int:
     return len(pool._requests)
 
 
-class TestDeeptable:
+class TestDeepTable:
     @pytest.mark.respx(base_url=base_url)
-    def test_raw_response(self, respx_mock: MockRouter, client: Deeptable) -> None:
+    def test_raw_response(self, respx_mock: MockRouter, client: DeepTable) -> None:
         respx_mock.post("/foo").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
 
         response = client.post("/foo", cast_to=httpx.Response)
@@ -122,7 +122,7 @@ class TestDeeptable:
         assert response.json() == {"foo": "bar"}
 
     @pytest.mark.respx(base_url=base_url)
-    def test_raw_response_for_binary(self, respx_mock: MockRouter, client: Deeptable) -> None:
+    def test_raw_response_for_binary(self, respx_mock: MockRouter, client: DeepTable) -> None:
         respx_mock.post("/foo").mock(
             return_value=httpx.Response(200, headers={"Content-Type": "application/binary"}, content='{"foo": "bar"}')
         )
@@ -132,7 +132,7 @@ class TestDeeptable:
         assert isinstance(response, httpx.Response)
         assert response.json() == {"foo": "bar"}
 
-    def test_copy(self, client: Deeptable) -> None:
+    def test_copy(self, client: DeepTable) -> None:
         copied = client.copy()
         assert id(copied) != id(client)
 
@@ -140,7 +140,7 @@ class TestDeeptable:
         assert copied.api_key == "another My API Key"
         assert client.api_key == "My API Key"
 
-    def test_copy_default_options(self, client: Deeptable) -> None:
+    def test_copy_default_options(self, client: DeepTable) -> None:
         # options that have a default are overridden correctly
         copied = client.copy(max_retries=7)
         assert copied.max_retries == 7
@@ -157,7 +157,7 @@ class TestDeeptable:
         assert isinstance(client.timeout, httpx.Timeout)
 
     def test_copy_default_headers(self) -> None:
-        client = Deeptable(
+        client = DeepTable(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_headers={"X-Foo": "bar"}
         )
         assert client.default_headers["X-Foo"] == "bar"
@@ -192,7 +192,7 @@ class TestDeeptable:
         client.close()
 
     def test_copy_default_query(self) -> None:
-        client = Deeptable(
+        client = DeepTable(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_query={"foo": "bar"}
         )
         assert _get_params(client)["foo"] == "bar"
@@ -229,7 +229,7 @@ class TestDeeptable:
 
         client.close()
 
-    def test_copy_signature(self, client: Deeptable) -> None:
+    def test_copy_signature(self, client: DeepTable) -> None:
         # ensure the same parameters that can be passed to the client are defined in the `.copy()` method
         init_signature = inspect.signature(
             # mypy doesn't like that we access the `__init__` property.
@@ -246,7 +246,7 @@ class TestDeeptable:
             assert copy_param is not None, f"copy() signature is missing the {name} param"
 
     @pytest.mark.skipif(sys.version_info >= (3, 10), reason="fails because of a memory leak that started from 3.12")
-    def test_copy_build_request(self, client: Deeptable) -> None:
+    def test_copy_build_request(self, client: DeepTable) -> None:
         options = FinalRequestOptions(method="get", url="/foo")
 
         def build_request(options: FinalRequestOptions) -> None:
@@ -308,7 +308,7 @@ class TestDeeptable:
                     print(frame)
             raise AssertionError()
 
-    def test_request_timeout(self, client: Deeptable) -> None:
+    def test_request_timeout(self, client: DeepTable) -> None:
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         timeout = httpx.Timeout(**request.extensions["timeout"])  # type: ignore
         assert timeout == DEFAULT_TIMEOUT
@@ -318,7 +318,7 @@ class TestDeeptable:
         assert timeout == httpx.Timeout(100.0)
 
     def test_client_timeout_option(self) -> None:
-        client = Deeptable(
+        client = DeepTable(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, timeout=httpx.Timeout(0)
         )
 
@@ -331,7 +331,7 @@ class TestDeeptable:
     def test_http_client_timeout_option(self) -> None:
         # custom timeout given to the httpx client should be used
         with httpx.Client(timeout=None) as http_client:
-            client = Deeptable(
+            client = DeepTable(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
@@ -343,7 +343,7 @@ class TestDeeptable:
 
         # no timeout given to the httpx client should not use the httpx default
         with httpx.Client() as http_client:
-            client = Deeptable(
+            client = DeepTable(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
@@ -355,7 +355,7 @@ class TestDeeptable:
 
         # explicitly passing the default timeout currently results in it being ignored
         with httpx.Client(timeout=HTTPX_DEFAULT_TIMEOUT) as http_client:
-            client = Deeptable(
+            client = DeepTable(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
@@ -368,7 +368,7 @@ class TestDeeptable:
     async def test_invalid_http_client(self) -> None:
         with pytest.raises(TypeError, match="Invalid `http_client` arg"):
             async with httpx.AsyncClient() as http_client:
-                Deeptable(
+                DeepTable(
                     base_url=base_url,
                     api_key=api_key,
                     _strict_response_validation=True,
@@ -376,14 +376,14 @@ class TestDeeptable:
                 )
 
     def test_default_headers_option(self) -> None:
-        test_client = Deeptable(
+        test_client = DeepTable(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_headers={"X-Foo": "bar"}
         )
         request = test_client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-foo") == "bar"
         assert request.headers.get("x-stainless-lang") == "python"
 
-        test_client2 = Deeptable(
+        test_client2 = DeepTable(
             base_url=base_url,
             api_key=api_key,
             _strict_response_validation=True,
@@ -400,17 +400,17 @@ class TestDeeptable:
         test_client2.close()
 
     def test_validate_headers(self) -> None:
-        client = Deeptable(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = DeepTable(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("Authorization") == f"Bearer {api_key}"
 
-        with pytest.raises(DeeptableError):
+        with pytest.raises(DeepTableError):
             with update_env(**{"DEEPTABLE_API_KEY": Omit()}):
-                client2 = Deeptable(base_url=base_url, api_key=None, _strict_response_validation=True)
+                client2 = DeepTable(base_url=base_url, api_key=None, _strict_response_validation=True)
             _ = client2
 
     def test_default_query_option(self) -> None:
-        client = Deeptable(
+        client = DeepTable(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_query={"query_param": "bar"}
         )
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
@@ -429,7 +429,7 @@ class TestDeeptable:
 
         client.close()
 
-    def test_request_extra_json(self, client: Deeptable) -> None:
+    def test_request_extra_json(self, client: DeepTable) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -463,7 +463,7 @@ class TestDeeptable:
         data = json.loads(request.content.decode("utf-8"))
         assert data == {"foo": "bar", "baz": None}
 
-    def test_request_extra_headers(self, client: Deeptable) -> None:
+    def test_request_extra_headers(self, client: DeepTable) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -485,7 +485,7 @@ class TestDeeptable:
         )
         assert request.headers.get("X-Bar") == "false"
 
-    def test_request_extra_query(self, client: Deeptable) -> None:
+    def test_request_extra_query(self, client: DeepTable) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -526,7 +526,7 @@ class TestDeeptable:
         params = dict(request.url.params)
         assert params == {"foo": "2"}
 
-    def test_multipart_repeating_array(self, client: Deeptable) -> None:
+    def test_multipart_repeating_array(self, client: DeepTable) -> None:
         request = client._build_request(
             FinalRequestOptions.construct(
                 method="post",
@@ -556,7 +556,7 @@ class TestDeeptable:
         ]
 
     @pytest.mark.respx(base_url=base_url)
-    def test_binary_content_upload(self, respx_mock: MockRouter, client: Deeptable) -> None:
+    def test_binary_content_upload(self, respx_mock: MockRouter, client: DeepTable) -> None:
         respx_mock.post("/upload").mock(side_effect=mirror_request_content)
 
         file_content = b"Hello, this is a test file."
@@ -581,7 +581,7 @@ class TestDeeptable:
             assert counter.value == 0, "the request body should not have been read"
             return httpx.Response(200, content=request.read())
 
-        with Deeptable(
+        with DeepTable(
             base_url=base_url,
             api_key=api_key,
             _strict_response_validation=True,
@@ -600,7 +600,7 @@ class TestDeeptable:
             assert counter.value == 1
 
     @pytest.mark.respx(base_url=base_url)
-    def test_binary_content_upload_with_body_is_deprecated(self, respx_mock: MockRouter, client: Deeptable) -> None:
+    def test_binary_content_upload_with_body_is_deprecated(self, respx_mock: MockRouter, client: DeepTable) -> None:
         respx_mock.post("/upload").mock(side_effect=mirror_request_content)
 
         file_content = b"Hello, this is a test file."
@@ -620,7 +620,7 @@ class TestDeeptable:
         assert response.content == file_content
 
     @pytest.mark.respx(base_url=base_url)
-    def test_basic_union_response(self, respx_mock: MockRouter, client: Deeptable) -> None:
+    def test_basic_union_response(self, respx_mock: MockRouter, client: DeepTable) -> None:
         class Model1(BaseModel):
             name: str
 
@@ -634,7 +634,7 @@ class TestDeeptable:
         assert response.foo == "bar"
 
     @pytest.mark.respx(base_url=base_url)
-    def test_union_response_different_types(self, respx_mock: MockRouter, client: Deeptable) -> None:
+    def test_union_response_different_types(self, respx_mock: MockRouter, client: DeepTable) -> None:
         """Union of objects with the same field name using a different type"""
 
         class Model1(BaseModel):
@@ -656,7 +656,7 @@ class TestDeeptable:
         assert response.foo == 1
 
     @pytest.mark.respx(base_url=base_url)
-    def test_non_application_json_content_type_for_json_data(self, respx_mock: MockRouter, client: Deeptable) -> None:
+    def test_non_application_json_content_type_for_json_data(self, respx_mock: MockRouter, client: DeepTable) -> None:
         """
         Response that sets Content-Type to something other than application/json but returns json data
         """
@@ -677,7 +677,7 @@ class TestDeeptable:
         assert response.foo == 2
 
     def test_base_url_setter(self) -> None:
-        client = Deeptable(base_url="https://example.com/from_init", api_key=api_key, _strict_response_validation=True)
+        client = DeepTable(base_url="https://example.com/from_init", api_key=api_key, _strict_response_validation=True)
         assert client.base_url == "https://example.com/from_init/"
 
         client.base_url = "https://example.com/from_setter"  # type: ignore[assignment]
@@ -688,14 +688,14 @@ class TestDeeptable:
 
     def test_base_url_env(self) -> None:
         with update_env(DEEPTABLE_BASE_URL="http://localhost:5000/from/env"):
-            client = Deeptable(api_key=api_key, _strict_response_validation=True)
+            client = DeepTable(api_key=api_key, _strict_response_validation=True)
             assert client.base_url == "http://localhost:5000/from/env/"
 
     @pytest.mark.parametrize(
         "client",
         [
-            Deeptable(base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True),
-            Deeptable(
+            DeepTable(base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True),
+            DeepTable(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
@@ -704,7 +704,7 @@ class TestDeeptable:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_base_url_trailing_slash(self, client: Deeptable) -> None:
+    def test_base_url_trailing_slash(self, client: DeepTable) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -718,8 +718,8 @@ class TestDeeptable:
     @pytest.mark.parametrize(
         "client",
         [
-            Deeptable(base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True),
-            Deeptable(
+            DeepTable(base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True),
+            DeepTable(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
@@ -728,7 +728,7 @@ class TestDeeptable:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_base_url_no_trailing_slash(self, client: Deeptable) -> None:
+    def test_base_url_no_trailing_slash(self, client: DeepTable) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -742,8 +742,8 @@ class TestDeeptable:
     @pytest.mark.parametrize(
         "client",
         [
-            Deeptable(base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True),
-            Deeptable(
+            DeepTable(base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True),
+            DeepTable(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
@@ -752,7 +752,7 @@ class TestDeeptable:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_absolute_request_url(self, client: Deeptable) -> None:
+    def test_absolute_request_url(self, client: DeepTable) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -764,7 +764,7 @@ class TestDeeptable:
         client.close()
 
     def test_copied_client_does_not_close_http(self) -> None:
-        test_client = Deeptable(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        test_client = DeepTable(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         assert not test_client.is_closed()
 
         copied = test_client.copy()
@@ -775,7 +775,7 @@ class TestDeeptable:
         assert not test_client.is_closed()
 
     def test_client_context_manager(self) -> None:
-        test_client = Deeptable(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        test_client = DeepTable(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         with test_client as c2:
             assert c2 is test_client
             assert not c2.is_closed()
@@ -783,7 +783,7 @@ class TestDeeptable:
         assert test_client.is_closed()
 
     @pytest.mark.respx(base_url=base_url)
-    def test_client_response_validation_error(self, respx_mock: MockRouter, client: Deeptable) -> None:
+    def test_client_response_validation_error(self, respx_mock: MockRouter, client: DeepTable) -> None:
         class Model(BaseModel):
             foo: str
 
@@ -796,7 +796,7 @@ class TestDeeptable:
 
     def test_client_max_retries_validation(self) -> None:
         with pytest.raises(TypeError, match=r"max_retries cannot be None"):
-            Deeptable(base_url=base_url, api_key=api_key, _strict_response_validation=True, max_retries=cast(Any, None))
+            DeepTable(base_url=base_url, api_key=api_key, _strict_response_validation=True, max_retries=cast(Any, None))
 
     @pytest.mark.respx(base_url=base_url)
     def test_received_text_for_expected_json(self, respx_mock: MockRouter) -> None:
@@ -805,12 +805,12 @@ class TestDeeptable:
 
         respx_mock.get("/foo").mock(return_value=httpx.Response(200, text="my-custom-format"))
 
-        strict_client = Deeptable(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        strict_client = DeepTable(base_url=base_url, api_key=api_key, _strict_response_validation=True)
 
         with pytest.raises(APIResponseValidationError):
             strict_client.get("/foo", cast_to=Model)
 
-        non_strict_client = Deeptable(base_url=base_url, api_key=api_key, _strict_response_validation=False)
+        non_strict_client = DeepTable(base_url=base_url, api_key=api_key, _strict_response_validation=False)
 
         response = non_strict_client.get("/foo", cast_to=Model)
         assert isinstance(response, str)  # type: ignore[unreachable]
@@ -841,7 +841,7 @@ class TestDeeptable:
     )
     @mock.patch("time.time", mock.MagicMock(return_value=1696004797))
     def test_parse_retry_after_header(
-        self, remaining_retries: int, retry_after: str, timeout: float, client: Deeptable
+        self, remaining_retries: int, retry_after: str, timeout: float, client: DeepTable
     ) -> None:
         headers = httpx.Headers({"retry-after": retry_after})
         options = FinalRequestOptions(method="get", url="/foo", max_retries=3)
@@ -850,7 +850,7 @@ class TestDeeptable:
 
     @mock.patch("deeptable._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
-    def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter, client: Deeptable) -> None:
+    def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter, client: DeepTable) -> None:
         respx_mock.post("/v1/structured-sheets").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
@@ -862,7 +862,7 @@ class TestDeeptable:
 
     @mock.patch("deeptable._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
-    def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter, client: Deeptable) -> None:
+    def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter, client: DeepTable) -> None:
         respx_mock.post("/v1/structured-sheets").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
@@ -877,7 +877,7 @@ class TestDeeptable:
     @pytest.mark.parametrize("failure_mode", ["status", "exception"])
     def test_retries_taken(
         self,
-        client: Deeptable,
+        client: DeepTable,
         failures_before_success: int,
         failure_mode: Literal["status", "exception"],
         respx_mock: MockRouter,
@@ -906,7 +906,7 @@ class TestDeeptable:
     @mock.patch("deeptable._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_omit_retry_count_header(
-        self, client: Deeptable, failures_before_success: int, respx_mock: MockRouter
+        self, client: DeepTable, failures_before_success: int, respx_mock: MockRouter
     ) -> None:
         client = client.with_options(max_retries=4)
 
@@ -931,7 +931,7 @@ class TestDeeptable:
     @mock.patch("deeptable._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_overwrite_retry_count_header(
-        self, client: Deeptable, failures_before_success: int, respx_mock: MockRouter
+        self, client: DeepTable, failures_before_success: int, respx_mock: MockRouter
     ) -> None:
         client = client.with_options(max_retries=4)
 
@@ -975,7 +975,7 @@ class TestDeeptable:
         )
 
     @pytest.mark.respx(base_url=base_url)
-    def test_follow_redirects(self, respx_mock: MockRouter, client: Deeptable) -> None:
+    def test_follow_redirects(self, respx_mock: MockRouter, client: DeepTable) -> None:
         # Test that the default follow_redirects=True allows following redirects
         respx_mock.post("/redirect").mock(
             return_value=httpx.Response(302, headers={"Location": f"{base_url}/redirected"})
@@ -987,7 +987,7 @@ class TestDeeptable:
         assert response.json() == {"status": "ok"}
 
     @pytest.mark.respx(base_url=base_url)
-    def test_follow_redirects_disabled(self, respx_mock: MockRouter, client: Deeptable) -> None:
+    def test_follow_redirects_disabled(self, respx_mock: MockRouter, client: DeepTable) -> None:
         # Test that follow_redirects=False prevents following redirects
         respx_mock.post("/redirect").mock(
             return_value=httpx.Response(302, headers={"Location": f"{base_url}/redirected"})
@@ -1000,9 +1000,9 @@ class TestDeeptable:
         assert exc_info.value.response.headers["Location"] == f"{base_url}/redirected"
 
 
-class TestAsyncDeeptable:
+class TestAsyncDeepTable:
     @pytest.mark.respx(base_url=base_url)
-    async def test_raw_response(self, respx_mock: MockRouter, async_client: AsyncDeeptable) -> None:
+    async def test_raw_response(self, respx_mock: MockRouter, async_client: AsyncDeepTable) -> None:
         respx_mock.post("/foo").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
 
         response = await async_client.post("/foo", cast_to=httpx.Response)
@@ -1011,7 +1011,7 @@ class TestAsyncDeeptable:
         assert response.json() == {"foo": "bar"}
 
     @pytest.mark.respx(base_url=base_url)
-    async def test_raw_response_for_binary(self, respx_mock: MockRouter, async_client: AsyncDeeptable) -> None:
+    async def test_raw_response_for_binary(self, respx_mock: MockRouter, async_client: AsyncDeepTable) -> None:
         respx_mock.post("/foo").mock(
             return_value=httpx.Response(200, headers={"Content-Type": "application/binary"}, content='{"foo": "bar"}')
         )
@@ -1021,7 +1021,7 @@ class TestAsyncDeeptable:
         assert isinstance(response, httpx.Response)
         assert response.json() == {"foo": "bar"}
 
-    def test_copy(self, async_client: AsyncDeeptable) -> None:
+    def test_copy(self, async_client: AsyncDeepTable) -> None:
         copied = async_client.copy()
         assert id(copied) != id(async_client)
 
@@ -1029,7 +1029,7 @@ class TestAsyncDeeptable:
         assert copied.api_key == "another My API Key"
         assert async_client.api_key == "My API Key"
 
-    def test_copy_default_options(self, async_client: AsyncDeeptable) -> None:
+    def test_copy_default_options(self, async_client: AsyncDeepTable) -> None:
         # options that have a default are overridden correctly
         copied = async_client.copy(max_retries=7)
         assert copied.max_retries == 7
@@ -1046,7 +1046,7 @@ class TestAsyncDeeptable:
         assert isinstance(async_client.timeout, httpx.Timeout)
 
     async def test_copy_default_headers(self) -> None:
-        client = AsyncDeeptable(
+        client = AsyncDeepTable(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_headers={"X-Foo": "bar"}
         )
         assert client.default_headers["X-Foo"] == "bar"
@@ -1081,7 +1081,7 @@ class TestAsyncDeeptable:
         await client.close()
 
     async def test_copy_default_query(self) -> None:
-        client = AsyncDeeptable(
+        client = AsyncDeepTable(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_query={"foo": "bar"}
         )
         assert _get_params(client)["foo"] == "bar"
@@ -1118,7 +1118,7 @@ class TestAsyncDeeptable:
 
         await client.close()
 
-    def test_copy_signature(self, async_client: AsyncDeeptable) -> None:
+    def test_copy_signature(self, async_client: AsyncDeepTable) -> None:
         # ensure the same parameters that can be passed to the client are defined in the `.copy()` method
         init_signature = inspect.signature(
             # mypy doesn't like that we access the `__init__` property.
@@ -1135,7 +1135,7 @@ class TestAsyncDeeptable:
             assert copy_param is not None, f"copy() signature is missing the {name} param"
 
     @pytest.mark.skipif(sys.version_info >= (3, 10), reason="fails because of a memory leak that started from 3.12")
-    def test_copy_build_request(self, async_client: AsyncDeeptable) -> None:
+    def test_copy_build_request(self, async_client: AsyncDeepTable) -> None:
         options = FinalRequestOptions(method="get", url="/foo")
 
         def build_request(options: FinalRequestOptions) -> None:
@@ -1197,7 +1197,7 @@ class TestAsyncDeeptable:
                     print(frame)
             raise AssertionError()
 
-    async def test_request_timeout(self, async_client: AsyncDeeptable) -> None:
+    async def test_request_timeout(self, async_client: AsyncDeepTable) -> None:
         request = async_client._build_request(FinalRequestOptions(method="get", url="/foo"))
         timeout = httpx.Timeout(**request.extensions["timeout"])  # type: ignore
         assert timeout == DEFAULT_TIMEOUT
@@ -1209,7 +1209,7 @@ class TestAsyncDeeptable:
         assert timeout == httpx.Timeout(100.0)
 
     async def test_client_timeout_option(self) -> None:
-        client = AsyncDeeptable(
+        client = AsyncDeepTable(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, timeout=httpx.Timeout(0)
         )
 
@@ -1222,7 +1222,7 @@ class TestAsyncDeeptable:
     async def test_http_client_timeout_option(self) -> None:
         # custom timeout given to the httpx client should be used
         async with httpx.AsyncClient(timeout=None) as http_client:
-            client = AsyncDeeptable(
+            client = AsyncDeepTable(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
@@ -1234,7 +1234,7 @@ class TestAsyncDeeptable:
 
         # no timeout given to the httpx client should not use the httpx default
         async with httpx.AsyncClient() as http_client:
-            client = AsyncDeeptable(
+            client = AsyncDeepTable(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
@@ -1246,7 +1246,7 @@ class TestAsyncDeeptable:
 
         # explicitly passing the default timeout currently results in it being ignored
         async with httpx.AsyncClient(timeout=HTTPX_DEFAULT_TIMEOUT) as http_client:
-            client = AsyncDeeptable(
+            client = AsyncDeepTable(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
@@ -1259,7 +1259,7 @@ class TestAsyncDeeptable:
     def test_invalid_http_client(self) -> None:
         with pytest.raises(TypeError, match="Invalid `http_client` arg"):
             with httpx.Client() as http_client:
-                AsyncDeeptable(
+                AsyncDeepTable(
                     base_url=base_url,
                     api_key=api_key,
                     _strict_response_validation=True,
@@ -1267,14 +1267,14 @@ class TestAsyncDeeptable:
                 )
 
     async def test_default_headers_option(self) -> None:
-        test_client = AsyncDeeptable(
+        test_client = AsyncDeepTable(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_headers={"X-Foo": "bar"}
         )
         request = test_client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-foo") == "bar"
         assert request.headers.get("x-stainless-lang") == "python"
 
-        test_client2 = AsyncDeeptable(
+        test_client2 = AsyncDeepTable(
             base_url=base_url,
             api_key=api_key,
             _strict_response_validation=True,
@@ -1291,17 +1291,17 @@ class TestAsyncDeeptable:
         await test_client2.close()
 
     def test_validate_headers(self) -> None:
-        client = AsyncDeeptable(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = AsyncDeepTable(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("Authorization") == f"Bearer {api_key}"
 
-        with pytest.raises(DeeptableError):
+        with pytest.raises(DeepTableError):
             with update_env(**{"DEEPTABLE_API_KEY": Omit()}):
-                client2 = AsyncDeeptable(base_url=base_url, api_key=None, _strict_response_validation=True)
+                client2 = AsyncDeepTable(base_url=base_url, api_key=None, _strict_response_validation=True)
             _ = client2
 
     async def test_default_query_option(self) -> None:
-        client = AsyncDeeptable(
+        client = AsyncDeepTable(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_query={"query_param": "bar"}
         )
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
@@ -1320,7 +1320,7 @@ class TestAsyncDeeptable:
 
         await client.close()
 
-    def test_request_extra_json(self, client: Deeptable) -> None:
+    def test_request_extra_json(self, client: DeepTable) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -1354,7 +1354,7 @@ class TestAsyncDeeptable:
         data = json.loads(request.content.decode("utf-8"))
         assert data == {"foo": "bar", "baz": None}
 
-    def test_request_extra_headers(self, client: Deeptable) -> None:
+    def test_request_extra_headers(self, client: DeepTable) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -1376,7 +1376,7 @@ class TestAsyncDeeptable:
         )
         assert request.headers.get("X-Bar") == "false"
 
-    def test_request_extra_query(self, client: Deeptable) -> None:
+    def test_request_extra_query(self, client: DeepTable) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -1417,7 +1417,7 @@ class TestAsyncDeeptable:
         params = dict(request.url.params)
         assert params == {"foo": "2"}
 
-    def test_multipart_repeating_array(self, async_client: AsyncDeeptable) -> None:
+    def test_multipart_repeating_array(self, async_client: AsyncDeepTable) -> None:
         request = async_client._build_request(
             FinalRequestOptions.construct(
                 method="post",
@@ -1447,7 +1447,7 @@ class TestAsyncDeeptable:
         ]
 
     @pytest.mark.respx(base_url=base_url)
-    async def test_binary_content_upload(self, respx_mock: MockRouter, async_client: AsyncDeeptable) -> None:
+    async def test_binary_content_upload(self, respx_mock: MockRouter, async_client: AsyncDeepTable) -> None:
         respx_mock.post("/upload").mock(side_effect=mirror_request_content)
 
         file_content = b"Hello, this is a test file."
@@ -1472,7 +1472,7 @@ class TestAsyncDeeptable:
             assert counter.value == 0, "the request body should not have been read"
             return httpx.Response(200, content=await request.aread())
 
-        async with AsyncDeeptable(
+        async with AsyncDeepTable(
             base_url=base_url,
             api_key=api_key,
             _strict_response_validation=True,
@@ -1492,7 +1492,7 @@ class TestAsyncDeeptable:
 
     @pytest.mark.respx(base_url=base_url)
     async def test_binary_content_upload_with_body_is_deprecated(
-        self, respx_mock: MockRouter, async_client: AsyncDeeptable
+        self, respx_mock: MockRouter, async_client: AsyncDeepTable
     ) -> None:
         respx_mock.post("/upload").mock(side_effect=mirror_request_content)
 
@@ -1513,7 +1513,7 @@ class TestAsyncDeeptable:
         assert response.content == file_content
 
     @pytest.mark.respx(base_url=base_url)
-    async def test_basic_union_response(self, respx_mock: MockRouter, async_client: AsyncDeeptable) -> None:
+    async def test_basic_union_response(self, respx_mock: MockRouter, async_client: AsyncDeepTable) -> None:
         class Model1(BaseModel):
             name: str
 
@@ -1527,7 +1527,7 @@ class TestAsyncDeeptable:
         assert response.foo == "bar"
 
     @pytest.mark.respx(base_url=base_url)
-    async def test_union_response_different_types(self, respx_mock: MockRouter, async_client: AsyncDeeptable) -> None:
+    async def test_union_response_different_types(self, respx_mock: MockRouter, async_client: AsyncDeepTable) -> None:
         """Union of objects with the same field name using a different type"""
 
         class Model1(BaseModel):
@@ -1550,7 +1550,7 @@ class TestAsyncDeeptable:
 
     @pytest.mark.respx(base_url=base_url)
     async def test_non_application_json_content_type_for_json_data(
-        self, respx_mock: MockRouter, async_client: AsyncDeeptable
+        self, respx_mock: MockRouter, async_client: AsyncDeepTable
     ) -> None:
         """
         Response that sets Content-Type to something other than application/json but returns json data
@@ -1572,7 +1572,7 @@ class TestAsyncDeeptable:
         assert response.foo == 2
 
     async def test_base_url_setter(self) -> None:
-        client = AsyncDeeptable(
+        client = AsyncDeepTable(
             base_url="https://example.com/from_init", api_key=api_key, _strict_response_validation=True
         )
         assert client.base_url == "https://example.com/from_init/"
@@ -1585,16 +1585,16 @@ class TestAsyncDeeptable:
 
     async def test_base_url_env(self) -> None:
         with update_env(DEEPTABLE_BASE_URL="http://localhost:5000/from/env"):
-            client = AsyncDeeptable(api_key=api_key, _strict_response_validation=True)
+            client = AsyncDeepTable(api_key=api_key, _strict_response_validation=True)
             assert client.base_url == "http://localhost:5000/from/env/"
 
     @pytest.mark.parametrize(
         "client",
         [
-            AsyncDeeptable(
+            AsyncDeepTable(
                 base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True
             ),
-            AsyncDeeptable(
+            AsyncDeepTable(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
@@ -1603,7 +1603,7 @@ class TestAsyncDeeptable:
         ],
         ids=["standard", "custom http client"],
     )
-    async def test_base_url_trailing_slash(self, client: AsyncDeeptable) -> None:
+    async def test_base_url_trailing_slash(self, client: AsyncDeepTable) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -1617,10 +1617,10 @@ class TestAsyncDeeptable:
     @pytest.mark.parametrize(
         "client",
         [
-            AsyncDeeptable(
+            AsyncDeepTable(
                 base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True
             ),
-            AsyncDeeptable(
+            AsyncDeepTable(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
@@ -1629,7 +1629,7 @@ class TestAsyncDeeptable:
         ],
         ids=["standard", "custom http client"],
     )
-    async def test_base_url_no_trailing_slash(self, client: AsyncDeeptable) -> None:
+    async def test_base_url_no_trailing_slash(self, client: AsyncDeepTable) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -1643,10 +1643,10 @@ class TestAsyncDeeptable:
     @pytest.mark.parametrize(
         "client",
         [
-            AsyncDeeptable(
+            AsyncDeepTable(
                 base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True
             ),
-            AsyncDeeptable(
+            AsyncDeepTable(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
@@ -1655,7 +1655,7 @@ class TestAsyncDeeptable:
         ],
         ids=["standard", "custom http client"],
     )
-    async def test_absolute_request_url(self, client: AsyncDeeptable) -> None:
+    async def test_absolute_request_url(self, client: AsyncDeepTable) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -1667,7 +1667,7 @@ class TestAsyncDeeptable:
         await client.close()
 
     async def test_copied_client_does_not_close_http(self) -> None:
-        test_client = AsyncDeeptable(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        test_client = AsyncDeepTable(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         assert not test_client.is_closed()
 
         copied = test_client.copy()
@@ -1679,7 +1679,7 @@ class TestAsyncDeeptable:
         assert not test_client.is_closed()
 
     async def test_client_context_manager(self) -> None:
-        test_client = AsyncDeeptable(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        test_client = AsyncDeepTable(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         async with test_client as c2:
             assert c2 is test_client
             assert not c2.is_closed()
@@ -1687,7 +1687,7 @@ class TestAsyncDeeptable:
         assert test_client.is_closed()
 
     @pytest.mark.respx(base_url=base_url)
-    async def test_client_response_validation_error(self, respx_mock: MockRouter, async_client: AsyncDeeptable) -> None:
+    async def test_client_response_validation_error(self, respx_mock: MockRouter, async_client: AsyncDeepTable) -> None:
         class Model(BaseModel):
             foo: str
 
@@ -1700,7 +1700,7 @@ class TestAsyncDeeptable:
 
     async def test_client_max_retries_validation(self) -> None:
         with pytest.raises(TypeError, match=r"max_retries cannot be None"):
-            AsyncDeeptable(
+            AsyncDeepTable(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, max_retries=cast(Any, None)
             )
 
@@ -1711,12 +1711,12 @@ class TestAsyncDeeptable:
 
         respx_mock.get("/foo").mock(return_value=httpx.Response(200, text="my-custom-format"))
 
-        strict_client = AsyncDeeptable(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        strict_client = AsyncDeepTable(base_url=base_url, api_key=api_key, _strict_response_validation=True)
 
         with pytest.raises(APIResponseValidationError):
             await strict_client.get("/foo", cast_to=Model)
 
-        non_strict_client = AsyncDeeptable(base_url=base_url, api_key=api_key, _strict_response_validation=False)
+        non_strict_client = AsyncDeepTable(base_url=base_url, api_key=api_key, _strict_response_validation=False)
 
         response = await non_strict_client.get("/foo", cast_to=Model)
         assert isinstance(response, str)  # type: ignore[unreachable]
@@ -1747,7 +1747,7 @@ class TestAsyncDeeptable:
     )
     @mock.patch("time.time", mock.MagicMock(return_value=1696004797))
     async def test_parse_retry_after_header(
-        self, remaining_retries: int, retry_after: str, timeout: float, async_client: AsyncDeeptable
+        self, remaining_retries: int, retry_after: str, timeout: float, async_client: AsyncDeepTable
     ) -> None:
         headers = httpx.Headers({"retry-after": retry_after})
         options = FinalRequestOptions(method="get", url="/foo", max_retries=3)
@@ -1757,7 +1757,7 @@ class TestAsyncDeeptable:
     @mock.patch("deeptable._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_timeout_errors_doesnt_leak(
-        self, respx_mock: MockRouter, async_client: AsyncDeeptable
+        self, respx_mock: MockRouter, async_client: AsyncDeepTable
     ) -> None:
         respx_mock.post("/v1/structured-sheets").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
@@ -1771,7 +1771,7 @@ class TestAsyncDeeptable:
     @mock.patch("deeptable._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_status_errors_doesnt_leak(
-        self, respx_mock: MockRouter, async_client: AsyncDeeptable
+        self, respx_mock: MockRouter, async_client: AsyncDeepTable
     ) -> None:
         respx_mock.post("/v1/structured-sheets").mock(return_value=httpx.Response(500))
 
@@ -1787,7 +1787,7 @@ class TestAsyncDeeptable:
     @pytest.mark.parametrize("failure_mode", ["status", "exception"])
     async def test_retries_taken(
         self,
-        async_client: AsyncDeeptable,
+        async_client: AsyncDeepTable,
         failures_before_success: int,
         failure_mode: Literal["status", "exception"],
         respx_mock: MockRouter,
@@ -1816,7 +1816,7 @@ class TestAsyncDeeptable:
     @mock.patch("deeptable._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_omit_retry_count_header(
-        self, async_client: AsyncDeeptable, failures_before_success: int, respx_mock: MockRouter
+        self, async_client: AsyncDeepTable, failures_before_success: int, respx_mock: MockRouter
     ) -> None:
         client = async_client.with_options(max_retries=4)
 
@@ -1841,7 +1841,7 @@ class TestAsyncDeeptable:
     @mock.patch("deeptable._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_overwrite_retry_count_header(
-        self, async_client: AsyncDeeptable, failures_before_success: int, respx_mock: MockRouter
+        self, async_client: AsyncDeepTable, failures_before_success: int, respx_mock: MockRouter
     ) -> None:
         client = async_client.with_options(max_retries=4)
 
@@ -1889,7 +1889,7 @@ class TestAsyncDeeptable:
         )
 
     @pytest.mark.respx(base_url=base_url)
-    async def test_follow_redirects(self, respx_mock: MockRouter, async_client: AsyncDeeptable) -> None:
+    async def test_follow_redirects(self, respx_mock: MockRouter, async_client: AsyncDeepTable) -> None:
         # Test that the default follow_redirects=True allows following redirects
         respx_mock.post("/redirect").mock(
             return_value=httpx.Response(302, headers={"Location": f"{base_url}/redirected"})
@@ -1901,7 +1901,7 @@ class TestAsyncDeeptable:
         assert response.json() == {"status": "ok"}
 
     @pytest.mark.respx(base_url=base_url)
-    async def test_follow_redirects_disabled(self, respx_mock: MockRouter, async_client: AsyncDeeptable) -> None:
+    async def test_follow_redirects_disabled(self, respx_mock: MockRouter, async_client: AsyncDeepTable) -> None:
         # Test that follow_redirects=False prevents following redirects
         respx_mock.post("/redirect").mock(
             return_value=httpx.Response(302, headers={"Location": f"{base_url}/redirected"})

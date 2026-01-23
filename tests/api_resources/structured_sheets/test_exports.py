@@ -9,7 +9,7 @@ import httpx
 import pytest
 from respx import MockRouter
 
-from deeptable import Deeptable, AsyncDeeptable
+from deeptable import DeepTable, AsyncDeepTable
 from deeptable._response import (
     BinaryAPIResponse,
     AsyncBinaryAPIResponse,
@@ -25,7 +25,7 @@ class TestExports:
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)
-    def test_method_download_sqlite(self, client: Deeptable, respx_mock: MockRouter) -> None:
+    def test_method_download_sqlite(self, client: DeepTable, respx_mock: MockRouter) -> None:
         respx_mock.get("/v1/structured-sheets/ss_01abc2def3ghjkmnpqrs4uvwxy/exports/sqlite").mock(
             return_value=httpx.Response(200, json={"foo": "bar"})
         )
@@ -39,7 +39,7 @@ class TestExports:
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)
-    def test_raw_response_download_sqlite(self, client: Deeptable, respx_mock: MockRouter) -> None:
+    def test_raw_response_download_sqlite(self, client: DeepTable, respx_mock: MockRouter) -> None:
         respx_mock.get("/v1/structured-sheets/ss_01abc2def3ghjkmnpqrs4uvwxy/exports/sqlite").mock(
             return_value=httpx.Response(200, json={"foo": "bar"})
         )
@@ -55,7 +55,7 @@ class TestExports:
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)
-    def test_streaming_response_download_sqlite(self, client: Deeptable, respx_mock: MockRouter) -> None:
+    def test_streaming_response_download_sqlite(self, client: DeepTable, respx_mock: MockRouter) -> None:
         respx_mock.get("/v1/structured-sheets/ss_01abc2def3ghjkmnpqrs4uvwxy/exports/sqlite").mock(
             return_value=httpx.Response(200, json={"foo": "bar"})
         )
@@ -73,7 +73,7 @@ class TestExports:
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)
-    def test_path_params_download_sqlite(self, client: Deeptable) -> None:
+    def test_path_params_download_sqlite(self, client: DeepTable) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `structured_sheets_id` but received ''"):
             client.structured_sheets.exports.with_raw_response.download_sqlite(
                 "",
@@ -87,7 +87,7 @@ class TestAsyncExports:
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)
-    async def test_method_download_sqlite(self, async_client: AsyncDeeptable, respx_mock: MockRouter) -> None:
+    async def test_method_download_sqlite(self, async_client: AsyncDeepTable, respx_mock: MockRouter) -> None:
         respx_mock.get("/v1/structured-sheets/ss_01abc2def3ghjkmnpqrs4uvwxy/exports/sqlite").mock(
             return_value=httpx.Response(200, json={"foo": "bar"})
         )
@@ -101,7 +101,7 @@ class TestAsyncExports:
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)
-    async def test_raw_response_download_sqlite(self, async_client: AsyncDeeptable, respx_mock: MockRouter) -> None:
+    async def test_raw_response_download_sqlite(self, async_client: AsyncDeepTable, respx_mock: MockRouter) -> None:
         respx_mock.get("/v1/structured-sheets/ss_01abc2def3ghjkmnpqrs4uvwxy/exports/sqlite").mock(
             return_value=httpx.Response(200, json={"foo": "bar"})
         )
@@ -118,7 +118,7 @@ class TestAsyncExports:
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     async def test_streaming_response_download_sqlite(
-        self, async_client: AsyncDeeptable, respx_mock: MockRouter
+        self, async_client: AsyncDeepTable, respx_mock: MockRouter
     ) -> None:
         respx_mock.get("/v1/structured-sheets/ss_01abc2def3ghjkmnpqrs4uvwxy/exports/sqlite").mock(
             return_value=httpx.Response(200, json={"foo": "bar"})
@@ -137,7 +137,7 @@ class TestAsyncExports:
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)
-    async def test_path_params_download_sqlite(self, async_client: AsyncDeeptable) -> None:
+    async def test_path_params_download_sqlite(self, async_client: AsyncDeepTable) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `structured_sheets_id` but received ''"):
             await async_client.structured_sheets.exports.with_raw_response.download_sqlite(
                 "",

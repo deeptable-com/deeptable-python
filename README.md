@@ -1,9 +1,9 @@
-# Deeptable Python API library
+# DeepTable Python API library
 
 <!-- prettier-ignore -->
 [![PyPI version](https://img.shields.io/pypi/v/deeptable.svg?label=pypi%20(stable))](https://pypi.org/project/deeptable/)
 
-The Deeptable Python library provides convenient access to the Deeptable REST API from any Python 3.9+
+The DeepTable Python library provides convenient access to the DeepTable REST API from any Python 3.9+
 application. The library includes type definitions for all request params and response fields,
 and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).
 
@@ -26,9 +26,9 @@ The full API of this library can be found in [api.md](api.md).
 
 ```python
 import os
-from deeptable import Deeptable
+from deeptable import DeepTable
 
-client = Deeptable(
+client = DeepTable(
     api_key=os.environ.get("DEEPTABLE_API_KEY"),  # This is the default and can be omitted
 )
 
@@ -45,14 +45,14 @@ so that your API Key is not stored in source control.
 
 ## Async usage
 
-Simply import `AsyncDeeptable` instead of `Deeptable` and use `await` with each API call:
+Simply import `AsyncDeepTable` instead of `DeepTable` and use `await` with each API call:
 
 ```python
 import os
 import asyncio
-from deeptable import AsyncDeeptable
+from deeptable import AsyncDeepTable
 
-client = AsyncDeeptable(
+client = AsyncDeepTable(
     api_key=os.environ.get("DEEPTABLE_API_KEY"),  # This is the default and can be omitted
 )
 
@@ -86,11 +86,11 @@ Then you can enable it by instantiating the client with `http_client=DefaultAioH
 import os
 import asyncio
 from deeptable import DefaultAioHttpClient
-from deeptable import AsyncDeeptable
+from deeptable import AsyncDeepTable
 
 
 async def main() -> None:
-    async with AsyncDeeptable(
+    async with AsyncDeepTable(
         api_key=os.environ.get("DEEPTABLE_API_KEY"),  # This is the default and can be omitted
         http_client=DefaultAioHttpClient(),
     ) as client:
@@ -114,14 +114,14 @@ Typed requests and responses provide autocomplete and documentation within your 
 
 ## Pagination
 
-List methods in the Deeptable API are paginated.
+List methods in the DeepTable API are paginated.
 
 This library provides auto-paginating iterators with each list response, so you do not have to request successive pages manually:
 
 ```python
-from deeptable import Deeptable
+from deeptable import DeepTable
 
-client = Deeptable()
+client = DeepTable()
 
 all_files = []
 # Automatically fetches more pages as needed.
@@ -135,9 +135,9 @@ Or, asynchronously:
 
 ```python
 import asyncio
-from deeptable import AsyncDeeptable
+from deeptable import AsyncDeepTable
 
-client = AsyncDeeptable()
+client = AsyncDeepTable()
 
 
 async def main() -> None:
@@ -181,9 +181,9 @@ Request parameters that correspond to file uploads can be passed as `bytes`, or 
 
 ```python
 from pathlib import Path
-from deeptable import Deeptable
+from deeptable import DeepTable
 
-client = Deeptable()
+client = DeepTable()
 
 client.files.upload(
     file=Path("/path/to/file"),
@@ -203,9 +203,9 @@ All errors inherit from `deeptable.APIError`.
 
 ```python
 import deeptable
-from deeptable import Deeptable
+from deeptable import DeepTable
 
-client = Deeptable()
+client = DeepTable()
 
 try:
     client.structured_sheets.create(
@@ -244,10 +244,10 @@ Connection errors (for example, due to a network connectivity problem), 408 Requ
 You can use the `max_retries` option to configure or disable retry settings:
 
 ```python
-from deeptable import Deeptable
+from deeptable import DeepTable
 
 # Configure the default for all requests:
-client = Deeptable(
+client = DeepTable(
     # default is 2
     max_retries=0,
 )
@@ -264,16 +264,16 @@ By default requests time out after 1 minute. You can configure this with a `time
 which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/timeouts/#fine-tuning-the-configuration) object:
 
 ```python
-from deeptable import Deeptable
+from deeptable import DeepTable
 
 # Configure the default for all requests:
-client = Deeptable(
+client = DeepTable(
     # 20 seconds (default is 1 minute)
     timeout=20.0,
 )
 
 # More granular control:
-client = Deeptable(
+client = DeepTable(
     timeout=httpx.Timeout(60.0, read=5.0, write=10.0, connect=2.0),
 )
 
@@ -318,9 +318,9 @@ if response.my_field is None:
 The "raw" Response object can be accessed by prefixing `.with_raw_response.` to any HTTP method call, e.g.,
 
 ```py
-from deeptable import Deeptable
+from deeptable import DeepTable
 
-client = Deeptable()
+client = DeepTable()
 response = client.structured_sheets.with_raw_response.create(
     file_id="file_01h45ytscbebyvny4gc8cr8ma2",
 )
@@ -396,9 +396,9 @@ You can directly override the [httpx client](https://www.python-httpx.org/api/#c
 
 ```python
 import httpx
-from deeptable import Deeptable, DefaultHttpxClient
+from deeptable import DeepTable, DefaultHttpxClient
 
-client = Deeptable(
+client = DeepTable(
     # Or use the `DEEPTABLE_BASE_URL` env var
     base_url="http://my.test.server.example.com:8083",
     http_client=DefaultHttpxClient(
@@ -419,9 +419,9 @@ client.with_options(http_client=DefaultHttpxClient(...))
 By default the library closes underlying HTTP connections whenever the client is [garbage collected](https://docs.python.org/3/reference/datamodel.html#object.__del__). You can manually close the client using the `.close()` method if desired, or with a context manager that closes when exiting.
 
 ```py
-from deeptable import Deeptable
+from deeptable import DeepTable
 
-with Deeptable() as client:
+with DeepTable() as client:
   # make requests here
   ...
 

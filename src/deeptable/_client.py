@@ -23,7 +23,7 @@ from ._utils import is_given, get_async_library
 from ._compat import cached_property
 from ._version import __version__
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
-from ._exceptions import APIStatusError, DeeptableError
+from ._exceptions import APIStatusError, DeepTableError
 from ._base_client import (
     DEFAULT_MAX_RETRIES,
     SyncAPIClient,
@@ -40,14 +40,14 @@ __all__ = [
     "Transport",
     "ProxiesTypes",
     "RequestOptions",
-    "Deeptable",
-    "AsyncDeeptable",
+    "DeepTable",
+    "AsyncDeepTable",
     "Client",
     "AsyncClient",
 ]
 
 
-class Deeptable(SyncAPIClient):
+class DeepTable(SyncAPIClient):
     # client options
     api_key: str
 
@@ -74,14 +74,14 @@ class Deeptable(SyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new synchronous Deeptable client instance.
+        """Construct a new synchronous DeepTable client instance.
 
         This automatically infers the `api_key` argument from the `DEEPTABLE_API_KEY` environment variable if it is not provided.
         """
         if api_key is None:
             api_key = os.environ.get("DEEPTABLE_API_KEY")
         if api_key is None:
-            raise DeeptableError(
+            raise DeepTableError(
                 "The api_key client option must be set either by passing api_key to the client or by setting the DEEPTABLE_API_KEY environment variable"
             )
         self.api_key = api_key
@@ -115,12 +115,12 @@ class Deeptable(SyncAPIClient):
         return StructuredSheetsResource(self)
 
     @cached_property
-    def with_raw_response(self) -> DeeptableWithRawResponse:
-        return DeeptableWithRawResponse(self)
+    def with_raw_response(self) -> DeepTableWithRawResponse:
+        return DeepTableWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> DeeptableWithStreamedResponse:
-        return DeeptableWithStreamedResponse(self)
+    def with_streaming_response(self) -> DeepTableWithStreamedResponse:
+        return DeepTableWithStreamedResponse(self)
 
     @property
     @override
@@ -227,7 +227,7 @@ class Deeptable(SyncAPIClient):
         return APIStatusError(err_msg, response=response, body=body)
 
 
-class AsyncDeeptable(AsyncAPIClient):
+class AsyncDeepTable(AsyncAPIClient):
     # client options
     api_key: str
 
@@ -254,14 +254,14 @@ class AsyncDeeptable(AsyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new async AsyncDeeptable client instance.
+        """Construct a new async AsyncDeepTable client instance.
 
         This automatically infers the `api_key` argument from the `DEEPTABLE_API_KEY` environment variable if it is not provided.
         """
         if api_key is None:
             api_key = os.environ.get("DEEPTABLE_API_KEY")
         if api_key is None:
-            raise DeeptableError(
+            raise DeepTableError(
                 "The api_key client option must be set either by passing api_key to the client or by setting the DEEPTABLE_API_KEY environment variable"
             )
         self.api_key = api_key
@@ -295,12 +295,12 @@ class AsyncDeeptable(AsyncAPIClient):
         return AsyncStructuredSheetsResource(self)
 
     @cached_property
-    def with_raw_response(self) -> AsyncDeeptableWithRawResponse:
-        return AsyncDeeptableWithRawResponse(self)
+    def with_raw_response(self) -> AsyncDeepTableWithRawResponse:
+        return AsyncDeepTableWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> AsyncDeeptableWithStreamedResponse:
-        return AsyncDeeptableWithStreamedResponse(self)
+    def with_streaming_response(self) -> AsyncDeepTableWithStreamedResponse:
+        return AsyncDeepTableWithStreamedResponse(self)
 
     @property
     @override
@@ -407,10 +407,10 @@ class AsyncDeeptable(AsyncAPIClient):
         return APIStatusError(err_msg, response=response, body=body)
 
 
-class DeeptableWithRawResponse:
-    _client: Deeptable
+class DeepTableWithRawResponse:
+    _client: DeepTable
 
-    def __init__(self, client: Deeptable) -> None:
+    def __init__(self, client: DeepTable) -> None:
         self._client = client
 
     @cached_property
@@ -426,10 +426,10 @@ class DeeptableWithRawResponse:
         return StructuredSheetsResourceWithRawResponse(self._client.structured_sheets)
 
 
-class AsyncDeeptableWithRawResponse:
-    _client: AsyncDeeptable
+class AsyncDeepTableWithRawResponse:
+    _client: AsyncDeepTable
 
-    def __init__(self, client: AsyncDeeptable) -> None:
+    def __init__(self, client: AsyncDeepTable) -> None:
         self._client = client
 
     @cached_property
@@ -445,10 +445,10 @@ class AsyncDeeptableWithRawResponse:
         return AsyncStructuredSheetsResourceWithRawResponse(self._client.structured_sheets)
 
 
-class DeeptableWithStreamedResponse:
-    _client: Deeptable
+class DeepTableWithStreamedResponse:
+    _client: DeepTable
 
-    def __init__(self, client: Deeptable) -> None:
+    def __init__(self, client: DeepTable) -> None:
         self._client = client
 
     @cached_property
@@ -464,10 +464,10 @@ class DeeptableWithStreamedResponse:
         return StructuredSheetsResourceWithStreamingResponse(self._client.structured_sheets)
 
 
-class AsyncDeeptableWithStreamedResponse:
-    _client: AsyncDeeptable
+class AsyncDeepTableWithStreamedResponse:
+    _client: AsyncDeepTable
 
-    def __init__(self, client: AsyncDeeptable) -> None:
+    def __init__(self, client: AsyncDeepTable) -> None:
         self._client = client
 
     @cached_property
@@ -483,6 +483,6 @@ class AsyncDeeptableWithStreamedResponse:
         return AsyncStructuredSheetsResourceWithStreamingResponse(self._client.structured_sheets)
 
 
-Client = Deeptable
+Client = DeepTable
 
-AsyncClient = AsyncDeeptable
+AsyncClient = AsyncDeepTable

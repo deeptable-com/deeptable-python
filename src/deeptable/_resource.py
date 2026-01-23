@@ -8,13 +8,13 @@ from typing import TYPE_CHECKING
 import anyio
 
 if TYPE_CHECKING:
-    from ._client import Deeptable, AsyncDeeptable
+    from ._client import DeepTable, AsyncDeepTable
 
 
 class SyncAPIResource:
-    _client: Deeptable
+    _client: DeepTable
 
-    def __init__(self, client: Deeptable) -> None:
+    def __init__(self, client: DeepTable) -> None:
         self._client = client
         self._get = client.get
         self._post = client.post
@@ -28,9 +28,9 @@ class SyncAPIResource:
 
 
 class AsyncAPIResource:
-    _client: AsyncDeeptable
+    _client: AsyncDeepTable
 
-    def __init__(self, client: AsyncDeeptable) -> None:
+    def __init__(self, client: AsyncDeepTable) -> None:
         self._client = client
         self._get = client.get
         self._post = client.post
