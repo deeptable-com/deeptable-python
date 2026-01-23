@@ -9,12 +9,8 @@ __all__ = ["StructuredSheetListParams"]
 
 
 class StructuredSheetListParams(TypedDict, total=False):
+    after: Optional[str]
+    """Unique identifier for a structured sheets conversion."""
+
     limit: int
     """Maximum number of results to return per page."""
-
-    starting_after: Optional[str]
-    """Cursor for pagination.
-
-    Use the `next_cursor` from a previous response to fetch the next page of
-    results.
-    """

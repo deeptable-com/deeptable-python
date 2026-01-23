@@ -25,9 +25,9 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ..._base_client import make_request_options
+from ...pagination import SyncCursorIDPage, AsyncCursorIDPage
+from ..._base_client import AsyncPaginator, make_request_options
 from ...types.structured_sheet_response import StructuredSheetResponse
-from ...types.structured_sheet_list_response import StructuredSheetListResponse
 
 __all__ = ["StructuredSheetsResource", "AsyncStructuredSheetsResource"]
 
@@ -142,25 +142,24 @@ class StructuredSheetsResource(SyncAPIResource):
     def list(
         self,
         *,
+        after: Optional[str] | Omit = omit,
         limit: int | Omit = omit,
-        starting_after: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> StructuredSheetListResponse:
+    ) -> SyncCursorIDPage[StructuredSheetResponse]:
         """List all structured sheets conversions for the authenticated user.
 
         Results are
         paginated using cursor-based pagination.
 
         Args:
-          limit: Maximum number of results to return per page.
+          after: Unique identifier for a structured sheets conversion.
 
-          starting_after: Cursor for pagination. Use the `next_cursor` from a previous response to fetch
-              the next page of results.
+          limit: Maximum number of results to return per page.
 
           extra_headers: Send extra headers
 
@@ -170,8 +169,9 @@ class StructuredSheetsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get(
+        return self._get_api_list(
             "/v1/structured-sheets",
+            page=SyncCursorIDPage[StructuredSheetResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -179,13 +179,13 @@ class StructuredSheetsResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "after": after,
                         "limit": limit,
-                        "starting_after": starting_after,
                     },
                     structured_sheet_list_params.StructuredSheetListParams,
                 ),
             ),
-            cast_to=StructuredSheetListResponse,
+            model=StructuredSheetResponse,
         )
 
     def delete(
@@ -336,28 +336,27 @@ class AsyncStructuredSheetsResource(AsyncAPIResource):
             cast_to=StructuredSheetResponse,
         )
 
-    async def list(
+    def list(
         self,
         *,
+        after: Optional[str] | Omit = omit,
         limit: int | Omit = omit,
-        starting_after: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> StructuredSheetListResponse:
+    ) -> AsyncPaginator[StructuredSheetResponse, AsyncCursorIDPage[StructuredSheetResponse]]:
         """List all structured sheets conversions for the authenticated user.
 
         Results are
         paginated using cursor-based pagination.
 
         Args:
-          limit: Maximum number of results to return per page.
+          after: Unique identifier for a structured sheets conversion.
 
-          starting_after: Cursor for pagination. Use the `next_cursor` from a previous response to fetch
-              the next page of results.
+          limit: Maximum number of results to return per page.
 
           extra_headers: Send extra headers
 
@@ -367,22 +366,23 @@ class AsyncStructuredSheetsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._get(
+        return self._get_api_list(
             "/v1/structured-sheets",
+            page=AsyncCursorIDPage[StructuredSheetResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform(
+                query=maybe_transform(
                     {
+                        "after": after,
                         "limit": limit,
-                        "starting_after": starting_after,
                     },
                     structured_sheet_list_params.StructuredSheetListParams,
                 ),
             ),
-            cast_to=StructuredSheetListResponse,
+            model=StructuredSheetResponse,
         )
 
     async def delete(

@@ -9,10 +9,8 @@ import pytest
 
 from deeptable import Deeptable, AsyncDeeptable
 from tests.utils import assert_matches_type
-from deeptable.types import (
-    StructuredSheetResponse,
-    StructuredSheetListResponse,
-)
+from deeptable.types import StructuredSheetResponse
+from deeptable.pagination import SyncCursorIDPage, AsyncCursorIDPage
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -109,16 +107,16 @@ class TestStructuredSheets:
     @parametrize
     def test_method_list(self, client: Deeptable) -> None:
         structured_sheet = client.structured_sheets.list()
-        assert_matches_type(StructuredSheetListResponse, structured_sheet, path=["response"])
+        assert_matches_type(SyncCursorIDPage[StructuredSheetResponse], structured_sheet, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_list_with_all_params(self, client: Deeptable) -> None:
         structured_sheet = client.structured_sheets.list(
+            after="ss_01abc2def3ghjkmnpqrs4uvwxy",
             limit=20,
-            starting_after="ss_01abc2def3ghjkmnpqrs4uvwxy",
         )
-        assert_matches_type(StructuredSheetListResponse, structured_sheet, path=["response"])
+        assert_matches_type(SyncCursorIDPage[StructuredSheetResponse], structured_sheet, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -128,7 +126,7 @@ class TestStructuredSheets:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         structured_sheet = response.parse()
-        assert_matches_type(StructuredSheetListResponse, structured_sheet, path=["response"])
+        assert_matches_type(SyncCursorIDPage[StructuredSheetResponse], structured_sheet, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -138,7 +136,7 @@ class TestStructuredSheets:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             structured_sheet = response.parse()
-            assert_matches_type(StructuredSheetListResponse, structured_sheet, path=["response"])
+            assert_matches_type(SyncCursorIDPage[StructuredSheetResponse], structured_sheet, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -279,16 +277,16 @@ class TestAsyncStructuredSheets:
     @parametrize
     async def test_method_list(self, async_client: AsyncDeeptable) -> None:
         structured_sheet = await async_client.structured_sheets.list()
-        assert_matches_type(StructuredSheetListResponse, structured_sheet, path=["response"])
+        assert_matches_type(AsyncCursorIDPage[StructuredSheetResponse], structured_sheet, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncDeeptable) -> None:
         structured_sheet = await async_client.structured_sheets.list(
+            after="ss_01abc2def3ghjkmnpqrs4uvwxy",
             limit=20,
-            starting_after="ss_01abc2def3ghjkmnpqrs4uvwxy",
         )
-        assert_matches_type(StructuredSheetListResponse, structured_sheet, path=["response"])
+        assert_matches_type(AsyncCursorIDPage[StructuredSheetResponse], structured_sheet, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -298,7 +296,7 @@ class TestAsyncStructuredSheets:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         structured_sheet = await response.parse()
-        assert_matches_type(StructuredSheetListResponse, structured_sheet, path=["response"])
+        assert_matches_type(AsyncCursorIDPage[StructuredSheetResponse], structured_sheet, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -308,7 +306,7 @@ class TestAsyncStructuredSheets:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             structured_sheet = await response.parse()
-            assert_matches_type(StructuredSheetListResponse, structured_sheet, path=["response"])
+            assert_matches_type(AsyncCursorIDPage[StructuredSheetResponse], structured_sheet, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
