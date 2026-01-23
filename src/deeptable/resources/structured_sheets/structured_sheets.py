@@ -43,7 +43,7 @@ class StructuredSheetsResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/deeptable-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/deeptable-com/deeptable-python#accessing-raw-response-data-eg-headers
         """
         return StructuredSheetsResourceWithRawResponse(self)
 
@@ -52,7 +52,7 @@ class StructuredSheetsResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/deeptable-python#with_streaming_response
+        For more information, see https://www.github.com/deeptable-com/deeptable-python#with_streaming_response
         """
         return StructuredSheetsResourceWithStreamingResponse(self)
 
@@ -240,7 +240,7 @@ class AsyncStructuredSheetsResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/deeptable-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/deeptable-com/deeptable-python#accessing-raw-response-data-eg-headers
         """
         return AsyncStructuredSheetsResourceWithRawResponse(self)
 
@@ -249,7 +249,7 @@ class AsyncStructuredSheetsResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/deeptable-python#with_streaming_response
+        For more information, see https://www.github.com/deeptable-com/deeptable-python#with_streaming_response
         """
         return AsyncStructuredSheetsResourceWithStreamingResponse(self)
 
