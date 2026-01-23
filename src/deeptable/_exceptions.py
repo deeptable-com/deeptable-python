@@ -18,11 +18,11 @@ __all__ = [
 ]
 
 
-class DeeptableError(Exception):
+class DeepTableError(Exception):
     pass
 
 
-class APIError(DeeptableError):
+class APIError(DeepTableError):
     message: str
     request: httpx.Request
 

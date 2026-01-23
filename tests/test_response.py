@@ -6,7 +6,7 @@ import httpx
 import pytest
 import pydantic
 
-from deeptable import BaseModel, Deeptable, AsyncDeeptable
+from deeptable import BaseModel, DeepTable, AsyncDeepTable
 from deeptable._response import (
     APIResponse,
     BaseAPIResponse,
@@ -56,7 +56,7 @@ def test_extract_response_type_binary_response() -> None:
 class PydanticModel(pydantic.BaseModel): ...
 
 
-def test_response_parse_mismatched_basemodel(client: Deeptable) -> None:
+def test_response_parse_mismatched_basemodel(client: DeepTable) -> None:
     response = APIResponse(
         raw=httpx.Response(200, content=b"foo"),
         client=client,
@@ -74,7 +74,7 @@ def test_response_parse_mismatched_basemodel(client: Deeptable) -> None:
 
 
 @pytest.mark.asyncio
-async def test_async_response_parse_mismatched_basemodel(async_client: AsyncDeeptable) -> None:
+async def test_async_response_parse_mismatched_basemodel(async_client: AsyncDeepTable) -> None:
     response = AsyncAPIResponse(
         raw=httpx.Response(200, content=b"foo"),
         client=async_client,
@@ -91,7 +91,7 @@ async def test_async_response_parse_mismatched_basemodel(async_client: AsyncDeep
         await response.parse(to=PydanticModel)
 
 
-def test_response_parse_custom_stream(client: Deeptable) -> None:
+def test_response_parse_custom_stream(client: DeepTable) -> None:
     response = APIResponse(
         raw=httpx.Response(200, content=b"foo"),
         client=client,
@@ -106,7 +106,7 @@ def test_response_parse_custom_stream(client: Deeptable) -> None:
 
 
 @pytest.mark.asyncio
-async def test_async_response_parse_custom_stream(async_client: AsyncDeeptable) -> None:
+async def test_async_response_parse_custom_stream(async_client: AsyncDeepTable) -> None:
     response = AsyncAPIResponse(
         raw=httpx.Response(200, content=b"foo"),
         client=async_client,
@@ -125,7 +125,7 @@ class CustomModel(BaseModel):
     bar: int
 
 
-def test_response_parse_custom_model(client: Deeptable) -> None:
+def test_response_parse_custom_model(client: DeepTable) -> None:
     response = APIResponse(
         raw=httpx.Response(200, content=json.dumps({"foo": "hello!", "bar": 2})),
         client=client,
@@ -141,7 +141,7 @@ def test_response_parse_custom_model(client: Deeptable) -> None:
 
 
 @pytest.mark.asyncio
-async def test_async_response_parse_custom_model(async_client: AsyncDeeptable) -> None:
+async def test_async_response_parse_custom_model(async_client: AsyncDeepTable) -> None:
     response = AsyncAPIResponse(
         raw=httpx.Response(200, content=json.dumps({"foo": "hello!", "bar": 2})),
         client=async_client,
@@ -156,7 +156,7 @@ async def test_async_response_parse_custom_model(async_client: AsyncDeeptable) -
     assert obj.bar == 2
 
 
-def test_response_parse_annotated_type(client: Deeptable) -> None:
+def test_response_parse_annotated_type(client: DeepTable) -> None:
     response = APIResponse(
         raw=httpx.Response(200, content=json.dumps({"foo": "hello!", "bar": 2})),
         client=client,
@@ -173,7 +173,7 @@ def test_response_parse_annotated_type(client: Deeptable) -> None:
     assert obj.bar == 2
 
 
-async def test_async_response_parse_annotated_type(async_client: AsyncDeeptable) -> None:
+async def test_async_response_parse_annotated_type(async_client: AsyncDeepTable) -> None:
     response = AsyncAPIResponse(
         raw=httpx.Response(200, content=json.dumps({"foo": "hello!", "bar": 2})),
         client=async_client,
@@ -201,7 +201,7 @@ async def test_async_response_parse_annotated_type(async_client: AsyncDeeptable)
         ("FalSe", False),
     ],
 )
-def test_response_parse_bool(client: Deeptable, content: str, expected: bool) -> None:
+def test_response_parse_bool(client: DeepTable, content: str, expected: bool) -> None:
     response = APIResponse(
         raw=httpx.Response(200, content=content),
         client=client,
@@ -226,7 +226,7 @@ def test_response_parse_bool(client: Deeptable, content: str, expected: bool) ->
         ("FalSe", False),
     ],
 )
-async def test_async_response_parse_bool(client: AsyncDeeptable, content: str, expected: bool) -> None:
+async def test_async_response_parse_bool(client: AsyncDeepTable, content: str, expected: bool) -> None:
     response = AsyncAPIResponse(
         raw=httpx.Response(200, content=content),
         client=client,
@@ -245,7 +245,7 @@ class OtherModel(BaseModel):
 
 
 @pytest.mark.parametrize("client", [False], indirect=True)  # loose validation
-def test_response_parse_expect_model_union_non_json_content(client: Deeptable) -> None:
+def test_response_parse_expect_model_union_non_json_content(client: DeepTable) -> None:
     response = APIResponse(
         raw=httpx.Response(200, content=b"foo", headers={"Content-Type": "application/text"}),
         client=client,
@@ -262,7 +262,7 @@ def test_response_parse_expect_model_union_non_json_content(client: Deeptable) -
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize("async_client", [False], indirect=True)  # loose validation
-async def test_async_response_parse_expect_model_union_non_json_content(async_client: AsyncDeeptable) -> None:
+async def test_async_response_parse_expect_model_union_non_json_content(async_client: AsyncDeepTable) -> None:
     response = AsyncAPIResponse(
         raw=httpx.Response(200, content=b"foo", headers={"Content-Type": "application/text"}),
         client=async_client,
