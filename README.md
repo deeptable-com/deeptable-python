@@ -16,12 +16,9 @@ The REST API documentation can be found on [docs.deeptable.com](https://docs.dee
 ## Installation
 
 ```sh
-# install from the production repo
-pip install git+ssh://git@github.com/deeptable-com/deeptable-python.git
+# install from PyPI
+pip install deeptable
 ```
-
-> [!NOTE]
-> Once this package is [published to PyPI](https://www.stainless.com/docs/guides/publish), this will become: `pip install deeptable`
 
 ## Usage
 
@@ -79,8 +76,8 @@ By default, the async client uses `httpx` for HTTP requests. However, for improv
 You can enable this by installing `aiohttp`:
 
 ```sh
-# install from the production repo
-pip install 'deeptable[aiohttp] @ git+ssh://git@github.com/deeptable-com/deeptable-python.git'
+# install from PyPI
+pip install deeptable[aiohttp]
 ```
 
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
