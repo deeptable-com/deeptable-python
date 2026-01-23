@@ -851,20 +851,24 @@ class TestDeeptable:
     @mock.patch("deeptable._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter, client: Deeptable) -> None:
-        respx_mock.get("/v1/files").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.post("/v1/structured-sheets").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
-            client.files.with_streaming_response.list().__enter__()
+            client.structured_sheets.with_streaming_response.create(
+                file_id="file_01h45ytscbebyvny4gc8cr8ma2"
+            ).__enter__()
 
         assert _get_open_connections(client) == 0
 
     @mock.patch("deeptable._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter, client: Deeptable) -> None:
-        respx_mock.get("/v1/files").mock(return_value=httpx.Response(500))
+        respx_mock.post("/v1/structured-sheets").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
-            client.files.with_streaming_response.list().__enter__()
+            client.structured_sheets.with_streaming_response.create(
+                file_id="file_01h45ytscbebyvny4gc8cr8ma2"
+            ).__enter__()
         assert _get_open_connections(client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
@@ -891,9 +895,9 @@ class TestDeeptable:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/v1/files").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/structured-sheets").mock(side_effect=retry_handler)
 
-        response = client.files.with_raw_response.list()
+        response = client.structured_sheets.with_raw_response.create(file_id="file_01h45ytscbebyvny4gc8cr8ma2")
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -915,9 +919,11 @@ class TestDeeptable:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/v1/files").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/structured-sheets").mock(side_effect=retry_handler)
 
-        response = client.files.with_raw_response.list(extra_headers={"x-stainless-retry-count": Omit()})
+        response = client.structured_sheets.with_raw_response.create(
+            file_id="file_01h45ytscbebyvny4gc8cr8ma2", extra_headers={"x-stainless-retry-count": Omit()}
+        )
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
@@ -938,9 +944,11 @@ class TestDeeptable:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/v1/files").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/structured-sheets").mock(side_effect=retry_handler)
 
-        response = client.files.with_raw_response.list(extra_headers={"x-stainless-retry-count": "42"})
+        response = client.structured_sheets.with_raw_response.create(
+            file_id="file_01h45ytscbebyvny4gc8cr8ma2", extra_headers={"x-stainless-retry-count": "42"}
+        )
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
 
@@ -1751,10 +1759,12 @@ class TestAsyncDeeptable:
     async def test_retrying_timeout_errors_doesnt_leak(
         self, respx_mock: MockRouter, async_client: AsyncDeeptable
     ) -> None:
-        respx_mock.get("/v1/files").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.post("/v1/structured-sheets").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
-            await async_client.files.with_streaming_response.list().__aenter__()
+            await async_client.structured_sheets.with_streaming_response.create(
+                file_id="file_01h45ytscbebyvny4gc8cr8ma2"
+            ).__aenter__()
 
         assert _get_open_connections(async_client) == 0
 
@@ -1763,10 +1773,12 @@ class TestAsyncDeeptable:
     async def test_retrying_status_errors_doesnt_leak(
         self, respx_mock: MockRouter, async_client: AsyncDeeptable
     ) -> None:
-        respx_mock.get("/v1/files").mock(return_value=httpx.Response(500))
+        respx_mock.post("/v1/structured-sheets").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
-            await async_client.files.with_streaming_response.list().__aenter__()
+            await async_client.structured_sheets.with_streaming_response.create(
+                file_id="file_01h45ytscbebyvny4gc8cr8ma2"
+            ).__aenter__()
         assert _get_open_connections(async_client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
@@ -1793,9 +1805,9 @@ class TestAsyncDeeptable:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/v1/files").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/structured-sheets").mock(side_effect=retry_handler)
 
-        response = await client.files.with_raw_response.list()
+        response = await client.structured_sheets.with_raw_response.create(file_id="file_01h45ytscbebyvny4gc8cr8ma2")
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -1817,9 +1829,11 @@ class TestAsyncDeeptable:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/v1/files").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/structured-sheets").mock(side_effect=retry_handler)
 
-        response = await client.files.with_raw_response.list(extra_headers={"x-stainless-retry-count": Omit()})
+        response = await client.structured_sheets.with_raw_response.create(
+            file_id="file_01h45ytscbebyvny4gc8cr8ma2", extra_headers={"x-stainless-retry-count": Omit()}
+        )
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
@@ -1840,9 +1854,11 @@ class TestAsyncDeeptable:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/v1/files").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/structured-sheets").mock(side_effect=retry_handler)
 
-        response = await client.files.with_raw_response.list(extra_headers={"x-stainless-retry-count": "42"})
+        response = await client.structured_sheets.with_raw_response.create(
+            file_id="file_01h45ytscbebyvny4gc8cr8ma2", extra_headers={"x-stainless-retry-count": "42"}
+        )
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
 

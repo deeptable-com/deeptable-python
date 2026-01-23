@@ -11,7 +11,7 @@ It is generated with [Stainless](https://www.stainless.com/).
 
 ## Documentation
 
-The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found on [docs.deeptable.com](https://docs.deeptable.com). The full API of this library can be found in [api.md](api.md).
 
 ## Installation
 
@@ -35,8 +35,10 @@ client = Deeptable(
     api_key=os.environ.get("DEEPTABLE_API_KEY"),  # This is the default and can be omitted
 )
 
-files = client.files.list()
-print(files.data)
+structured_sheet_response = client.structured_sheets.create(
+    file_id="file_01h45ytscbebyvny4gc8cr8ma2",
+)
+print(structured_sheet_response.id)
 ```
 
 While you can provide an `api_key` keyword argument,
@@ -59,8 +61,10 @@ client = AsyncDeeptable(
 
 
 async def main() -> None:
-    files = await client.files.list()
-    print(files.data)
+    structured_sheet_response = await client.structured_sheets.create(
+        file_id="file_01h45ytscbebyvny4gc8cr8ma2",
+    )
+    print(structured_sheet_response.id)
 
 
 asyncio.run(main())
@@ -93,8 +97,10 @@ async def main() -> None:
         api_key=os.environ.get("DEEPTABLE_API_KEY"),  # This is the default and can be omitted
         http_client=DefaultAioHttpClient(),
     ) as client:
-        files = await client.files.list()
-        print(files.data)
+        structured_sheet_response = await client.structured_sheets.create(
+            file_id="file_01h45ytscbebyvny4gc8cr8ma2",
+        )
+        print(structured_sheet_response.id)
 
 
 asyncio.run(main())
@@ -108,6 +114,69 @@ Nested request parameters are [TypedDicts](https://docs.python.org/3/library/typ
 - Converting to a dictionary, `model.to_dict()`
 
 Typed requests and responses provide autocomplete and documentation within your editor. If you would like to see type errors in VS Code to help catch bugs earlier, set `python.analysis.typeCheckingMode` to `basic`.
+
+## Pagination
+
+List methods in the Deeptable API are paginated.
+
+This library provides auto-paginating iterators with each list response, so you do not have to request successive pages manually:
+
+```python
+from deeptable import Deeptable
+
+client = Deeptable()
+
+all_files = []
+# Automatically fetches more pages as needed.
+for file in client.files.list():
+    # Do something with file here
+    all_files.append(file)
+print(all_files)
+```
+
+Or, asynchronously:
+
+```python
+import asyncio
+from deeptable import AsyncDeeptable
+
+client = AsyncDeeptable()
+
+
+async def main() -> None:
+    all_files = []
+    # Iterate through items across all pages, issuing requests as needed.
+    async for file in client.files.list():
+        all_files.append(file)
+    print(all_files)
+
+
+asyncio.run(main())
+```
+
+Alternatively, you can use the `.has_next_page()`, `.next_page_info()`, or `.get_next_page()` methods for more granular control working with pages:
+
+```python
+first_page = await client.files.list()
+if first_page.has_next_page():
+    print(f"will fetch next page using these details: {first_page.next_page_info()}")
+    next_page = await first_page.get_next_page()
+    print(f"number of items we just fetched: {len(next_page.data)}")
+
+# Remove `await` for non-async usage.
+```
+
+Or just work directly with the returned data:
+
+```python
+first_page = await client.files.list()
+
+print(f"next page cursor: {first_page.after}")  # => "next page cursor: ..."
+for file in first_page.data:
+    print(file.id)
+
+# Remove `await` for non-async usage.
+```
 
 ## File uploads
 
@@ -142,7 +211,9 @@ from deeptable import Deeptable
 client = Deeptable()
 
 try:
-    client.files.list()
+    client.structured_sheets.create(
+        file_id="file_01h45ytscbebyvny4gc8cr8ma2",
+    )
 except deeptable.APIConnectionError as e:
     print("The server could not be reached")
     print(e.__cause__)  # an underlying Exception, likely raised within httpx.
@@ -185,7 +256,9 @@ client = Deeptable(
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).files.list()
+client.with_options(max_retries=5).structured_sheets.create(
+    file_id="file_01h45ytscbebyvny4gc8cr8ma2",
+)
 ```
 
 ### Timeouts
@@ -208,7 +281,9 @@ client = Deeptable(
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).files.list()
+client.with_options(timeout=5.0).structured_sheets.create(
+    file_id="file_01h45ytscbebyvny4gc8cr8ma2",
+)
 ```
 
 On timeout, an `APITimeoutError` is thrown.
@@ -249,11 +324,13 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 from deeptable import Deeptable
 
 client = Deeptable()
-response = client.files.with_raw_response.list()
+response = client.structured_sheets.with_raw_response.create(
+    file_id="file_01h45ytscbebyvny4gc8cr8ma2",
+)
 print(response.headers.get('X-My-Header'))
 
-file = response.parse()  # get the object that `files.list()` would have returned
-print(file.data)
+structured_sheet = response.parse()  # get the object that `structured_sheets.create()` would have returned
+print(structured_sheet.id)
 ```
 
 These methods return an [`APIResponse`](https://github.com/stainless-sdks/deeptable-python/tree/main/src/deeptable/_response.py) object.
@@ -267,7 +344,9 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.files.with_streaming_response.list() as response:
+with client.structured_sheets.with_streaming_response.create(
+    file_id="file_01h45ytscbebyvny4gc8cr8ma2",
+) as response:
     print(response.headers.get("X-My-Header"))
 
     for line in response.iter_lines():

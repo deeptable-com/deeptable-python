@@ -17,9 +17,9 @@ from .._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
+from ..pagination import SyncCursorIDPage, AsyncCursorIDPage
 from ..types.file import File
-from .._base_client import make_request_options
-from ..types.file_list_response import FileListResponse
+from .._base_client import AsyncPaginator, make_request_options
 
 __all__ = ["FilesResource", "AsyncFilesResource"]
 
@@ -82,22 +82,22 @@ class FilesResource(SyncAPIResource):
     def list(
         self,
         *,
+        after: Optional[str] | Omit = omit,
         limit: int | Omit = omit,
-        starting_after: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileListResponse:
+    ) -> SyncCursorIDPage[File]:
         """
         List all files uploaded by the current user.
 
         Args:
-          limit: Maximum number of files to return.
+          after: Unique identifier for a file.
 
-          starting_after: Cursor for pagination. Use the ID of the last file from the previous page.
+          limit: Maximum number of files to return.
 
           extra_headers: Send extra headers
 
@@ -107,8 +107,9 @@ class FilesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get(
+        return self._get_api_list(
             "/v1/files",
+            page=SyncCursorIDPage[File],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -116,13 +117,13 @@ class FilesResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "after": after,
                         "limit": limit,
-                        "starting_after": starting_after,
                     },
                     file_list_params.FileListParams,
                 ),
             ),
-            cast_to=FileListResponse,
+            model=File,
         )
 
     def delete(
@@ -265,25 +266,25 @@ class AsyncFilesResource(AsyncAPIResource):
             cast_to=File,
         )
 
-    async def list(
+    def list(
         self,
         *,
+        after: Optional[str] | Omit = omit,
         limit: int | Omit = omit,
-        starting_after: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileListResponse:
+    ) -> AsyncPaginator[File, AsyncCursorIDPage[File]]:
         """
         List all files uploaded by the current user.
 
         Args:
-          limit: Maximum number of files to return.
+          after: Unique identifier for a file.
 
-          starting_after: Cursor for pagination. Use the ID of the last file from the previous page.
+          limit: Maximum number of files to return.
 
           extra_headers: Send extra headers
 
@@ -293,22 +294,23 @@ class AsyncFilesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._get(
+        return self._get_api_list(
             "/v1/files",
+            page=AsyncCursorIDPage[File],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform(
+                query=maybe_transform(
                     {
+                        "after": after,
                         "limit": limit,
-                        "starting_after": starting_after,
                     },
                     file_list_params.FileListParams,
                 ),
             ),
-            cast_to=FileListResponse,
+            model=File,
         )
 
     async def delete(
