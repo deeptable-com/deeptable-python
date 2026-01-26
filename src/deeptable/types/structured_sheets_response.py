@@ -6,7 +6,7 @@ from typing_extensions import Literal
 
 from .._models import BaseModel
 
-__all__ = ["StructuredSheetResponse", "LastError"]
+__all__ = ["StructuredSheetsResponse", "LastError"]
 
 
 class LastError(BaseModel):
@@ -19,7 +19,7 @@ class LastError(BaseModel):
     """A human-readable description of the error."""
 
 
-class StructuredSheetResponse(BaseModel):
+class StructuredSheetsResponse(BaseModel):
     """Response representing a structured sheets conversion job.
 
     This is returned from POST (create), GET (retrieve), and list endpoints.
@@ -34,14 +34,11 @@ class StructuredSheetResponse(BaseModel):
     file_id: str
     """The unique identifier for the source file."""
 
-    status: Literal["pending", "queued", "in_progress", "completed", "failed", "cancelled"]
+    status: Literal["queued", "in_progress", "completed", "failed", "cancelled"]
     """The current processing status."""
 
     updated_at: datetime
     """The timestamp when the conversion was last updated."""
-
-    exports_available: Optional[List[str]] = None
-    """List of export formats available for download (e.g., ['sqlite'])."""
 
     last_error: Optional[LastError] = None
     """Error information when processing fails."""
@@ -51,3 +48,9 @@ class StructuredSheetResponse(BaseModel):
 
     sheet_names: Optional[List[str]] = None
     """List of sheet names included in this conversion."""
+
+    table_count: Optional[int] = None
+    """Number of tables extracted from the workbook.
+
+    Only present when status is 'completed'.
+    """
