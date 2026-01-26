@@ -29,8 +29,8 @@ class TestTables:
     @parametrize
     def test_method_retrieve(self, client: DeepTable) -> None:
         table = client.structured_sheets.tables.retrieve(
-            table_id="tbl_01abc2def3ghjkmnpqrs4uvwxy",
-            structured_sheets_id="ss_01abc2def3ghjkmnpqrs4uvwxy",
+            table_id="tbl_01kfxgjd94fn9stqm45rqr2pnz",
+            structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
         )
         assert_matches_type(TableResponse, table, path=["response"])
 
@@ -38,8 +38,8 @@ class TestTables:
     @parametrize
     def test_raw_response_retrieve(self, client: DeepTable) -> None:
         response = client.structured_sheets.tables.with_raw_response.retrieve(
-            table_id="tbl_01abc2def3ghjkmnpqrs4uvwxy",
-            structured_sheets_id="ss_01abc2def3ghjkmnpqrs4uvwxy",
+            table_id="tbl_01kfxgjd94fn9stqm45rqr2pnz",
+            structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
         )
 
         assert response.is_closed is True
@@ -51,8 +51,8 @@ class TestTables:
     @parametrize
     def test_streaming_response_retrieve(self, client: DeepTable) -> None:
         with client.structured_sheets.tables.with_streaming_response.retrieve(
-            table_id="tbl_01abc2def3ghjkmnpqrs4uvwxy",
-            structured_sheets_id="ss_01abc2def3ghjkmnpqrs4uvwxy",
+            table_id="tbl_01kfxgjd94fn9stqm45rqr2pnz",
+            structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -67,21 +67,21 @@ class TestTables:
     def test_path_params_retrieve(self, client: DeepTable) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `structured_sheets_id` but received ''"):
             client.structured_sheets.tables.with_raw_response.retrieve(
-                table_id="tbl_01abc2def3ghjkmnpqrs4uvwxy",
+                table_id="tbl_01kfxgjd94fn9stqm45rqr2pnz",
                 structured_sheets_id="",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `table_id` but received ''"):
             client.structured_sheets.tables.with_raw_response.retrieve(
                 table_id="",
-                structured_sheets_id="ss_01abc2def3ghjkmnpqrs4uvwxy",
+                structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
             )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_list(self, client: DeepTable) -> None:
         table = client.structured_sheets.tables.list(
-            "ss_01abc2def3ghjkmnpqrs4uvwxy",
+            "ss_01kfxgjd94fn9stqm42nejb627",
         )
         assert_matches_type(TableListResponse, table, path=["response"])
 
@@ -89,7 +89,7 @@ class TestTables:
     @parametrize
     def test_raw_response_list(self, client: DeepTable) -> None:
         response = client.structured_sheets.tables.with_raw_response.list(
-            "ss_01abc2def3ghjkmnpqrs4uvwxy",
+            "ss_01kfxgjd94fn9stqm42nejb627",
         )
 
         assert response.is_closed is True
@@ -101,7 +101,7 @@ class TestTables:
     @parametrize
     def test_streaming_response_list(self, client: DeepTable) -> None:
         with client.structured_sheets.tables.with_streaming_response.list(
-            "ss_01abc2def3ghjkmnpqrs4uvwxy",
+            "ss_01kfxgjd94fn9stqm42nejb627",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -123,11 +123,11 @@ class TestTables:
     @pytest.mark.respx(base_url=base_url)
     def test_method_download(self, client: DeepTable, respx_mock: MockRouter) -> None:
         respx_mock.get(
-            "/v1/structured-sheets/ss_01abc2def3ghjkmnpqrs4uvwxy/tables/tbl_01abc2def3ghjkmnpqrs4uvwxy/download"
+            "/v1/structured-sheets/ss_01kfxgjd94fn9stqm42nejb627/tables/tbl_01kfxgjd94fn9stqm45rqr2pnz/download"
         ).mock(return_value=httpx.Response(200, json={"foo": "bar"}))
         table = client.structured_sheets.tables.download(
-            table_id="tbl_01abc2def3ghjkmnpqrs4uvwxy",
-            structured_sheets_id="ss_01abc2def3ghjkmnpqrs4uvwxy",
+            table_id="tbl_01kfxgjd94fn9stqm45rqr2pnz",
+            structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
         )
         assert table.is_closed
         assert table.json() == {"foo": "bar"}
@@ -138,11 +138,11 @@ class TestTables:
     @pytest.mark.respx(base_url=base_url)
     def test_method_download_with_all_params(self, client: DeepTable, respx_mock: MockRouter) -> None:
         respx_mock.get(
-            "/v1/structured-sheets/ss_01abc2def3ghjkmnpqrs4uvwxy/tables/tbl_01abc2def3ghjkmnpqrs4uvwxy/download"
+            "/v1/structured-sheets/ss_01kfxgjd94fn9stqm42nejb627/tables/tbl_01kfxgjd94fn9stqm45rqr2pnz/download"
         ).mock(return_value=httpx.Response(200, json={"foo": "bar"}))
         table = client.structured_sheets.tables.download(
-            table_id="tbl_01abc2def3ghjkmnpqrs4uvwxy",
-            structured_sheets_id="ss_01abc2def3ghjkmnpqrs4uvwxy",
+            table_id="tbl_01kfxgjd94fn9stqm45rqr2pnz",
+            structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
             format="parquet",
         )
         assert table.is_closed
@@ -154,12 +154,12 @@ class TestTables:
     @pytest.mark.respx(base_url=base_url)
     def test_raw_response_download(self, client: DeepTable, respx_mock: MockRouter) -> None:
         respx_mock.get(
-            "/v1/structured-sheets/ss_01abc2def3ghjkmnpqrs4uvwxy/tables/tbl_01abc2def3ghjkmnpqrs4uvwxy/download"
+            "/v1/structured-sheets/ss_01kfxgjd94fn9stqm42nejb627/tables/tbl_01kfxgjd94fn9stqm45rqr2pnz/download"
         ).mock(return_value=httpx.Response(200, json={"foo": "bar"}))
 
         table = client.structured_sheets.tables.with_raw_response.download(
-            table_id="tbl_01abc2def3ghjkmnpqrs4uvwxy",
-            structured_sheets_id="ss_01abc2def3ghjkmnpqrs4uvwxy",
+            table_id="tbl_01kfxgjd94fn9stqm45rqr2pnz",
+            structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
         )
 
         assert table.is_closed is True
@@ -171,11 +171,11 @@ class TestTables:
     @pytest.mark.respx(base_url=base_url)
     def test_streaming_response_download(self, client: DeepTable, respx_mock: MockRouter) -> None:
         respx_mock.get(
-            "/v1/structured-sheets/ss_01abc2def3ghjkmnpqrs4uvwxy/tables/tbl_01abc2def3ghjkmnpqrs4uvwxy/download"
+            "/v1/structured-sheets/ss_01kfxgjd94fn9stqm42nejb627/tables/tbl_01kfxgjd94fn9stqm45rqr2pnz/download"
         ).mock(return_value=httpx.Response(200, json={"foo": "bar"}))
         with client.structured_sheets.tables.with_streaming_response.download(
-            table_id="tbl_01abc2def3ghjkmnpqrs4uvwxy",
-            structured_sheets_id="ss_01abc2def3ghjkmnpqrs4uvwxy",
+            table_id="tbl_01kfxgjd94fn9stqm45rqr2pnz",
+            structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
         ) as table:
             assert not table.is_closed
             assert table.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -191,14 +191,14 @@ class TestTables:
     def test_path_params_download(self, client: DeepTable) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `structured_sheets_id` but received ''"):
             client.structured_sheets.tables.with_raw_response.download(
-                table_id="tbl_01abc2def3ghjkmnpqrs4uvwxy",
+                table_id="tbl_01kfxgjd94fn9stqm45rqr2pnz",
                 structured_sheets_id="",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `table_id` but received ''"):
             client.structured_sheets.tables.with_raw_response.download(
                 table_id="",
-                structured_sheets_id="ss_01abc2def3ghjkmnpqrs4uvwxy",
+                structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
             )
 
 
@@ -211,8 +211,8 @@ class TestAsyncTables:
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncDeepTable) -> None:
         table = await async_client.structured_sheets.tables.retrieve(
-            table_id="tbl_01abc2def3ghjkmnpqrs4uvwxy",
-            structured_sheets_id="ss_01abc2def3ghjkmnpqrs4uvwxy",
+            table_id="tbl_01kfxgjd94fn9stqm45rqr2pnz",
+            structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
         )
         assert_matches_type(TableResponse, table, path=["response"])
 
@@ -220,8 +220,8 @@ class TestAsyncTables:
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncDeepTable) -> None:
         response = await async_client.structured_sheets.tables.with_raw_response.retrieve(
-            table_id="tbl_01abc2def3ghjkmnpqrs4uvwxy",
-            structured_sheets_id="ss_01abc2def3ghjkmnpqrs4uvwxy",
+            table_id="tbl_01kfxgjd94fn9stqm45rqr2pnz",
+            structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
         )
 
         assert response.is_closed is True
@@ -233,8 +233,8 @@ class TestAsyncTables:
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncDeepTable) -> None:
         async with async_client.structured_sheets.tables.with_streaming_response.retrieve(
-            table_id="tbl_01abc2def3ghjkmnpqrs4uvwxy",
-            structured_sheets_id="ss_01abc2def3ghjkmnpqrs4uvwxy",
+            table_id="tbl_01kfxgjd94fn9stqm45rqr2pnz",
+            structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -249,21 +249,21 @@ class TestAsyncTables:
     async def test_path_params_retrieve(self, async_client: AsyncDeepTable) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `structured_sheets_id` but received ''"):
             await async_client.structured_sheets.tables.with_raw_response.retrieve(
-                table_id="tbl_01abc2def3ghjkmnpqrs4uvwxy",
+                table_id="tbl_01kfxgjd94fn9stqm45rqr2pnz",
                 structured_sheets_id="",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `table_id` but received ''"):
             await async_client.structured_sheets.tables.with_raw_response.retrieve(
                 table_id="",
-                structured_sheets_id="ss_01abc2def3ghjkmnpqrs4uvwxy",
+                structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
             )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_list(self, async_client: AsyncDeepTable) -> None:
         table = await async_client.structured_sheets.tables.list(
-            "ss_01abc2def3ghjkmnpqrs4uvwxy",
+            "ss_01kfxgjd94fn9stqm42nejb627",
         )
         assert_matches_type(TableListResponse, table, path=["response"])
 
@@ -271,7 +271,7 @@ class TestAsyncTables:
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncDeepTable) -> None:
         response = await async_client.structured_sheets.tables.with_raw_response.list(
-            "ss_01abc2def3ghjkmnpqrs4uvwxy",
+            "ss_01kfxgjd94fn9stqm42nejb627",
         )
 
         assert response.is_closed is True
@@ -283,7 +283,7 @@ class TestAsyncTables:
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncDeepTable) -> None:
         async with async_client.structured_sheets.tables.with_streaming_response.list(
-            "ss_01abc2def3ghjkmnpqrs4uvwxy",
+            "ss_01kfxgjd94fn9stqm42nejb627",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -305,11 +305,11 @@ class TestAsyncTables:
     @pytest.mark.respx(base_url=base_url)
     async def test_method_download(self, async_client: AsyncDeepTable, respx_mock: MockRouter) -> None:
         respx_mock.get(
-            "/v1/structured-sheets/ss_01abc2def3ghjkmnpqrs4uvwxy/tables/tbl_01abc2def3ghjkmnpqrs4uvwxy/download"
+            "/v1/structured-sheets/ss_01kfxgjd94fn9stqm42nejb627/tables/tbl_01kfxgjd94fn9stqm45rqr2pnz/download"
         ).mock(return_value=httpx.Response(200, json={"foo": "bar"}))
         table = await async_client.structured_sheets.tables.download(
-            table_id="tbl_01abc2def3ghjkmnpqrs4uvwxy",
-            structured_sheets_id="ss_01abc2def3ghjkmnpqrs4uvwxy",
+            table_id="tbl_01kfxgjd94fn9stqm45rqr2pnz",
+            structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
         )
         assert table.is_closed
         assert await table.json() == {"foo": "bar"}
@@ -320,11 +320,11 @@ class TestAsyncTables:
     @pytest.mark.respx(base_url=base_url)
     async def test_method_download_with_all_params(self, async_client: AsyncDeepTable, respx_mock: MockRouter) -> None:
         respx_mock.get(
-            "/v1/structured-sheets/ss_01abc2def3ghjkmnpqrs4uvwxy/tables/tbl_01abc2def3ghjkmnpqrs4uvwxy/download"
+            "/v1/structured-sheets/ss_01kfxgjd94fn9stqm42nejb627/tables/tbl_01kfxgjd94fn9stqm45rqr2pnz/download"
         ).mock(return_value=httpx.Response(200, json={"foo": "bar"}))
         table = await async_client.structured_sheets.tables.download(
-            table_id="tbl_01abc2def3ghjkmnpqrs4uvwxy",
-            structured_sheets_id="ss_01abc2def3ghjkmnpqrs4uvwxy",
+            table_id="tbl_01kfxgjd94fn9stqm45rqr2pnz",
+            structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
             format="parquet",
         )
         assert table.is_closed
@@ -336,12 +336,12 @@ class TestAsyncTables:
     @pytest.mark.respx(base_url=base_url)
     async def test_raw_response_download(self, async_client: AsyncDeepTable, respx_mock: MockRouter) -> None:
         respx_mock.get(
-            "/v1/structured-sheets/ss_01abc2def3ghjkmnpqrs4uvwxy/tables/tbl_01abc2def3ghjkmnpqrs4uvwxy/download"
+            "/v1/structured-sheets/ss_01kfxgjd94fn9stqm42nejb627/tables/tbl_01kfxgjd94fn9stqm45rqr2pnz/download"
         ).mock(return_value=httpx.Response(200, json={"foo": "bar"}))
 
         table = await async_client.structured_sheets.tables.with_raw_response.download(
-            table_id="tbl_01abc2def3ghjkmnpqrs4uvwxy",
-            structured_sheets_id="ss_01abc2def3ghjkmnpqrs4uvwxy",
+            table_id="tbl_01kfxgjd94fn9stqm45rqr2pnz",
+            structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
         )
 
         assert table.is_closed is True
@@ -353,11 +353,11 @@ class TestAsyncTables:
     @pytest.mark.respx(base_url=base_url)
     async def test_streaming_response_download(self, async_client: AsyncDeepTable, respx_mock: MockRouter) -> None:
         respx_mock.get(
-            "/v1/structured-sheets/ss_01abc2def3ghjkmnpqrs4uvwxy/tables/tbl_01abc2def3ghjkmnpqrs4uvwxy/download"
+            "/v1/structured-sheets/ss_01kfxgjd94fn9stqm42nejb627/tables/tbl_01kfxgjd94fn9stqm45rqr2pnz/download"
         ).mock(return_value=httpx.Response(200, json={"foo": "bar"}))
         async with async_client.structured_sheets.tables.with_streaming_response.download(
-            table_id="tbl_01abc2def3ghjkmnpqrs4uvwxy",
-            structured_sheets_id="ss_01abc2def3ghjkmnpqrs4uvwxy",
+            table_id="tbl_01kfxgjd94fn9stqm45rqr2pnz",
+            structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
         ) as table:
             assert not table.is_closed
             assert table.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -373,12 +373,12 @@ class TestAsyncTables:
     async def test_path_params_download(self, async_client: AsyncDeepTable) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `structured_sheets_id` but received ''"):
             await async_client.structured_sheets.tables.with_raw_response.download(
-                table_id="tbl_01abc2def3ghjkmnpqrs4uvwxy",
+                table_id="tbl_01kfxgjd94fn9stqm45rqr2pnz",
                 structured_sheets_id="",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `table_id` but received ''"):
             await async_client.structured_sheets.tables.with_raw_response.download(
                 table_id="",
-                structured_sheets_id="ss_01abc2def3ghjkmnpqrs4uvwxy",
+                structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
             )
