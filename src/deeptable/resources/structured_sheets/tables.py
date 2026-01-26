@@ -2,11 +2,12 @@
 
 from __future__ import annotations
 
+from typing import Optional
 from typing_extensions import Literal
 
 import httpx
 
-from ..._types import Body, Query, Headers, NotGiven, not_given
+from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
@@ -24,10 +25,10 @@ from ..._response import (
     async_to_custom_raw_response_wrapper,
     async_to_custom_streamed_response_wrapper,
 )
-from ..._base_client import make_request_options
-from ...types.structured_sheets import table_download_params
+from ...pagination import SyncCursorIDPage, AsyncCursorIDPage
+from ..._base_client import AsyncPaginator, make_request_options
+from ...types.structured_sheets import table_list_params, table_download_params
 from ...types.structured_sheets.table_response import TableResponse
-from ...types.structured_sheets.table_list_response import TableListResponse
 
 __all__ = ["TablesResource", "AsyncTablesResource"]
 
@@ -100,13 +101,15 @@ class TablesResource(SyncAPIResource):
         self,
         structured_sheets_id: str,
         *,
+        after: Optional[str] | Omit = omit,
+        limit: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> TableListResponse:
+    ) -> SyncCursorIDPage[TableResponse]:
         """List all tables extracted from the structured sheet.
 
         Only available when
@@ -114,6 +117,10 @@ class TablesResource(SyncAPIResource):
 
         Args:
           structured_sheets_id: The unique identifier of the structured sheets conversion.
+
+          after: Unique identifier for a table.
+
+          limit: Maximum number of tables to return per page.
 
           extra_headers: Send extra headers
 
@@ -127,12 +134,23 @@ class TablesResource(SyncAPIResource):
             raise ValueError(
                 f"Expected a non-empty value for `structured_sheets_id` but received {structured_sheets_id!r}"
             )
-        return self._get(
+        return self._get_api_list(
             f"/v1/structured-sheets/{structured_sheets_id}/tables",
+            page=SyncCursorIDPage[TableResponse],
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "after": after,
+                        "limit": limit,
+                    },
+                    table_list_params.TableListParams,
+                ),
             ),
-            cast_to=TableListResponse,
+            model=TableResponse,
         )
 
     def download(
@@ -255,17 +273,19 @@ class AsyncTablesResource(AsyncAPIResource):
             cast_to=TableResponse,
         )
 
-    async def list(
+    def list(
         self,
         structured_sheets_id: str,
         *,
+        after: Optional[str] | Omit = omit,
+        limit: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> TableListResponse:
+    ) -> AsyncPaginator[TableResponse, AsyncCursorIDPage[TableResponse]]:
         """List all tables extracted from the structured sheet.
 
         Only available when
@@ -273,6 +293,10 @@ class AsyncTablesResource(AsyncAPIResource):
 
         Args:
           structured_sheets_id: The unique identifier of the structured sheets conversion.
+
+          after: Unique identifier for a table.
+
+          limit: Maximum number of tables to return per page.
 
           extra_headers: Send extra headers
 
@@ -286,12 +310,23 @@ class AsyncTablesResource(AsyncAPIResource):
             raise ValueError(
                 f"Expected a non-empty value for `structured_sheets_id` but received {structured_sheets_id!r}"
             )
-        return await self._get(
+        return self._get_api_list(
             f"/v1/structured-sheets/{structured_sheets_id}/tables",
+            page=AsyncCursorIDPage[TableResponse],
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "after": after,
+                        "limit": limit,
+                    },
+                    table_list_params.TableListParams,
+                ),
             ),
-            cast_to=TableListResponse,
+            model=TableResponse,
         )
 
     async def download(

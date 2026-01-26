@@ -36,11 +36,11 @@ Methods:
 Types:
 
 ```python
-from deeptable.types.structured_sheets import TableResponse, TableListResponse
+from deeptable.types.structured_sheets import TableResponse
 ```
 
 Methods:
 
 - <code title="get /v1/structured-sheets/{structured_sheets_id}/tables/{table_id}">client.structured_sheets.tables.<a href="./src/deeptable/resources/structured_sheets/tables.py">retrieve</a>(table_id, \*, structured_sheets_id) -> <a href="./src/deeptable/types/structured_sheets/table_response.py">TableResponse</a></code>
-- <code title="get /v1/structured-sheets/{structured_sheets_id}/tables">client.structured_sheets.tables.<a href="./src/deeptable/resources/structured_sheets/tables.py">list</a>(structured_sheets_id) -> <a href="./src/deeptable/types/structured_sheets/table_list_response.py">TableListResponse</a></code>
+- <code title="get /v1/structured-sheets/{structured_sheets_id}/tables">client.structured_sheets.tables.<a href="./src/deeptable/resources/structured_sheets/tables.py">list</a>(structured_sheets_id, \*\*<a href="src/deeptable/types/structured_sheets/table_list_params.py">params</a>) -> <a href="./src/deeptable/types/structured_sheets/table_response.py">SyncCursorIDPage[TableResponse]</a></code>
 - <code title="get /v1/structured-sheets/{structured_sheets_id}/tables/{table_id}/download">client.structured_sheets.tables.<a href="./src/deeptable/resources/structured_sheets/tables.py">download</a>(table_id, \*, structured_sheets_id, \*\*<a href="src/deeptable/types/structured_sheets/table_download_params.py">params</a>) -> BinaryAPIResponse</code>
