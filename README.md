@@ -32,10 +32,10 @@ client = DeepTable(
     api_key=os.environ.get("DEEPTABLE_API_KEY"),  # This is the default and can be omitted
 )
 
-structured_sheet_response = client.structured_sheets.create(
+structured_sheets_response = client.structured_sheets.create(
     file_id="file_01h45ytscbebyvny4gc8cr8ma2",
 )
-print(structured_sheet_response.id)
+print(structured_sheets_response.id)
 ```
 
 While you can provide an `api_key` keyword argument,
@@ -58,10 +58,10 @@ client = AsyncDeepTable(
 
 
 async def main() -> None:
-    structured_sheet_response = await client.structured_sheets.create(
+    structured_sheets_response = await client.structured_sheets.create(
         file_id="file_01h45ytscbebyvny4gc8cr8ma2",
     )
-    print(structured_sheet_response.id)
+    print(structured_sheets_response.id)
 
 
 asyncio.run(main())
@@ -94,10 +94,10 @@ async def main() -> None:
         api_key=os.environ.get("DEEPTABLE_API_KEY"),  # This is the default and can be omitted
         http_client=DefaultAioHttpClient(),
     ) as client:
-        structured_sheet_response = await client.structured_sheets.create(
+        structured_sheets_response = await client.structured_sheets.create(
             file_id="file_01h45ytscbebyvny4gc8cr8ma2",
         )
-        print(structured_sheet_response.id)
+        print(structured_sheets_response.id)
 
 
 asyncio.run(main())
