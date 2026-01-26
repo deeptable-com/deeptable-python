@@ -12,10 +12,18 @@ from .._utils import extract_files, maybe_transform, deepcopy_minimal, async_may
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
+    BinaryAPIResponse,
+    AsyncBinaryAPIResponse,
+    StreamedBinaryAPIResponse,
+    AsyncStreamedBinaryAPIResponse,
     to_raw_response_wrapper,
     to_streamed_response_wrapper,
     async_to_raw_response_wrapper,
+    to_custom_raw_response_wrapper,
     async_to_streamed_response_wrapper,
+    to_custom_streamed_response_wrapper,
+    async_to_custom_raw_response_wrapper,
+    async_to_custom_streamed_response_wrapper,
 )
 from ..pagination import SyncCursorIDPage, AsyncCursorIDPage
 from ..types.file import File
@@ -161,6 +169,45 @@ class FilesResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
+        )
+
+    def download(
+        self,
+        file_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> BinaryAPIResponse:
+        """
+        Download the original uploaded file content.
+
+        Args:
+          file_id: The unique identifier of the file.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not file_id:
+            raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
+        extra_headers = {
+            "Accept": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            **(extra_headers or {}),
+        }
+        return self._get(
+            f"/v1/files/{file_id}/content",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=BinaryAPIResponse,
         )
 
     def upload(
@@ -350,6 +397,45 @@ class AsyncFilesResource(AsyncAPIResource):
             cast_to=NoneType,
         )
 
+    async def download(
+        self,
+        file_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> AsyncBinaryAPIResponse:
+        """
+        Download the original uploaded file content.
+
+        Args:
+          file_id: The unique identifier of the file.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not file_id:
+            raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
+        extra_headers = {
+            "Accept": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            **(extra_headers or {}),
+        }
+        return await self._get(
+            f"/v1/files/{file_id}/content",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=AsyncBinaryAPIResponse,
+        )
+
     async def upload(
         self,
         *,
@@ -411,6 +497,10 @@ class FilesResourceWithRawResponse:
         self.delete = to_raw_response_wrapper(
             files.delete,
         )
+        self.download = to_custom_raw_response_wrapper(
+            files.download,
+            BinaryAPIResponse,
+        )
         self.upload = to_raw_response_wrapper(
             files.upload,
         )
@@ -428,6 +518,10 @@ class AsyncFilesResourceWithRawResponse:
         )
         self.delete = async_to_raw_response_wrapper(
             files.delete,
+        )
+        self.download = async_to_custom_raw_response_wrapper(
+            files.download,
+            AsyncBinaryAPIResponse,
         )
         self.upload = async_to_raw_response_wrapper(
             files.upload,
@@ -447,6 +541,10 @@ class FilesResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             files.delete,
         )
+        self.download = to_custom_streamed_response_wrapper(
+            files.download,
+            StreamedBinaryAPIResponse,
+        )
         self.upload = to_streamed_response_wrapper(
             files.upload,
         )
@@ -464,6 +562,10 @@ class AsyncFilesResourceWithStreamingResponse:
         )
         self.delete = async_to_streamed_response_wrapper(
             files.delete,
+        )
+        self.download = async_to_custom_streamed_response_wrapper(
+            files.download,
+            AsyncStreamedBinaryAPIResponse,
         )
         self.upload = async_to_streamed_response_wrapper(
             files.upload,

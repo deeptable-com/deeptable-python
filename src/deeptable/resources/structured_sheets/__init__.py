@@ -1,12 +1,12 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from .exports import (
-    ExportsResource,
-    AsyncExportsResource,
-    ExportsResourceWithRawResponse,
-    AsyncExportsResourceWithRawResponse,
-    ExportsResourceWithStreamingResponse,
-    AsyncExportsResourceWithStreamingResponse,
+from .tables import (
+    TablesResource,
+    AsyncTablesResource,
+    TablesResourceWithRawResponse,
+    AsyncTablesResourceWithRawResponse,
+    TablesResourceWithStreamingResponse,
+    AsyncTablesResourceWithStreamingResponse,
 )
 from .structured_sheets import (
     StructuredSheetsResource,
@@ -18,12 +18,12 @@ from .structured_sheets import (
 )
 
 __all__ = [
-    "ExportsResource",
-    "AsyncExportsResource",
-    "ExportsResourceWithRawResponse",
-    "AsyncExportsResourceWithRawResponse",
-    "ExportsResourceWithStreamingResponse",
-    "AsyncExportsResourceWithStreamingResponse",
+    "TablesResource",
+    "AsyncTablesResource",
+    "TablesResourceWithRawResponse",
+    "AsyncTablesResourceWithRawResponse",
+    "TablesResourceWithStreamingResponse",
+    "AsyncTablesResourceWithStreamingResponse",
     "StructuredSheetsResource",
     "AsyncStructuredSheetsResource",
     "StructuredSheetsResourceWithRawResponse",
