@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.3 (2026-01-26)
+
+Full Changelog: [v0.1.0-alpha.2...v0.1.0-alpha.3](https://github.com/deeptable-com/deeptable-python/compare/v0.1.0-alpha.2...v0.1.0-alpha.3)
+
+### Features
+
+* Make format parameter required in download_table endpoint and improve OpenAPI spec publishing ([efb6258](https://github.com/deeptable-com/deeptable-python/commit/efb625837a2e6fe68e00a01a16147d00f6af0b6a))
+
 ## 0.1.0-alpha.2 (2026-01-26)
 
 Full Changelog: [v0.1.0-alpha.1...v0.1.0-alpha.2](https://github.com/deeptable-com/deeptable-python/compare/v0.1.0-alpha.1...v0.1.0-alpha.2)
