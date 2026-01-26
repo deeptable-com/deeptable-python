@@ -11,5 +11,5 @@ class TableDownloadParams(TypedDict, total=False):
     structured_sheets_id: Required[str]
     """The unique identifier of the structured sheets conversion."""
 
-    format: Literal["parquet", "csv"]
+    format: Required[Literal["parquet", "csv"]]
     """The format to download the table data in."""

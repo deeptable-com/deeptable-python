@@ -128,21 +128,6 @@ class TestTables:
         table = client.structured_sheets.tables.download(
             table_id="tbl_01kfxgjd94fn9stqm45rqr2pnz",
             structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
-        )
-        assert table.is_closed
-        assert table.json() == {"foo": "bar"}
-        assert cast(Any, table.is_closed) is True
-        assert isinstance(table, BinaryAPIResponse)
-
-    @parametrize
-    @pytest.mark.respx(base_url=base_url)
-    def test_method_download_with_all_params(self, client: DeepTable, respx_mock: MockRouter) -> None:
-        respx_mock.get(
-            "/v1/structured-sheets/ss_01kfxgjd94fn9stqm42nejb627/tables/tbl_01kfxgjd94fn9stqm45rqr2pnz/download"
-        ).mock(return_value=httpx.Response(200, json={"foo": "bar"}))
-        table = client.structured_sheets.tables.download(
-            table_id="tbl_01kfxgjd94fn9stqm45rqr2pnz",
-            structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
             format="parquet",
         )
         assert table.is_closed
@@ -160,6 +145,7 @@ class TestTables:
         table = client.structured_sheets.tables.with_raw_response.download(
             table_id="tbl_01kfxgjd94fn9stqm45rqr2pnz",
             structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
+            format="parquet",
         )
 
         assert table.is_closed is True
@@ -176,6 +162,7 @@ class TestTables:
         with client.structured_sheets.tables.with_streaming_response.download(
             table_id="tbl_01kfxgjd94fn9stqm45rqr2pnz",
             structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
+            format="parquet",
         ) as table:
             assert not table.is_closed
             assert table.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -193,12 +180,14 @@ class TestTables:
             client.structured_sheets.tables.with_raw_response.download(
                 table_id="tbl_01kfxgjd94fn9stqm45rqr2pnz",
                 structured_sheets_id="",
+                format="parquet",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `table_id` but received ''"):
             client.structured_sheets.tables.with_raw_response.download(
                 table_id="",
                 structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
+                format="parquet",
             )
 
 
@@ -310,21 +299,6 @@ class TestAsyncTables:
         table = await async_client.structured_sheets.tables.download(
             table_id="tbl_01kfxgjd94fn9stqm45rqr2pnz",
             structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
-        )
-        assert table.is_closed
-        assert await table.json() == {"foo": "bar"}
-        assert cast(Any, table.is_closed) is True
-        assert isinstance(table, AsyncBinaryAPIResponse)
-
-    @parametrize
-    @pytest.mark.respx(base_url=base_url)
-    async def test_method_download_with_all_params(self, async_client: AsyncDeepTable, respx_mock: MockRouter) -> None:
-        respx_mock.get(
-            "/v1/structured-sheets/ss_01kfxgjd94fn9stqm42nejb627/tables/tbl_01kfxgjd94fn9stqm45rqr2pnz/download"
-        ).mock(return_value=httpx.Response(200, json={"foo": "bar"}))
-        table = await async_client.structured_sheets.tables.download(
-            table_id="tbl_01kfxgjd94fn9stqm45rqr2pnz",
-            structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
             format="parquet",
         )
         assert table.is_closed
@@ -342,6 +316,7 @@ class TestAsyncTables:
         table = await async_client.structured_sheets.tables.with_raw_response.download(
             table_id="tbl_01kfxgjd94fn9stqm45rqr2pnz",
             structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
+            format="parquet",
         )
 
         assert table.is_closed is True
@@ -358,6 +333,7 @@ class TestAsyncTables:
         async with async_client.structured_sheets.tables.with_streaming_response.download(
             table_id="tbl_01kfxgjd94fn9stqm45rqr2pnz",
             structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
+            format="parquet",
         ) as table:
             assert not table.is_closed
             assert table.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -375,10 +351,12 @@ class TestAsyncTables:
             await async_client.structured_sheets.tables.with_raw_response.download(
                 table_id="tbl_01kfxgjd94fn9stqm45rqr2pnz",
                 structured_sheets_id="",
+                format="parquet",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `table_id` but received ''"):
             await async_client.structured_sheets.tables.with_raw_response.download(
                 table_id="",
                 structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
+                format="parquet",
             )
