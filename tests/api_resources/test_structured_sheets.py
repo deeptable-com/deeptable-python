@@ -75,7 +75,7 @@ class TestStructuredSheets:
     @parametrize
     def test_method_retrieve(self, client: DeepTable) -> None:
         structured_sheet = client.structured_sheets.retrieve(
-            "ss_01abc2def3ghjkmnpqrs4uvwxy",
+            "ss_01kfxgjd94fn9stqm42nejb627",
         )
         assert_matches_type(StructuredSheetsResponse, structured_sheet, path=["response"])
 
@@ -83,7 +83,7 @@ class TestStructuredSheets:
     @parametrize
     def test_raw_response_retrieve(self, client: DeepTable) -> None:
         response = client.structured_sheets.with_raw_response.retrieve(
-            "ss_01abc2def3ghjkmnpqrs4uvwxy",
+            "ss_01kfxgjd94fn9stqm42nejb627",
         )
 
         assert response.is_closed is True
@@ -95,7 +95,7 @@ class TestStructuredSheets:
     @parametrize
     def test_streaming_response_retrieve(self, client: DeepTable) -> None:
         with client.structured_sheets.with_streaming_response.retrieve(
-            "ss_01abc2def3ghjkmnpqrs4uvwxy",
+            "ss_01kfxgjd94fn9stqm42nejb627",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -123,7 +123,7 @@ class TestStructuredSheets:
     @parametrize
     def test_method_list_with_all_params(self, client: DeepTable) -> None:
         structured_sheet = client.structured_sheets.list(
-            after="ss_01abc2def3ghjkmnpqrs4uvwxy",
+            after="ss_01kfxgjd94fn9stqm42nejb627",
             limit=20,
         )
         assert_matches_type(SyncCursorIDPage[StructuredSheetsResponse], structured_sheet, path=["response"])
@@ -154,7 +154,7 @@ class TestStructuredSheets:
     @parametrize
     def test_method_delete(self, client: DeepTable) -> None:
         structured_sheet = client.structured_sheets.delete(
-            "ss_01abc2def3ghjkmnpqrs4uvwxy",
+            "ss_01kfxgjd94fn9stqm42nejb627",
         )
         assert structured_sheet is None
 
@@ -162,7 +162,7 @@ class TestStructuredSheets:
     @parametrize
     def test_raw_response_delete(self, client: DeepTable) -> None:
         response = client.structured_sheets.with_raw_response.delete(
-            "ss_01abc2def3ghjkmnpqrs4uvwxy",
+            "ss_01kfxgjd94fn9stqm42nejb627",
         )
 
         assert response.is_closed is True
@@ -174,7 +174,7 @@ class TestStructuredSheets:
     @parametrize
     def test_streaming_response_delete(self, client: DeepTable) -> None:
         with client.structured_sheets.with_streaming_response.delete(
-            "ss_01abc2def3ghjkmnpqrs4uvwxy",
+            "ss_01kfxgjd94fn9stqm42nejb627",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -196,7 +196,7 @@ class TestStructuredSheets:
     @parametrize
     def test_method_cancel(self, client: DeepTable) -> None:
         structured_sheet = client.structured_sheets.cancel(
-            "ss_01abc2def3ghjkmnpqrs4uvwxy",
+            "ss_01kfxgjd94fn9stqm42nejb627",
         )
         assert_matches_type(StructuredSheetsResponse, structured_sheet, path=["response"])
 
@@ -204,7 +204,7 @@ class TestStructuredSheets:
     @parametrize
     def test_raw_response_cancel(self, client: DeepTable) -> None:
         response = client.structured_sheets.with_raw_response.cancel(
-            "ss_01abc2def3ghjkmnpqrs4uvwxy",
+            "ss_01kfxgjd94fn9stqm42nejb627",
         )
 
         assert response.is_closed is True
@@ -216,7 +216,7 @@ class TestStructuredSheets:
     @parametrize
     def test_streaming_response_cancel(self, client: DeepTable) -> None:
         with client.structured_sheets.with_streaming_response.cancel(
-            "ss_01abc2def3ghjkmnpqrs4uvwxy",
+            "ss_01kfxgjd94fn9stqm42nejb627",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -237,11 +237,11 @@ class TestStructuredSheets:
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     def test_method_download(self, client: DeepTable, respx_mock: MockRouter) -> None:
-        respx_mock.get("/v1/structured-sheets/ss_01abc2def3ghjkmnpqrs4uvwxy/download").mock(
+        respx_mock.get("/v1/structured-sheets/ss_01kfxgjd94fn9stqm42nejb627/download").mock(
             return_value=httpx.Response(200, json={"foo": "bar"})
         )
         structured_sheet = client.structured_sheets.download(
-            structured_sheets_id="ss_01abc2def3ghjkmnpqrs4uvwxy",
+            structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
         )
         assert structured_sheet.is_closed
         assert structured_sheet.json() == {"foo": "bar"}
@@ -251,11 +251,11 @@ class TestStructuredSheets:
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     def test_method_download_with_all_params(self, client: DeepTable, respx_mock: MockRouter) -> None:
-        respx_mock.get("/v1/structured-sheets/ss_01abc2def3ghjkmnpqrs4uvwxy/download").mock(
+        respx_mock.get("/v1/structured-sheets/ss_01kfxgjd94fn9stqm42nejb627/download").mock(
             return_value=httpx.Response(200, json={"foo": "bar"})
         )
         structured_sheet = client.structured_sheets.download(
-            structured_sheets_id="ss_01abc2def3ghjkmnpqrs4uvwxy",
+            structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
             format="sqlite",
         )
         assert structured_sheet.is_closed
@@ -266,12 +266,12 @@ class TestStructuredSheets:
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     def test_raw_response_download(self, client: DeepTable, respx_mock: MockRouter) -> None:
-        respx_mock.get("/v1/structured-sheets/ss_01abc2def3ghjkmnpqrs4uvwxy/download").mock(
+        respx_mock.get("/v1/structured-sheets/ss_01kfxgjd94fn9stqm42nejb627/download").mock(
             return_value=httpx.Response(200, json={"foo": "bar"})
         )
 
         structured_sheet = client.structured_sheets.with_raw_response.download(
-            structured_sheets_id="ss_01abc2def3ghjkmnpqrs4uvwxy",
+            structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
         )
 
         assert structured_sheet.is_closed is True
@@ -282,11 +282,11 @@ class TestStructuredSheets:
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     def test_streaming_response_download(self, client: DeepTable, respx_mock: MockRouter) -> None:
-        respx_mock.get("/v1/structured-sheets/ss_01abc2def3ghjkmnpqrs4uvwxy/download").mock(
+        respx_mock.get("/v1/structured-sheets/ss_01kfxgjd94fn9stqm42nejb627/download").mock(
             return_value=httpx.Response(200, json={"foo": "bar"})
         )
         with client.structured_sheets.with_streaming_response.download(
-            structured_sheets_id="ss_01abc2def3ghjkmnpqrs4uvwxy",
+            structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
         ) as structured_sheet:
             assert not structured_sheet.is_closed
             assert structured_sheet.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -358,7 +358,7 @@ class TestAsyncStructuredSheets:
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncDeepTable) -> None:
         structured_sheet = await async_client.structured_sheets.retrieve(
-            "ss_01abc2def3ghjkmnpqrs4uvwxy",
+            "ss_01kfxgjd94fn9stqm42nejb627",
         )
         assert_matches_type(StructuredSheetsResponse, structured_sheet, path=["response"])
 
@@ -366,7 +366,7 @@ class TestAsyncStructuredSheets:
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncDeepTable) -> None:
         response = await async_client.structured_sheets.with_raw_response.retrieve(
-            "ss_01abc2def3ghjkmnpqrs4uvwxy",
+            "ss_01kfxgjd94fn9stqm42nejb627",
         )
 
         assert response.is_closed is True
@@ -378,7 +378,7 @@ class TestAsyncStructuredSheets:
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncDeepTable) -> None:
         async with async_client.structured_sheets.with_streaming_response.retrieve(
-            "ss_01abc2def3ghjkmnpqrs4uvwxy",
+            "ss_01kfxgjd94fn9stqm42nejb627",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -406,7 +406,7 @@ class TestAsyncStructuredSheets:
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncDeepTable) -> None:
         structured_sheet = await async_client.structured_sheets.list(
-            after="ss_01abc2def3ghjkmnpqrs4uvwxy",
+            after="ss_01kfxgjd94fn9stqm42nejb627",
             limit=20,
         )
         assert_matches_type(AsyncCursorIDPage[StructuredSheetsResponse], structured_sheet, path=["response"])
@@ -437,7 +437,7 @@ class TestAsyncStructuredSheets:
     @parametrize
     async def test_method_delete(self, async_client: AsyncDeepTable) -> None:
         structured_sheet = await async_client.structured_sheets.delete(
-            "ss_01abc2def3ghjkmnpqrs4uvwxy",
+            "ss_01kfxgjd94fn9stqm42nejb627",
         )
         assert structured_sheet is None
 
@@ -445,7 +445,7 @@ class TestAsyncStructuredSheets:
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncDeepTable) -> None:
         response = await async_client.structured_sheets.with_raw_response.delete(
-            "ss_01abc2def3ghjkmnpqrs4uvwxy",
+            "ss_01kfxgjd94fn9stqm42nejb627",
         )
 
         assert response.is_closed is True
@@ -457,7 +457,7 @@ class TestAsyncStructuredSheets:
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncDeepTable) -> None:
         async with async_client.structured_sheets.with_streaming_response.delete(
-            "ss_01abc2def3ghjkmnpqrs4uvwxy",
+            "ss_01kfxgjd94fn9stqm42nejb627",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -479,7 +479,7 @@ class TestAsyncStructuredSheets:
     @parametrize
     async def test_method_cancel(self, async_client: AsyncDeepTable) -> None:
         structured_sheet = await async_client.structured_sheets.cancel(
-            "ss_01abc2def3ghjkmnpqrs4uvwxy",
+            "ss_01kfxgjd94fn9stqm42nejb627",
         )
         assert_matches_type(StructuredSheetsResponse, structured_sheet, path=["response"])
 
@@ -487,7 +487,7 @@ class TestAsyncStructuredSheets:
     @parametrize
     async def test_raw_response_cancel(self, async_client: AsyncDeepTable) -> None:
         response = await async_client.structured_sheets.with_raw_response.cancel(
-            "ss_01abc2def3ghjkmnpqrs4uvwxy",
+            "ss_01kfxgjd94fn9stqm42nejb627",
         )
 
         assert response.is_closed is True
@@ -499,7 +499,7 @@ class TestAsyncStructuredSheets:
     @parametrize
     async def test_streaming_response_cancel(self, async_client: AsyncDeepTable) -> None:
         async with async_client.structured_sheets.with_streaming_response.cancel(
-            "ss_01abc2def3ghjkmnpqrs4uvwxy",
+            "ss_01kfxgjd94fn9stqm42nejb627",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -520,11 +520,11 @@ class TestAsyncStructuredSheets:
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     async def test_method_download(self, async_client: AsyncDeepTable, respx_mock: MockRouter) -> None:
-        respx_mock.get("/v1/structured-sheets/ss_01abc2def3ghjkmnpqrs4uvwxy/download").mock(
+        respx_mock.get("/v1/structured-sheets/ss_01kfxgjd94fn9stqm42nejb627/download").mock(
             return_value=httpx.Response(200, json={"foo": "bar"})
         )
         structured_sheet = await async_client.structured_sheets.download(
-            structured_sheets_id="ss_01abc2def3ghjkmnpqrs4uvwxy",
+            structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
         )
         assert structured_sheet.is_closed
         assert await structured_sheet.json() == {"foo": "bar"}
@@ -534,11 +534,11 @@ class TestAsyncStructuredSheets:
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     async def test_method_download_with_all_params(self, async_client: AsyncDeepTable, respx_mock: MockRouter) -> None:
-        respx_mock.get("/v1/structured-sheets/ss_01abc2def3ghjkmnpqrs4uvwxy/download").mock(
+        respx_mock.get("/v1/structured-sheets/ss_01kfxgjd94fn9stqm42nejb627/download").mock(
             return_value=httpx.Response(200, json={"foo": "bar"})
         )
         structured_sheet = await async_client.structured_sheets.download(
-            structured_sheets_id="ss_01abc2def3ghjkmnpqrs4uvwxy",
+            structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
             format="sqlite",
         )
         assert structured_sheet.is_closed
@@ -549,12 +549,12 @@ class TestAsyncStructuredSheets:
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     async def test_raw_response_download(self, async_client: AsyncDeepTable, respx_mock: MockRouter) -> None:
-        respx_mock.get("/v1/structured-sheets/ss_01abc2def3ghjkmnpqrs4uvwxy/download").mock(
+        respx_mock.get("/v1/structured-sheets/ss_01kfxgjd94fn9stqm42nejb627/download").mock(
             return_value=httpx.Response(200, json={"foo": "bar"})
         )
 
         structured_sheet = await async_client.structured_sheets.with_raw_response.download(
-            structured_sheets_id="ss_01abc2def3ghjkmnpqrs4uvwxy",
+            structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
         )
 
         assert structured_sheet.is_closed is True
@@ -565,11 +565,11 @@ class TestAsyncStructuredSheets:
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     async def test_streaming_response_download(self, async_client: AsyncDeepTable, respx_mock: MockRouter) -> None:
-        respx_mock.get("/v1/structured-sheets/ss_01abc2def3ghjkmnpqrs4uvwxy/download").mock(
+        respx_mock.get("/v1/structured-sheets/ss_01kfxgjd94fn9stqm42nejb627/download").mock(
             return_value=httpx.Response(200, json={"foo": "bar"})
         )
         async with async_client.structured_sheets.with_streaming_response.download(
-            structured_sheets_id="ss_01abc2def3ghjkmnpqrs4uvwxy",
+            structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
         ) as structured_sheet:
             assert not structured_sheet.is_closed
             assert structured_sheet.http_request.headers.get("X-Stainless-Lang") == "python"

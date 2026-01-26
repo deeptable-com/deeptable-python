@@ -30,7 +30,7 @@ class TestFiles:
     @parametrize
     def test_method_retrieve(self, client: DeepTable) -> None:
         file = client.files.retrieve(
-            "file_01abc2def3ghjkmnpqrs4uvwxy",
+            "file_01kfxgjd94fn9stqm414vjb0s8",
         )
         assert_matches_type(File, file, path=["response"])
 
@@ -38,7 +38,7 @@ class TestFiles:
     @parametrize
     def test_raw_response_retrieve(self, client: DeepTable) -> None:
         response = client.files.with_raw_response.retrieve(
-            "file_01abc2def3ghjkmnpqrs4uvwxy",
+            "file_01kfxgjd94fn9stqm414vjb0s8",
         )
 
         assert response.is_closed is True
@@ -50,7 +50,7 @@ class TestFiles:
     @parametrize
     def test_streaming_response_retrieve(self, client: DeepTable) -> None:
         with client.files.with_streaming_response.retrieve(
-            "file_01abc2def3ghjkmnpqrs4uvwxy",
+            "file_01kfxgjd94fn9stqm414vjb0s8",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -78,7 +78,7 @@ class TestFiles:
     @parametrize
     def test_method_list_with_all_params(self, client: DeepTable) -> None:
         file = client.files.list(
-            after="file_01abc2def3ghjkmnpqrs4uvwxy",
+            after="file_01kfxgjd94fn9stqm414vjb0s8",
             limit=20,
         )
         assert_matches_type(SyncCursorIDPage[File], file, path=["response"])
@@ -109,7 +109,7 @@ class TestFiles:
     @parametrize
     def test_method_delete(self, client: DeepTable) -> None:
         file = client.files.delete(
-            "file_01abc2def3ghjkmnpqrs4uvwxy",
+            "file_01kfxgjd94fn9stqm414vjb0s8",
         )
         assert file is None
 
@@ -117,7 +117,7 @@ class TestFiles:
     @parametrize
     def test_raw_response_delete(self, client: DeepTable) -> None:
         response = client.files.with_raw_response.delete(
-            "file_01abc2def3ghjkmnpqrs4uvwxy",
+            "file_01kfxgjd94fn9stqm414vjb0s8",
         )
 
         assert response.is_closed is True
@@ -129,7 +129,7 @@ class TestFiles:
     @parametrize
     def test_streaming_response_delete(self, client: DeepTable) -> None:
         with client.files.with_streaming_response.delete(
-            "file_01abc2def3ghjkmnpqrs4uvwxy",
+            "file_01kfxgjd94fn9stqm414vjb0s8",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -150,11 +150,11 @@ class TestFiles:
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     def test_method_download(self, client: DeepTable, respx_mock: MockRouter) -> None:
-        respx_mock.get("/v1/files/file_01abc2def3ghjkmnpqrs4uvwxy/content").mock(
+        respx_mock.get("/v1/files/file_01kfxgjd94fn9stqm414vjb0s8/content").mock(
             return_value=httpx.Response(200, json={"foo": "bar"})
         )
         file = client.files.download(
-            "file_01abc2def3ghjkmnpqrs4uvwxy",
+            "file_01kfxgjd94fn9stqm414vjb0s8",
         )
         assert file.is_closed
         assert file.json() == {"foo": "bar"}
@@ -164,12 +164,12 @@ class TestFiles:
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     def test_raw_response_download(self, client: DeepTable, respx_mock: MockRouter) -> None:
-        respx_mock.get("/v1/files/file_01abc2def3ghjkmnpqrs4uvwxy/content").mock(
+        respx_mock.get("/v1/files/file_01kfxgjd94fn9stqm414vjb0s8/content").mock(
             return_value=httpx.Response(200, json={"foo": "bar"})
         )
 
         file = client.files.with_raw_response.download(
-            "file_01abc2def3ghjkmnpqrs4uvwxy",
+            "file_01kfxgjd94fn9stqm414vjb0s8",
         )
 
         assert file.is_closed is True
@@ -180,11 +180,11 @@ class TestFiles:
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     def test_streaming_response_download(self, client: DeepTable, respx_mock: MockRouter) -> None:
-        respx_mock.get("/v1/files/file_01abc2def3ghjkmnpqrs4uvwxy/content").mock(
+        respx_mock.get("/v1/files/file_01kfxgjd94fn9stqm414vjb0s8/content").mock(
             return_value=httpx.Response(200, json={"foo": "bar"})
         )
         with client.files.with_streaming_response.download(
-            "file_01abc2def3ghjkmnpqrs4uvwxy",
+            "file_01kfxgjd94fn9stqm414vjb0s8",
         ) as file:
             assert not file.is_closed
             assert file.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -247,7 +247,7 @@ class TestAsyncFiles:
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncDeepTable) -> None:
         file = await async_client.files.retrieve(
-            "file_01abc2def3ghjkmnpqrs4uvwxy",
+            "file_01kfxgjd94fn9stqm414vjb0s8",
         )
         assert_matches_type(File, file, path=["response"])
 
@@ -255,7 +255,7 @@ class TestAsyncFiles:
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncDeepTable) -> None:
         response = await async_client.files.with_raw_response.retrieve(
-            "file_01abc2def3ghjkmnpqrs4uvwxy",
+            "file_01kfxgjd94fn9stqm414vjb0s8",
         )
 
         assert response.is_closed is True
@@ -267,7 +267,7 @@ class TestAsyncFiles:
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncDeepTable) -> None:
         async with async_client.files.with_streaming_response.retrieve(
-            "file_01abc2def3ghjkmnpqrs4uvwxy",
+            "file_01kfxgjd94fn9stqm414vjb0s8",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -295,7 +295,7 @@ class TestAsyncFiles:
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncDeepTable) -> None:
         file = await async_client.files.list(
-            after="file_01abc2def3ghjkmnpqrs4uvwxy",
+            after="file_01kfxgjd94fn9stqm414vjb0s8",
             limit=20,
         )
         assert_matches_type(AsyncCursorIDPage[File], file, path=["response"])
@@ -326,7 +326,7 @@ class TestAsyncFiles:
     @parametrize
     async def test_method_delete(self, async_client: AsyncDeepTable) -> None:
         file = await async_client.files.delete(
-            "file_01abc2def3ghjkmnpqrs4uvwxy",
+            "file_01kfxgjd94fn9stqm414vjb0s8",
         )
         assert file is None
 
@@ -334,7 +334,7 @@ class TestAsyncFiles:
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncDeepTable) -> None:
         response = await async_client.files.with_raw_response.delete(
-            "file_01abc2def3ghjkmnpqrs4uvwxy",
+            "file_01kfxgjd94fn9stqm414vjb0s8",
         )
 
         assert response.is_closed is True
@@ -346,7 +346,7 @@ class TestAsyncFiles:
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncDeepTable) -> None:
         async with async_client.files.with_streaming_response.delete(
-            "file_01abc2def3ghjkmnpqrs4uvwxy",
+            "file_01kfxgjd94fn9stqm414vjb0s8",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -367,11 +367,11 @@ class TestAsyncFiles:
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     async def test_method_download(self, async_client: AsyncDeepTable, respx_mock: MockRouter) -> None:
-        respx_mock.get("/v1/files/file_01abc2def3ghjkmnpqrs4uvwxy/content").mock(
+        respx_mock.get("/v1/files/file_01kfxgjd94fn9stqm414vjb0s8/content").mock(
             return_value=httpx.Response(200, json={"foo": "bar"})
         )
         file = await async_client.files.download(
-            "file_01abc2def3ghjkmnpqrs4uvwxy",
+            "file_01kfxgjd94fn9stqm414vjb0s8",
         )
         assert file.is_closed
         assert await file.json() == {"foo": "bar"}
@@ -381,12 +381,12 @@ class TestAsyncFiles:
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     async def test_raw_response_download(self, async_client: AsyncDeepTable, respx_mock: MockRouter) -> None:
-        respx_mock.get("/v1/files/file_01abc2def3ghjkmnpqrs4uvwxy/content").mock(
+        respx_mock.get("/v1/files/file_01kfxgjd94fn9stqm414vjb0s8/content").mock(
             return_value=httpx.Response(200, json={"foo": "bar"})
         )
 
         file = await async_client.files.with_raw_response.download(
-            "file_01abc2def3ghjkmnpqrs4uvwxy",
+            "file_01kfxgjd94fn9stqm414vjb0s8",
         )
 
         assert file.is_closed is True
@@ -397,11 +397,11 @@ class TestAsyncFiles:
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     async def test_streaming_response_download(self, async_client: AsyncDeepTable, respx_mock: MockRouter) -> None:
-        respx_mock.get("/v1/files/file_01abc2def3ghjkmnpqrs4uvwxy/content").mock(
+        respx_mock.get("/v1/files/file_01kfxgjd94fn9stqm414vjb0s8/content").mock(
             return_value=httpx.Response(200, json={"foo": "bar"})
         )
         async with async_client.files.with_streaming_response.download(
-            "file_01abc2def3ghjkmnpqrs4uvwxy",
+            "file_01kfxgjd94fn9stqm414vjb0s8",
         ) as file:
             assert not file.is_closed
             assert file.http_request.headers.get("X-Stainless-Lang") == "python"
