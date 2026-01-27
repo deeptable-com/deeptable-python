@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.0-alpha.4 (2026-01-27)
+
+Full Changelog: [v0.1.0-alpha.3...v0.1.0-alpha.4](https://github.com/deeptable-com/deeptable-python/compare/v0.1.0-alpha.3...v0.1.0-alpha.4)
+
+### Features
+
+* Add seed_bill_snow.py to test.yaml for Bruno E2E tests ([6ae40ec](https://github.com/deeptable-com/deeptable-python/commit/6ae40ecffa73852845f5f7e679fc0f6524c6b439))
+* Fix seed.sql to overwrite records on conflict ([3a766c7](https://github.com/deeptable-com/deeptable-python/commit/3a766c7cf55c336c2cb1d32015eaaf4d88f9786e))
+
 ## 0.1.0-alpha.3 (2026-01-26)
 
 Full Changelog: [v0.1.0-alpha.2...v0.1.0-alpha.3](https://github.com/deeptable-com/deeptable-python/compare/v0.1.0-alpha.2...v0.1.0-alpha.3)
