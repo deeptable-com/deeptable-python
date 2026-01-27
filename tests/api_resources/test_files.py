@@ -11,7 +11,7 @@ from respx import MockRouter
 
 from deeptable import DeepTable, AsyncDeepTable
 from tests.utils import assert_matches_type
-from deeptable.types import File
+from deeptable.types import File, FileDeleteResponse
 from deeptable._response import (
     BinaryAPIResponse,
     AsyncBinaryAPIResponse,
@@ -111,7 +111,7 @@ class TestFiles:
         file = client.files.delete(
             "file_01kfxgjd94fn9stqm414vjb0s8",
         )
-        assert file is None
+        assert_matches_type(FileDeleteResponse, file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -123,7 +123,7 @@ class TestFiles:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         file = response.parse()
-        assert file is None
+        assert_matches_type(FileDeleteResponse, file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -135,7 +135,7 @@ class TestFiles:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             file = response.parse()
-            assert file is None
+            assert_matches_type(FileDeleteResponse, file, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -328,7 +328,7 @@ class TestAsyncFiles:
         file = await async_client.files.delete(
             "file_01kfxgjd94fn9stqm414vjb0s8",
         )
-        assert file is None
+        assert_matches_type(FileDeleteResponse, file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -340,7 +340,7 @@ class TestAsyncFiles:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         file = await response.parse()
-        assert file is None
+        assert_matches_type(FileDeleteResponse, file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -352,7 +352,7 @@ class TestAsyncFiles:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             file = await response.parse()
-            assert file is None
+            assert_matches_type(FileDeleteResponse, file, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

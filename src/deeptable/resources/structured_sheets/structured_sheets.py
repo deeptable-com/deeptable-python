@@ -16,7 +16,7 @@ from .tables import (
     AsyncTablesResourceWithStreamingResponse,
 )
 from ...types import structured_sheet_list_params, structured_sheet_create_params, structured_sheet_download_params
-from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
+from ..._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
@@ -36,7 +36,8 @@ from ..._response import (
 )
 from ...pagination import SyncCursorIDPage, AsyncCursorIDPage
 from ..._base_client import AsyncPaginator, make_request_options
-from ...types.structured_sheets_response import StructuredSheetsResponse
+from ...types.structured_sheet_response import StructuredSheetResponse
+from ...types.structured_sheet_delete_response import StructuredSheetDeleteResponse
 
 __all__ = ["StructuredSheetsResource", "AsyncStructuredSheetsResource"]
 
@@ -76,7 +77,7 @@ class StructuredSheetsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> StructuredSheetsResponse:
+    ) -> StructuredSheetResponse:
         """Start converting a spreadsheet workbook into structured data.
 
         This initiates an
@@ -108,12 +109,12 @@ class StructuredSheetsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=StructuredSheetsResponse,
+            cast_to=StructuredSheetResponse,
         )
 
     def retrieve(
         self,
-        structured_sheets_id: str,
+        structured_sheet_id: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -121,12 +122,12 @@ class StructuredSheetsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> StructuredSheetsResponse:
+    ) -> StructuredSheetResponse:
         """
-        Get the status and details of a structured sheets conversion.
+        Get the status and details of a structured sheet conversion.
 
         Args:
-          structured_sheets_id: The unique identifier of the structured sheets conversion.
+          structured_sheet_id: The unique identifier of the structured sheet conversion.
 
           extra_headers: Send extra headers
 
@@ -136,16 +137,16 @@ class StructuredSheetsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not structured_sheets_id:
+        if not structured_sheet_id:
             raise ValueError(
-                f"Expected a non-empty value for `structured_sheets_id` but received {structured_sheets_id!r}"
+                f"Expected a non-empty value for `structured_sheet_id` but received {structured_sheet_id!r}"
             )
         return self._get(
-            f"/v1/structured-sheets/{structured_sheets_id}",
+            f"/v1/structured-sheets/{structured_sheet_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=StructuredSheetsResponse,
+            cast_to=StructuredSheetResponse,
         )
 
     def list(
@@ -159,14 +160,14 @@ class StructuredSheetsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> SyncCursorIDPage[StructuredSheetsResponse]:
+    ) -> SyncCursorIDPage[StructuredSheetResponse]:
         """List all structured sheets conversions for the authenticated user.
 
         Results are
         paginated using cursor-based pagination.
 
         Args:
-          after: Unique identifier for a structured sheets conversion.
+          after: Unique identifier for a structured sheet conversion.
 
           limit: Maximum number of results to return per page.
 
@@ -180,7 +181,7 @@ class StructuredSheetsResource(SyncAPIResource):
         """
         return self._get_api_list(
             "/v1/structured-sheets",
-            page=SyncCursorIDPage[StructuredSheetsResponse],
+            page=SyncCursorIDPage[StructuredSheetResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -194,12 +195,12 @@ class StructuredSheetsResource(SyncAPIResource):
                     structured_sheet_list_params.StructuredSheetListParams,
                 ),
             ),
-            model=StructuredSheetsResponse,
+            model=StructuredSheetResponse,
         )
 
     def delete(
         self,
-        structured_sheets_id: str,
+        structured_sheet_id: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -207,14 +208,14 @@ class StructuredSheetsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> None:
-        """Delete a structured sheets conversion and its associated exports.
+    ) -> StructuredSheetDeleteResponse:
+        """Delete a structured sheet conversion and its associated exports.
 
         This action
         cannot be undone.
 
         Args:
-          structured_sheets_id: The unique identifier of the structured sheets conversion.
+          structured_sheet_id: The unique identifier of the structured sheet conversion.
 
           extra_headers: Send extra headers
 
@@ -224,22 +225,21 @@ class StructuredSheetsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not structured_sheets_id:
+        if not structured_sheet_id:
             raise ValueError(
-                f"Expected a non-empty value for `structured_sheets_id` but received {structured_sheets_id!r}"
+                f"Expected a non-empty value for `structured_sheet_id` but received {structured_sheet_id!r}"
             )
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._delete(
-            f"/v1/structured-sheets/{structured_sheets_id}",
+            f"/v1/structured-sheets/{structured_sheet_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=NoneType,
+            cast_to=StructuredSheetDeleteResponse,
         )
 
     def cancel(
         self,
-        structured_sheets_id: str,
+        structured_sheet_id: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -247,14 +247,14 @@ class StructuredSheetsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> StructuredSheetsResponse:
-        """Cancel a structured sheets conversion that is in progress.
+    ) -> StructuredSheetResponse:
+        """Cancel a structured sheet conversion that is in progress.
 
         Only jobs with status
         'queued' or 'in_progress' can be cancelled.
 
         Args:
-          structured_sheets_id: The unique identifier of the structured sheets conversion.
+          structured_sheet_id: The unique identifier of the structured sheet conversion.
 
           extra_headers: Send extra headers
 
@@ -264,21 +264,21 @@ class StructuredSheetsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not structured_sheets_id:
+        if not structured_sheet_id:
             raise ValueError(
-                f"Expected a non-empty value for `structured_sheets_id` but received {structured_sheets_id!r}"
+                f"Expected a non-empty value for `structured_sheet_id` but received {structured_sheet_id!r}"
             )
         return self._post(
-            f"/v1/structured-sheets/{structured_sheets_id}/cancel",
+            f"/v1/structured-sheets/{structured_sheet_id}/cancel",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=StructuredSheetsResponse,
+            cast_to=StructuredSheetResponse,
         )
 
     def download(
         self,
-        structured_sheets_id: str,
+        structured_sheet_id: str,
         *,
         format: Literal["sqlite", "cell_labels"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -299,7 +299,7 @@ class StructuredSheetsResource(SyncAPIResource):
         - `cell_labels`: CSV file with cell-level semantic labels
 
         Args:
-          structured_sheets_id: The unique identifier of the structured sheets conversion.
+          structured_sheet_id: The unique identifier of the structured sheet conversion.
 
           format: The export format to download.
 
@@ -311,13 +311,13 @@ class StructuredSheetsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not structured_sheets_id:
+        if not structured_sheet_id:
             raise ValueError(
-                f"Expected a non-empty value for `structured_sheets_id` but received {structured_sheets_id!r}"
+                f"Expected a non-empty value for `structured_sheet_id` but received {structured_sheet_id!r}"
             )
         extra_headers = {"Accept": "application/x-sqlite3", **(extra_headers or {})}
         return self._get(
-            f"/v1/structured-sheets/{structured_sheets_id}/download",
+            f"/v1/structured-sheets/{structured_sheet_id}/download",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -366,7 +366,7 @@ class AsyncStructuredSheetsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> StructuredSheetsResponse:
+    ) -> StructuredSheetResponse:
         """Start converting a spreadsheet workbook into structured data.
 
         This initiates an
@@ -398,12 +398,12 @@ class AsyncStructuredSheetsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=StructuredSheetsResponse,
+            cast_to=StructuredSheetResponse,
         )
 
     async def retrieve(
         self,
-        structured_sheets_id: str,
+        structured_sheet_id: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -411,12 +411,12 @@ class AsyncStructuredSheetsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> StructuredSheetsResponse:
+    ) -> StructuredSheetResponse:
         """
-        Get the status and details of a structured sheets conversion.
+        Get the status and details of a structured sheet conversion.
 
         Args:
-          structured_sheets_id: The unique identifier of the structured sheets conversion.
+          structured_sheet_id: The unique identifier of the structured sheet conversion.
 
           extra_headers: Send extra headers
 
@@ -426,16 +426,16 @@ class AsyncStructuredSheetsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not structured_sheets_id:
+        if not structured_sheet_id:
             raise ValueError(
-                f"Expected a non-empty value for `structured_sheets_id` but received {structured_sheets_id!r}"
+                f"Expected a non-empty value for `structured_sheet_id` but received {structured_sheet_id!r}"
             )
         return await self._get(
-            f"/v1/structured-sheets/{structured_sheets_id}",
+            f"/v1/structured-sheets/{structured_sheet_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=StructuredSheetsResponse,
+            cast_to=StructuredSheetResponse,
         )
 
     def list(
@@ -449,14 +449,14 @@ class AsyncStructuredSheetsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AsyncPaginator[StructuredSheetsResponse, AsyncCursorIDPage[StructuredSheetsResponse]]:
+    ) -> AsyncPaginator[StructuredSheetResponse, AsyncCursorIDPage[StructuredSheetResponse]]:
         """List all structured sheets conversions for the authenticated user.
 
         Results are
         paginated using cursor-based pagination.
 
         Args:
-          after: Unique identifier for a structured sheets conversion.
+          after: Unique identifier for a structured sheet conversion.
 
           limit: Maximum number of results to return per page.
 
@@ -470,7 +470,7 @@ class AsyncStructuredSheetsResource(AsyncAPIResource):
         """
         return self._get_api_list(
             "/v1/structured-sheets",
-            page=AsyncCursorIDPage[StructuredSheetsResponse],
+            page=AsyncCursorIDPage[StructuredSheetResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -484,12 +484,12 @@ class AsyncStructuredSheetsResource(AsyncAPIResource):
                     structured_sheet_list_params.StructuredSheetListParams,
                 ),
             ),
-            model=StructuredSheetsResponse,
+            model=StructuredSheetResponse,
         )
 
     async def delete(
         self,
-        structured_sheets_id: str,
+        structured_sheet_id: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -497,14 +497,14 @@ class AsyncStructuredSheetsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> None:
-        """Delete a structured sheets conversion and its associated exports.
+    ) -> StructuredSheetDeleteResponse:
+        """Delete a structured sheet conversion and its associated exports.
 
         This action
         cannot be undone.
 
         Args:
-          structured_sheets_id: The unique identifier of the structured sheets conversion.
+          structured_sheet_id: The unique identifier of the structured sheet conversion.
 
           extra_headers: Send extra headers
 
@@ -514,22 +514,21 @@ class AsyncStructuredSheetsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not structured_sheets_id:
+        if not structured_sheet_id:
             raise ValueError(
-                f"Expected a non-empty value for `structured_sheets_id` but received {structured_sheets_id!r}"
+                f"Expected a non-empty value for `structured_sheet_id` but received {structured_sheet_id!r}"
             )
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._delete(
-            f"/v1/structured-sheets/{structured_sheets_id}",
+            f"/v1/structured-sheets/{structured_sheet_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=NoneType,
+            cast_to=StructuredSheetDeleteResponse,
         )
 
     async def cancel(
         self,
-        structured_sheets_id: str,
+        structured_sheet_id: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -537,14 +536,14 @@ class AsyncStructuredSheetsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> StructuredSheetsResponse:
-        """Cancel a structured sheets conversion that is in progress.
+    ) -> StructuredSheetResponse:
+        """Cancel a structured sheet conversion that is in progress.
 
         Only jobs with status
         'queued' or 'in_progress' can be cancelled.
 
         Args:
-          structured_sheets_id: The unique identifier of the structured sheets conversion.
+          structured_sheet_id: The unique identifier of the structured sheet conversion.
 
           extra_headers: Send extra headers
 
@@ -554,21 +553,21 @@ class AsyncStructuredSheetsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not structured_sheets_id:
+        if not structured_sheet_id:
             raise ValueError(
-                f"Expected a non-empty value for `structured_sheets_id` but received {structured_sheets_id!r}"
+                f"Expected a non-empty value for `structured_sheet_id` but received {structured_sheet_id!r}"
             )
         return await self._post(
-            f"/v1/structured-sheets/{structured_sheets_id}/cancel",
+            f"/v1/structured-sheets/{structured_sheet_id}/cancel",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=StructuredSheetsResponse,
+            cast_to=StructuredSheetResponse,
         )
 
     async def download(
         self,
-        structured_sheets_id: str,
+        structured_sheet_id: str,
         *,
         format: Literal["sqlite", "cell_labels"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -589,7 +588,7 @@ class AsyncStructuredSheetsResource(AsyncAPIResource):
         - `cell_labels`: CSV file with cell-level semantic labels
 
         Args:
-          structured_sheets_id: The unique identifier of the structured sheets conversion.
+          structured_sheet_id: The unique identifier of the structured sheet conversion.
 
           format: The export format to download.
 
@@ -601,13 +600,13 @@ class AsyncStructuredSheetsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not structured_sheets_id:
+        if not structured_sheet_id:
             raise ValueError(
-                f"Expected a non-empty value for `structured_sheets_id` but received {structured_sheets_id!r}"
+                f"Expected a non-empty value for `structured_sheet_id` but received {structured_sheet_id!r}"
             )
         extra_headers = {"Accept": "application/x-sqlite3", **(extra_headers or {})}
         return await self._get(
-            f"/v1/structured-sheets/{structured_sheets_id}/download",
+            f"/v1/structured-sheets/{structured_sheet_id}/download",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
