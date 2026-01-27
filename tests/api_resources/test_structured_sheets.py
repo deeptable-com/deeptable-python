@@ -12,7 +12,8 @@ from respx import MockRouter
 from deeptable import DeepTable, AsyncDeepTable
 from tests.utils import assert_matches_type
 from deeptable.types import (
-    StructuredSheetsResponse,
+    StructuredSheetResponse,
+    StructuredSheetDeleteResponse,
 )
 from deeptable._response import (
     BinaryAPIResponse,
@@ -34,7 +35,7 @@ class TestStructuredSheets:
         structured_sheet = client.structured_sheets.create(
             file_id="file_01h45ytscbebyvny4gc8cr8ma2",
         )
-        assert_matches_type(StructuredSheetsResponse, structured_sheet, path=["response"])
+        assert_matches_type(StructuredSheetResponse, structured_sheet, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -43,7 +44,7 @@ class TestStructuredSheets:
             file_id="file_01h45ytscbebyvny4gc8cr8ma2",
             sheet_names=["Sheet1", "Financials"],
         )
-        assert_matches_type(StructuredSheetsResponse, structured_sheet, path=["response"])
+        assert_matches_type(StructuredSheetResponse, structured_sheet, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -55,7 +56,7 @@ class TestStructuredSheets:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         structured_sheet = response.parse()
-        assert_matches_type(StructuredSheetsResponse, structured_sheet, path=["response"])
+        assert_matches_type(StructuredSheetResponse, structured_sheet, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -67,7 +68,7 @@ class TestStructuredSheets:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             structured_sheet = response.parse()
-            assert_matches_type(StructuredSheetsResponse, structured_sheet, path=["response"])
+            assert_matches_type(StructuredSheetResponse, structured_sheet, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -77,7 +78,7 @@ class TestStructuredSheets:
         structured_sheet = client.structured_sheets.retrieve(
             "ss_01kfxgjd94fn9stqm42nejb627",
         )
-        assert_matches_type(StructuredSheetsResponse, structured_sheet, path=["response"])
+        assert_matches_type(StructuredSheetResponse, structured_sheet, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -89,7 +90,7 @@ class TestStructuredSheets:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         structured_sheet = response.parse()
-        assert_matches_type(StructuredSheetsResponse, structured_sheet, path=["response"])
+        assert_matches_type(StructuredSheetResponse, structured_sheet, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -101,14 +102,14 @@ class TestStructuredSheets:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             structured_sheet = response.parse()
-            assert_matches_type(StructuredSheetsResponse, structured_sheet, path=["response"])
+            assert_matches_type(StructuredSheetResponse, structured_sheet, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_retrieve(self, client: DeepTable) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `structured_sheets_id` but received ''"):
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `structured_sheet_id` but received ''"):
             client.structured_sheets.with_raw_response.retrieve(
                 "",
             )
@@ -117,7 +118,7 @@ class TestStructuredSheets:
     @parametrize
     def test_method_list(self, client: DeepTable) -> None:
         structured_sheet = client.structured_sheets.list()
-        assert_matches_type(SyncCursorIDPage[StructuredSheetsResponse], structured_sheet, path=["response"])
+        assert_matches_type(SyncCursorIDPage[StructuredSheetResponse], structured_sheet, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -126,7 +127,7 @@ class TestStructuredSheets:
             after="ss_01kfxgjd94fn9stqm42nejb627",
             limit=20,
         )
-        assert_matches_type(SyncCursorIDPage[StructuredSheetsResponse], structured_sheet, path=["response"])
+        assert_matches_type(SyncCursorIDPage[StructuredSheetResponse], structured_sheet, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -136,7 +137,7 @@ class TestStructuredSheets:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         structured_sheet = response.parse()
-        assert_matches_type(SyncCursorIDPage[StructuredSheetsResponse], structured_sheet, path=["response"])
+        assert_matches_type(SyncCursorIDPage[StructuredSheetResponse], structured_sheet, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -146,7 +147,7 @@ class TestStructuredSheets:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             structured_sheet = response.parse()
-            assert_matches_type(SyncCursorIDPage[StructuredSheetsResponse], structured_sheet, path=["response"])
+            assert_matches_type(SyncCursorIDPage[StructuredSheetResponse], structured_sheet, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -156,7 +157,7 @@ class TestStructuredSheets:
         structured_sheet = client.structured_sheets.delete(
             "ss_01kfxgjd94fn9stqm42nejb627",
         )
-        assert structured_sheet is None
+        assert_matches_type(StructuredSheetDeleteResponse, structured_sheet, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -168,7 +169,7 @@ class TestStructuredSheets:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         structured_sheet = response.parse()
-        assert structured_sheet is None
+        assert_matches_type(StructuredSheetDeleteResponse, structured_sheet, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -180,14 +181,14 @@ class TestStructuredSheets:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             structured_sheet = response.parse()
-            assert structured_sheet is None
+            assert_matches_type(StructuredSheetDeleteResponse, structured_sheet, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_delete(self, client: DeepTable) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `structured_sheets_id` but received ''"):
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `structured_sheet_id` but received ''"):
             client.structured_sheets.with_raw_response.delete(
                 "",
             )
@@ -198,7 +199,7 @@ class TestStructuredSheets:
         structured_sheet = client.structured_sheets.cancel(
             "ss_01kfxgjd94fn9stqm42nejb627",
         )
-        assert_matches_type(StructuredSheetsResponse, structured_sheet, path=["response"])
+        assert_matches_type(StructuredSheetResponse, structured_sheet, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -210,7 +211,7 @@ class TestStructuredSheets:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         structured_sheet = response.parse()
-        assert_matches_type(StructuredSheetsResponse, structured_sheet, path=["response"])
+        assert_matches_type(StructuredSheetResponse, structured_sheet, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -222,14 +223,14 @@ class TestStructuredSheets:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             structured_sheet = response.parse()
-            assert_matches_type(StructuredSheetsResponse, structured_sheet, path=["response"])
+            assert_matches_type(StructuredSheetResponse, structured_sheet, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_cancel(self, client: DeepTable) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `structured_sheets_id` but received ''"):
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `structured_sheet_id` but received ''"):
             client.structured_sheets.with_raw_response.cancel(
                 "",
             )
@@ -241,7 +242,7 @@ class TestStructuredSheets:
             return_value=httpx.Response(200, json={"foo": "bar"})
         )
         structured_sheet = client.structured_sheets.download(
-            structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
+            structured_sheet_id="ss_01kfxgjd94fn9stqm42nejb627",
         )
         assert structured_sheet.is_closed
         assert structured_sheet.json() == {"foo": "bar"}
@@ -255,7 +256,7 @@ class TestStructuredSheets:
             return_value=httpx.Response(200, json={"foo": "bar"})
         )
         structured_sheet = client.structured_sheets.download(
-            structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
+            structured_sheet_id="ss_01kfxgjd94fn9stqm42nejb627",
             format="sqlite",
         )
         assert structured_sheet.is_closed
@@ -271,7 +272,7 @@ class TestStructuredSheets:
         )
 
         structured_sheet = client.structured_sheets.with_raw_response.download(
-            structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
+            structured_sheet_id="ss_01kfxgjd94fn9stqm42nejb627",
         )
 
         assert structured_sheet.is_closed is True
@@ -286,7 +287,7 @@ class TestStructuredSheets:
             return_value=httpx.Response(200, json={"foo": "bar"})
         )
         with client.structured_sheets.with_streaming_response.download(
-            structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
+            structured_sheet_id="ss_01kfxgjd94fn9stqm42nejb627",
         ) as structured_sheet:
             assert not structured_sheet.is_closed
             assert structured_sheet.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -300,9 +301,9 @@ class TestStructuredSheets:
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     def test_path_params_download(self, client: DeepTable) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `structured_sheets_id` but received ''"):
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `structured_sheet_id` but received ''"):
             client.structured_sheets.with_raw_response.download(
-                structured_sheets_id="",
+                structured_sheet_id="",
             )
 
 
@@ -317,7 +318,7 @@ class TestAsyncStructuredSheets:
         structured_sheet = await async_client.structured_sheets.create(
             file_id="file_01h45ytscbebyvny4gc8cr8ma2",
         )
-        assert_matches_type(StructuredSheetsResponse, structured_sheet, path=["response"])
+        assert_matches_type(StructuredSheetResponse, structured_sheet, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -326,7 +327,7 @@ class TestAsyncStructuredSheets:
             file_id="file_01h45ytscbebyvny4gc8cr8ma2",
             sheet_names=["Sheet1", "Financials"],
         )
-        assert_matches_type(StructuredSheetsResponse, structured_sheet, path=["response"])
+        assert_matches_type(StructuredSheetResponse, structured_sheet, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -338,7 +339,7 @@ class TestAsyncStructuredSheets:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         structured_sheet = await response.parse()
-        assert_matches_type(StructuredSheetsResponse, structured_sheet, path=["response"])
+        assert_matches_type(StructuredSheetResponse, structured_sheet, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -350,7 +351,7 @@ class TestAsyncStructuredSheets:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             structured_sheet = await response.parse()
-            assert_matches_type(StructuredSheetsResponse, structured_sheet, path=["response"])
+            assert_matches_type(StructuredSheetResponse, structured_sheet, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -360,7 +361,7 @@ class TestAsyncStructuredSheets:
         structured_sheet = await async_client.structured_sheets.retrieve(
             "ss_01kfxgjd94fn9stqm42nejb627",
         )
-        assert_matches_type(StructuredSheetsResponse, structured_sheet, path=["response"])
+        assert_matches_type(StructuredSheetResponse, structured_sheet, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -372,7 +373,7 @@ class TestAsyncStructuredSheets:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         structured_sheet = await response.parse()
-        assert_matches_type(StructuredSheetsResponse, structured_sheet, path=["response"])
+        assert_matches_type(StructuredSheetResponse, structured_sheet, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -384,14 +385,14 @@ class TestAsyncStructuredSheets:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             structured_sheet = await response.parse()
-            assert_matches_type(StructuredSheetsResponse, structured_sheet, path=["response"])
+            assert_matches_type(StructuredSheetResponse, structured_sheet, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_retrieve(self, async_client: AsyncDeepTable) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `structured_sheets_id` but received ''"):
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `structured_sheet_id` but received ''"):
             await async_client.structured_sheets.with_raw_response.retrieve(
                 "",
             )
@@ -400,7 +401,7 @@ class TestAsyncStructuredSheets:
     @parametrize
     async def test_method_list(self, async_client: AsyncDeepTable) -> None:
         structured_sheet = await async_client.structured_sheets.list()
-        assert_matches_type(AsyncCursorIDPage[StructuredSheetsResponse], structured_sheet, path=["response"])
+        assert_matches_type(AsyncCursorIDPage[StructuredSheetResponse], structured_sheet, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -409,7 +410,7 @@ class TestAsyncStructuredSheets:
             after="ss_01kfxgjd94fn9stqm42nejb627",
             limit=20,
         )
-        assert_matches_type(AsyncCursorIDPage[StructuredSheetsResponse], structured_sheet, path=["response"])
+        assert_matches_type(AsyncCursorIDPage[StructuredSheetResponse], structured_sheet, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -419,7 +420,7 @@ class TestAsyncStructuredSheets:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         structured_sheet = await response.parse()
-        assert_matches_type(AsyncCursorIDPage[StructuredSheetsResponse], structured_sheet, path=["response"])
+        assert_matches_type(AsyncCursorIDPage[StructuredSheetResponse], structured_sheet, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -429,7 +430,7 @@ class TestAsyncStructuredSheets:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             structured_sheet = await response.parse()
-            assert_matches_type(AsyncCursorIDPage[StructuredSheetsResponse], structured_sheet, path=["response"])
+            assert_matches_type(AsyncCursorIDPage[StructuredSheetResponse], structured_sheet, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -439,7 +440,7 @@ class TestAsyncStructuredSheets:
         structured_sheet = await async_client.structured_sheets.delete(
             "ss_01kfxgjd94fn9stqm42nejb627",
         )
-        assert structured_sheet is None
+        assert_matches_type(StructuredSheetDeleteResponse, structured_sheet, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -451,7 +452,7 @@ class TestAsyncStructuredSheets:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         structured_sheet = await response.parse()
-        assert structured_sheet is None
+        assert_matches_type(StructuredSheetDeleteResponse, structured_sheet, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -463,14 +464,14 @@ class TestAsyncStructuredSheets:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             structured_sheet = await response.parse()
-            assert structured_sheet is None
+            assert_matches_type(StructuredSheetDeleteResponse, structured_sheet, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_delete(self, async_client: AsyncDeepTable) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `structured_sheets_id` but received ''"):
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `structured_sheet_id` but received ''"):
             await async_client.structured_sheets.with_raw_response.delete(
                 "",
             )
@@ -481,7 +482,7 @@ class TestAsyncStructuredSheets:
         structured_sheet = await async_client.structured_sheets.cancel(
             "ss_01kfxgjd94fn9stqm42nejb627",
         )
-        assert_matches_type(StructuredSheetsResponse, structured_sheet, path=["response"])
+        assert_matches_type(StructuredSheetResponse, structured_sheet, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -493,7 +494,7 @@ class TestAsyncStructuredSheets:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         structured_sheet = await response.parse()
-        assert_matches_type(StructuredSheetsResponse, structured_sheet, path=["response"])
+        assert_matches_type(StructuredSheetResponse, structured_sheet, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -505,14 +506,14 @@ class TestAsyncStructuredSheets:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             structured_sheet = await response.parse()
-            assert_matches_type(StructuredSheetsResponse, structured_sheet, path=["response"])
+            assert_matches_type(StructuredSheetResponse, structured_sheet, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_cancel(self, async_client: AsyncDeepTable) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `structured_sheets_id` but received ''"):
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `structured_sheet_id` but received ''"):
             await async_client.structured_sheets.with_raw_response.cancel(
                 "",
             )
@@ -524,7 +525,7 @@ class TestAsyncStructuredSheets:
             return_value=httpx.Response(200, json={"foo": "bar"})
         )
         structured_sheet = await async_client.structured_sheets.download(
-            structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
+            structured_sheet_id="ss_01kfxgjd94fn9stqm42nejb627",
         )
         assert structured_sheet.is_closed
         assert await structured_sheet.json() == {"foo": "bar"}
@@ -538,7 +539,7 @@ class TestAsyncStructuredSheets:
             return_value=httpx.Response(200, json={"foo": "bar"})
         )
         structured_sheet = await async_client.structured_sheets.download(
-            structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
+            structured_sheet_id="ss_01kfxgjd94fn9stqm42nejb627",
             format="sqlite",
         )
         assert structured_sheet.is_closed
@@ -554,7 +555,7 @@ class TestAsyncStructuredSheets:
         )
 
         structured_sheet = await async_client.structured_sheets.with_raw_response.download(
-            structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
+            structured_sheet_id="ss_01kfxgjd94fn9stqm42nejb627",
         )
 
         assert structured_sheet.is_closed is True
@@ -569,7 +570,7 @@ class TestAsyncStructuredSheets:
             return_value=httpx.Response(200, json={"foo": "bar"})
         )
         async with async_client.structured_sheets.with_streaming_response.download(
-            structured_sheets_id="ss_01kfxgjd94fn9stqm42nejb627",
+            structured_sheet_id="ss_01kfxgjd94fn9stqm42nejb627",
         ) as structured_sheet:
             assert not structured_sheet.is_closed
             assert structured_sheet.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -583,7 +584,7 @@ class TestAsyncStructuredSheets:
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     async def test_path_params_download(self, async_client: AsyncDeepTable) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `structured_sheets_id` but received ''"):
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `structured_sheet_id` but received ''"):
             await async_client.structured_sheets.with_raw_response.download(
-                structured_sheets_id="",
+                structured_sheet_id="",
             )
