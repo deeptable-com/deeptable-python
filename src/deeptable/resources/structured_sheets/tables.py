@@ -57,7 +57,7 @@ class TablesResource(SyncAPIResource):
         self,
         table_id: str,
         *,
-        structured_sheets_id: str,
+        structured_sheet_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -71,7 +71,7 @@ class TablesResource(SyncAPIResource):
         available when conversion status is 'completed'.
 
         Args:
-          structured_sheets_id: The unique identifier of the structured sheets conversion.
+          structured_sheet_id: The unique identifier of the structured sheet conversion.
 
           table_id: The unique identifier of the table.
 
@@ -83,14 +83,14 @@ class TablesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not structured_sheets_id:
+        if not structured_sheet_id:
             raise ValueError(
-                f"Expected a non-empty value for `structured_sheets_id` but received {structured_sheets_id!r}"
+                f"Expected a non-empty value for `structured_sheet_id` but received {structured_sheet_id!r}"
             )
         if not table_id:
             raise ValueError(f"Expected a non-empty value for `table_id` but received {table_id!r}")
         return self._get(
-            f"/v1/structured-sheets/{structured_sheets_id}/tables/{table_id}",
+            f"/v1/structured-sheets/{structured_sheet_id}/tables/{table_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -99,7 +99,7 @@ class TablesResource(SyncAPIResource):
 
     def list(
         self,
-        structured_sheets_id: str,
+        structured_sheet_id: str,
         *,
         after: Optional[str] | Omit = omit,
         limit: int | Omit = omit,
@@ -116,7 +116,7 @@ class TablesResource(SyncAPIResource):
         conversion status is 'completed'.
 
         Args:
-          structured_sheets_id: The unique identifier of the structured sheets conversion.
+          structured_sheet_id: The unique identifier of the structured sheet conversion.
 
           after: Unique identifier for a table.
 
@@ -130,12 +130,12 @@ class TablesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not structured_sheets_id:
+        if not structured_sheet_id:
             raise ValueError(
-                f"Expected a non-empty value for `structured_sheets_id` but received {structured_sheets_id!r}"
+                f"Expected a non-empty value for `structured_sheet_id` but received {structured_sheet_id!r}"
             )
         return self._get_api_list(
-            f"/v1/structured-sheets/{structured_sheets_id}/tables",
+            f"/v1/structured-sheets/{structured_sheet_id}/tables",
             page=SyncCursorIDPage[TableResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -157,7 +157,7 @@ class TablesResource(SyncAPIResource):
         self,
         table_id: str,
         *,
-        structured_sheets_id: str,
+        structured_sheet_id: str,
         format: Literal["parquet", "csv"],
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -175,7 +175,7 @@ class TablesResource(SyncAPIResource):
         - `csv`: Comma-separated values (compatible with any spreadsheet application)
 
         Args:
-          structured_sheets_id: The unique identifier of the structured sheets conversion.
+          structured_sheet_id: The unique identifier of the structured sheet conversion.
 
           table_id: The unique identifier of the table.
 
@@ -189,15 +189,15 @@ class TablesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not structured_sheets_id:
+        if not structured_sheet_id:
             raise ValueError(
-                f"Expected a non-empty value for `structured_sheets_id` but received {structured_sheets_id!r}"
+                f"Expected a non-empty value for `structured_sheet_id` but received {structured_sheet_id!r}"
             )
         if not table_id:
             raise ValueError(f"Expected a non-empty value for `table_id` but received {table_id!r}")
         extra_headers = {"Accept": "application/vnd.apache.parquet", **(extra_headers or {})}
         return self._get(
-            f"/v1/structured-sheets/{structured_sheets_id}/tables/{table_id}/download",
+            f"/v1/structured-sheets/{structured_sheet_id}/tables/{table_id}/download",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -233,7 +233,7 @@ class AsyncTablesResource(AsyncAPIResource):
         self,
         table_id: str,
         *,
-        structured_sheets_id: str,
+        structured_sheet_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -247,7 +247,7 @@ class AsyncTablesResource(AsyncAPIResource):
         available when conversion status is 'completed'.
 
         Args:
-          structured_sheets_id: The unique identifier of the structured sheets conversion.
+          structured_sheet_id: The unique identifier of the structured sheet conversion.
 
           table_id: The unique identifier of the table.
 
@@ -259,14 +259,14 @@ class AsyncTablesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not structured_sheets_id:
+        if not structured_sheet_id:
             raise ValueError(
-                f"Expected a non-empty value for `structured_sheets_id` but received {structured_sheets_id!r}"
+                f"Expected a non-empty value for `structured_sheet_id` but received {structured_sheet_id!r}"
             )
         if not table_id:
             raise ValueError(f"Expected a non-empty value for `table_id` but received {table_id!r}")
         return await self._get(
-            f"/v1/structured-sheets/{structured_sheets_id}/tables/{table_id}",
+            f"/v1/structured-sheets/{structured_sheet_id}/tables/{table_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -275,7 +275,7 @@ class AsyncTablesResource(AsyncAPIResource):
 
     def list(
         self,
-        structured_sheets_id: str,
+        structured_sheet_id: str,
         *,
         after: Optional[str] | Omit = omit,
         limit: int | Omit = omit,
@@ -292,7 +292,7 @@ class AsyncTablesResource(AsyncAPIResource):
         conversion status is 'completed'.
 
         Args:
-          structured_sheets_id: The unique identifier of the structured sheets conversion.
+          structured_sheet_id: The unique identifier of the structured sheet conversion.
 
           after: Unique identifier for a table.
 
@@ -306,12 +306,12 @@ class AsyncTablesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not structured_sheets_id:
+        if not structured_sheet_id:
             raise ValueError(
-                f"Expected a non-empty value for `structured_sheets_id` but received {structured_sheets_id!r}"
+                f"Expected a non-empty value for `structured_sheet_id` but received {structured_sheet_id!r}"
             )
         return self._get_api_list(
-            f"/v1/structured-sheets/{structured_sheets_id}/tables",
+            f"/v1/structured-sheets/{structured_sheet_id}/tables",
             page=AsyncCursorIDPage[TableResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -333,7 +333,7 @@ class AsyncTablesResource(AsyncAPIResource):
         self,
         table_id: str,
         *,
-        structured_sheets_id: str,
+        structured_sheet_id: str,
         format: Literal["parquet", "csv"],
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -351,7 +351,7 @@ class AsyncTablesResource(AsyncAPIResource):
         - `csv`: Comma-separated values (compatible with any spreadsheet application)
 
         Args:
-          structured_sheets_id: The unique identifier of the structured sheets conversion.
+          structured_sheet_id: The unique identifier of the structured sheet conversion.
 
           table_id: The unique identifier of the table.
 
@@ -365,15 +365,15 @@ class AsyncTablesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not structured_sheets_id:
+        if not structured_sheet_id:
             raise ValueError(
-                f"Expected a non-empty value for `structured_sheets_id` but received {structured_sheets_id!r}"
+                f"Expected a non-empty value for `structured_sheet_id` but received {structured_sheet_id!r}"
             )
         if not table_id:
             raise ValueError(f"Expected a non-empty value for `table_id` but received {table_id!r}")
         extra_headers = {"Accept": "application/vnd.apache.parquet", **(extra_headers or {})}
         return await self._get(
-            f"/v1/structured-sheets/{structured_sheets_id}/tables/{table_id}/download",
+            f"/v1/structured-sheets/{structured_sheet_id}/tables/{table_id}/download",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,

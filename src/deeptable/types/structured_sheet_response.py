@@ -6,7 +6,7 @@ from typing_extensions import Literal
 
 from .._models import BaseModel
 
-__all__ = ["StructuredSheetsResponse", "LastError"]
+__all__ = ["StructuredSheetResponse", "LastError"]
 
 
 class LastError(BaseModel):
@@ -19,14 +19,14 @@ class LastError(BaseModel):
     """A human-readable description of the error."""
 
 
-class StructuredSheetsResponse(BaseModel):
-    """Response representing a structured sheets conversion job.
+class StructuredSheetResponse(BaseModel):
+    """Response representing a structured sheet conversion job.
 
     This is returned from POST (create), GET (retrieve), and list endpoints.
     """
 
     id: str
-    """The unique identifier for this structured sheets conversion."""
+    """The unique identifier for this structured sheet conversion."""
 
     created_at: datetime
     """The timestamp when the conversion was started."""
