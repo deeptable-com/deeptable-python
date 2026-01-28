@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-beta.1 (2026-01-28)
+
+Full Changelog: [v0.1.0-alpha.4...v0.1.0-beta.1](https://github.com/deeptable-com/deeptable-python/compare/v0.1.0-alpha.4...v0.1.0-beta.1)
+
+### Bug Fixes
+
+* documentation inconsistencies ([deb388e](https://github.com/deeptable-com/deeptable-python/commit/deb388e79ae20c3a4bdf6e6a5ebbe732b32c3fc6))
+
 ## 0.1.0-alpha.4 (2026-01-27)
 
 Full Changelog: [v0.1.0-alpha.3...v0.1.0-alpha.4](https://github.com/deeptable-com/deeptable-python/compare/v0.1.0-alpha.3...v0.1.0-alpha.4)
