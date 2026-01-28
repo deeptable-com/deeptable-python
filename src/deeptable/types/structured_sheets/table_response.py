@@ -13,7 +13,7 @@ class TableResponse(BaseModel):
     """Response representing a table extracted from a structured sheet.
 
     This is returned from GET (retrieve) and list table endpoints.
-    Table names use SQL naming conventions (e.g., monthly_head_count).
+    Table names use a composite format: {normalized_sheet_name}__{table_name}.
     """
 
     id: str
@@ -23,16 +23,14 @@ class TableResponse(BaseModel):
     """The timestamp when this table was created."""
 
     name: str
-    """The name of the table using SQL naming conventions."""
+    """Composite table name: {normalized_sheet_name}\\__\\__{table_name}.
+
+    Uses lowercase snake_case. Aggregation tables end with '**aggregations'.
+    Example: 'staffing**head_count' or 'staffing**head_count**aggregations'.
+    """
 
     sheet_name: str
     """The original Excel sheet name this table came from."""
-
-    sheet_name_normalized: str
-    """
-    Normalized sheet name for use in SQLite table names and export filenames
-    (lowercase, snake_case).
-    """
 
     structured_sheet_id: str
     """The ID of the structured sheet this table belongs to."""
