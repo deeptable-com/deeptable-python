@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.0-beta.2 (2026-01-30)
+
+Full Changelog: [v0.1.0-beta.1...v0.1.0-beta.2](https://github.com/deeptable-com/deeptable-python/compare/v0.1.0-beta.1...v0.1.0-beta.2)
+
+### Features
+
+* Add 'metadata' to TableType enum ([c2b9e6f](https://github.com/deeptable-com/deeptable-python/commit/c2b9e6f5bc560ee5a3ff5b44121a0160f8ae6d3e))
+* **client:** add custom JSON encoder for extended type support ([fa289e1](https://github.com/deeptable-com/deeptable-python/commit/fa289e16773cceab8a41e5b37853d7e98f55a38f))
+
 ## 0.1.0-beta.1 (2026-01-28)
 
 Full Changelog: [v0.1.0-alpha.4...v0.1.0-beta.1](https://github.com/deeptable-com/deeptable-python/compare/v0.1.0-alpha.4...v0.1.0-beta.1)
