@@ -35,7 +35,7 @@ class TableResponse(BaseModel):
     structured_sheet_id: str
     """The ID of the structured sheet this table belongs to."""
 
-    type: Literal["relational", "aggregation", "tableless"]
+    type: Literal["relational", "aggregation", "tableless", "metadata"]
     """The type of table (relational, aggregation, or tableless)."""
 
     object: Optional[Literal["table"]] = None
