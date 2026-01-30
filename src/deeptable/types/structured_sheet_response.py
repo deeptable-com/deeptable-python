@@ -34,6 +34,9 @@ class StructuredSheetResponse(BaseModel):
     file_id: str
     """The unique identifier for the source file."""
 
+    object: Literal["structured_sheet"]
+    """The object type, which is always 'structured_sheet'."""
+
     status: Literal["queued", "in_progress", "completed", "failed", "cancelled"]
     """The current processing status."""
 
@@ -42,9 +45,6 @@ class StructuredSheetResponse(BaseModel):
 
     last_error: Optional[LastError] = None
     """Error information when processing fails."""
-
-    object: Optional[Literal["structured_sheet"]] = None
-    """The object type, which is always 'structured_sheet'."""
 
     sheet_names: Optional[List[str]] = None
     """List of sheet names included in this conversion."""

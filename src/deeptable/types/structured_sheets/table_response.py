@@ -1,6 +1,5 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Optional
 from datetime import datetime
 from typing_extensions import Literal
 
@@ -25,9 +24,15 @@ class TableResponse(BaseModel):
     name: str
     """Composite table name: {normalized_sheet_name}\\__\\__{table_name}.
 
-    Uses lowercase snake_case. Aggregation tables end with '**aggregations'.
-    Example: 'staffing**head_count' or 'staffing**head_count**aggregations'.
+    Uses lowercase snake_case. Aggregation tables end with '**aggregations'. Two
+    special metadata tables exist per structured sheet:
+    '**deeptable_workbook_metadata' (workbook provenance info) and
+    '**deeptable_table_overview' (summary of all tables). Example:
+    'staffing**head_count' or 'staffing**head_count**aggregations'.
     """
+
+    object: Literal["table"]
+    """The object type, which is always 'table'."""
 
     sheet_name: str
     """The original Excel sheet name this table came from."""
@@ -36,7 +41,4 @@ class TableResponse(BaseModel):
     """The ID of the structured sheet this table belongs to."""
 
     type: Literal["relational", "aggregation", "tableless", "metadata"]
-    """The type of table (relational, aggregation, or tableless)."""
-
-    object: Optional[Literal["table"]] = None
-    """The object type, which is always 'table'."""
+    """The type of table (relational, aggregation, tableless, or metadata)."""

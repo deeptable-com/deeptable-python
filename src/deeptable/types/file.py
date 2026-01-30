@@ -1,6 +1,5 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Optional
 from datetime import datetime
 from typing_extensions import Literal
 
@@ -27,8 +26,8 @@ class File(BaseModel):
     file_name: str
     """The original filename of the uploaded file."""
 
+    object: Literal["file"]
+    """The object type, which is always 'file'."""
+
     size: int
     """The size of the file in bytes."""
-
-    object: Optional[Literal["file"]] = None
-    """The object type, which is always 'file'."""
