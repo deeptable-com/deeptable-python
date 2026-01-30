@@ -1,6 +1,5 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Optional
 from typing_extensions import Literal
 
 from .._models import BaseModel
@@ -17,8 +16,8 @@ class FileDeleteResponse(BaseModel):
     id: str
     """The unique identifier of the deleted file."""
 
-    deleted: Optional[Literal[True]] = None
+    deleted: Literal[True]
     """Whether the file was successfully deleted."""
 
-    object: Optional[Literal["file"]] = None
+    object: Literal["file"]
     """The object type, which is always 'file'."""

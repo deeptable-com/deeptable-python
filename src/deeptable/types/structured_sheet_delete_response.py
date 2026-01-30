@@ -1,6 +1,5 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Optional
 from typing_extensions import Literal
 
 from .._models import BaseModel
@@ -17,8 +16,8 @@ class StructuredSheetDeleteResponse(BaseModel):
     id: str
     """The unique identifier of the deleted structured sheet."""
 
-    deleted: Optional[Literal[True]] = None
+    deleted: Literal[True]
     """Whether the structured sheet was successfully deleted."""
 
-    object: Optional[Literal["structured_sheet"]] = None
+    object: Literal["structured_sheet"]
     """The object type, which is always 'structured_sheet'."""
