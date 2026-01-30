@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-beta.3 (2026-01-30)
+
+Full Changelog: [v0.1.0-beta.2...v0.1.0-beta.3](https://github.com/deeptable-com/deeptable-python/compare/v0.1.0-beta.2...v0.1.0-beta.3)
+
+### Features
+
+* Add column_sqlite_type and column_parquet_type to ColumnMetadata and enhance metadata tracking ([5abadf1](https://github.com/deeptable-com/deeptable-python/commit/5abadf12772b4c73b8ff3e5401f38f90913e6ce2))
+
 ## 0.1.0-beta.2 (2026-01-30)
 
 Full Changelog: [v0.1.0-beta.1...v0.1.0-beta.2](https://github.com/deeptable-com/deeptable-python/compare/v0.1.0-beta.1...v0.1.0-beta.2)
