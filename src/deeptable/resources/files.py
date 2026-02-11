@@ -104,7 +104,8 @@ class FilesResource(SyncAPIResource):
         List all files uploaded by the current user.
 
         Args:
-          after: Unique identifier for a file.
+          after: A cursor for pagination. Use the `last_id` from a previous response to fetch the
+              next page.
 
           limit: Maximum number of files to return.
 
@@ -329,7 +330,8 @@ class AsyncFilesResource(AsyncAPIResource):
         List all files uploaded by the current user.
 
         Args:
-          after: Unique identifier for a file.
+          after: A cursor for pagination. Use the `last_id` from a previous response to fetch the
+              next page.
 
           limit: Maximum number of files to return.
 

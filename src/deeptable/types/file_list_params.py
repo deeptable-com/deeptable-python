@@ -10,7 +10,10 @@ __all__ = ["FileListParams"]
 
 class FileListParams(TypedDict, total=False):
     after: Optional[str]
-    """Unique identifier for a file."""
+    """A cursor for pagination.
+
+    Use the `last_id` from a previous response to fetch the next page.
+    """
 
     limit: int
     """Maximum number of files to return."""

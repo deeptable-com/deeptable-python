@@ -167,7 +167,8 @@ class StructuredSheetsResource(SyncAPIResource):
         paginated using cursor-based pagination.
 
         Args:
-          after: Unique identifier for a structured sheet conversion.
+          after: A cursor for pagination. Use the `last_id` from a previous response to fetch the
+              next page of results.
 
           limit: Maximum number of results to return per page.
 
@@ -456,7 +457,8 @@ class AsyncStructuredSheetsResource(AsyncAPIResource):
         paginated using cursor-based pagination.
 
         Args:
-          after: Unique identifier for a structured sheet conversion.
+          after: A cursor for pagination. Use the `last_id` from a previous response to fetch the
+              next page of results.
 
           limit: Maximum number of results to return per page.
 
