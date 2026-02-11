@@ -10,7 +10,10 @@ __all__ = ["TableListParams"]
 
 class TableListParams(TypedDict, total=False):
     after: Optional[str]
-    """Unique identifier for a table."""
+    """A cursor for pagination.
+
+    Use the `last_id` from a previous response to fetch the next page of results.
+    """
 
     limit: int
     """Maximum number of tables to return per page."""
