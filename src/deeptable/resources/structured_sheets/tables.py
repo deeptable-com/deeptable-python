@@ -118,7 +118,8 @@ class TablesResource(SyncAPIResource):
         Args:
           structured_sheet_id: The unique identifier of the structured sheet conversion.
 
-          after: Unique identifier for a table.
+          after: A cursor for pagination. Use the `last_id` from a previous response to fetch the
+              next page of results.
 
           limit: Maximum number of tables to return per page.
 
@@ -294,7 +295,8 @@ class AsyncTablesResource(AsyncAPIResource):
         Args:
           structured_sheet_id: The unique identifier of the structured sheet conversion.
 
-          after: Unique identifier for a table.
+          after: A cursor for pagination. Use the `last_id` from a previous response to fetch the
+              next page of results.
 
           limit: Maximum number of tables to return per page.
 
