@@ -29,7 +29,7 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestStructuredSheets:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_create(self, client: DeepTable) -> None:
         structured_sheet = client.structured_sheets.create(
@@ -37,7 +37,7 @@ class TestStructuredSheets:
         )
         assert_matches_type(StructuredSheetResponse, structured_sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_create_with_all_params(self, client: DeepTable) -> None:
         structured_sheet = client.structured_sheets.create(
@@ -46,7 +46,7 @@ class TestStructuredSheets:
         )
         assert_matches_type(StructuredSheetResponse, structured_sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_create(self, client: DeepTable) -> None:
         response = client.structured_sheets.with_raw_response.create(
@@ -58,7 +58,7 @@ class TestStructuredSheets:
         structured_sheet = response.parse()
         assert_matches_type(StructuredSheetResponse, structured_sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_create(self, client: DeepTable) -> None:
         with client.structured_sheets.with_streaming_response.create(
@@ -72,7 +72,7 @@ class TestStructuredSheets:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_retrieve(self, client: DeepTable) -> None:
         structured_sheet = client.structured_sheets.retrieve(
@@ -80,7 +80,7 @@ class TestStructuredSheets:
         )
         assert_matches_type(StructuredSheetResponse, structured_sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_retrieve(self, client: DeepTable) -> None:
         response = client.structured_sheets.with_raw_response.retrieve(
@@ -92,7 +92,7 @@ class TestStructuredSheets:
         structured_sheet = response.parse()
         assert_matches_type(StructuredSheetResponse, structured_sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_retrieve(self, client: DeepTable) -> None:
         with client.structured_sheets.with_streaming_response.retrieve(
@@ -106,7 +106,7 @@ class TestStructuredSheets:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_retrieve(self, client: DeepTable) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `structured_sheet_id` but received ''"):
@@ -114,13 +114,13 @@ class TestStructuredSheets:
                 "",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list(self, client: DeepTable) -> None:
         structured_sheet = client.structured_sheets.list()
         assert_matches_type(SyncCursorIDPage[StructuredSheetResponse], structured_sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list_with_all_params(self, client: DeepTable) -> None:
         structured_sheet = client.structured_sheets.list(
@@ -129,7 +129,7 @@ class TestStructuredSheets:
         )
         assert_matches_type(SyncCursorIDPage[StructuredSheetResponse], structured_sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_list(self, client: DeepTable) -> None:
         response = client.structured_sheets.with_raw_response.list()
@@ -139,7 +139,7 @@ class TestStructuredSheets:
         structured_sheet = response.parse()
         assert_matches_type(SyncCursorIDPage[StructuredSheetResponse], structured_sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_list(self, client: DeepTable) -> None:
         with client.structured_sheets.with_streaming_response.list() as response:
@@ -151,7 +151,7 @@ class TestStructuredSheets:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_delete(self, client: DeepTable) -> None:
         structured_sheet = client.structured_sheets.delete(
@@ -159,7 +159,7 @@ class TestStructuredSheets:
         )
         assert_matches_type(StructuredSheetDeleteResponse, structured_sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_delete(self, client: DeepTable) -> None:
         response = client.structured_sheets.with_raw_response.delete(
@@ -171,7 +171,7 @@ class TestStructuredSheets:
         structured_sheet = response.parse()
         assert_matches_type(StructuredSheetDeleteResponse, structured_sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_delete(self, client: DeepTable) -> None:
         with client.structured_sheets.with_streaming_response.delete(
@@ -185,7 +185,7 @@ class TestStructuredSheets:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_delete(self, client: DeepTable) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `structured_sheet_id` but received ''"):
@@ -193,7 +193,7 @@ class TestStructuredSheets:
                 "",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_cancel(self, client: DeepTable) -> None:
         structured_sheet = client.structured_sheets.cancel(
@@ -201,7 +201,7 @@ class TestStructuredSheets:
         )
         assert_matches_type(StructuredSheetResponse, structured_sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_cancel(self, client: DeepTable) -> None:
         response = client.structured_sheets.with_raw_response.cancel(
@@ -213,7 +213,7 @@ class TestStructuredSheets:
         structured_sheet = response.parse()
         assert_matches_type(StructuredSheetResponse, structured_sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_cancel(self, client: DeepTable) -> None:
         with client.structured_sheets.with_streaming_response.cancel(
@@ -227,7 +227,7 @@ class TestStructuredSheets:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_cancel(self, client: DeepTable) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `structured_sheet_id` but received ''"):
@@ -312,7 +312,7 @@ class TestAsyncStructuredSheets:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_create(self, async_client: AsyncDeepTable) -> None:
         structured_sheet = await async_client.structured_sheets.create(
@@ -320,7 +320,7 @@ class TestAsyncStructuredSheets:
         )
         assert_matches_type(StructuredSheetResponse, structured_sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncDeepTable) -> None:
         structured_sheet = await async_client.structured_sheets.create(
@@ -329,7 +329,7 @@ class TestAsyncStructuredSheets:
         )
         assert_matches_type(StructuredSheetResponse, structured_sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncDeepTable) -> None:
         response = await async_client.structured_sheets.with_raw_response.create(
@@ -341,7 +341,7 @@ class TestAsyncStructuredSheets:
         structured_sheet = await response.parse()
         assert_matches_type(StructuredSheetResponse, structured_sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncDeepTable) -> None:
         async with async_client.structured_sheets.with_streaming_response.create(
@@ -355,7 +355,7 @@ class TestAsyncStructuredSheets:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncDeepTable) -> None:
         structured_sheet = await async_client.structured_sheets.retrieve(
@@ -363,7 +363,7 @@ class TestAsyncStructuredSheets:
         )
         assert_matches_type(StructuredSheetResponse, structured_sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncDeepTable) -> None:
         response = await async_client.structured_sheets.with_raw_response.retrieve(
@@ -375,7 +375,7 @@ class TestAsyncStructuredSheets:
         structured_sheet = await response.parse()
         assert_matches_type(StructuredSheetResponse, structured_sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncDeepTable) -> None:
         async with async_client.structured_sheets.with_streaming_response.retrieve(
@@ -389,7 +389,7 @@ class TestAsyncStructuredSheets:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_retrieve(self, async_client: AsyncDeepTable) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `structured_sheet_id` but received ''"):
@@ -397,13 +397,13 @@ class TestAsyncStructuredSheets:
                 "",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list(self, async_client: AsyncDeepTable) -> None:
         structured_sheet = await async_client.structured_sheets.list()
         assert_matches_type(AsyncCursorIDPage[StructuredSheetResponse], structured_sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncDeepTable) -> None:
         structured_sheet = await async_client.structured_sheets.list(
@@ -412,7 +412,7 @@ class TestAsyncStructuredSheets:
         )
         assert_matches_type(AsyncCursorIDPage[StructuredSheetResponse], structured_sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncDeepTable) -> None:
         response = await async_client.structured_sheets.with_raw_response.list()
@@ -422,7 +422,7 @@ class TestAsyncStructuredSheets:
         structured_sheet = await response.parse()
         assert_matches_type(AsyncCursorIDPage[StructuredSheetResponse], structured_sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncDeepTable) -> None:
         async with async_client.structured_sheets.with_streaming_response.list() as response:
@@ -434,7 +434,7 @@ class TestAsyncStructuredSheets:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_delete(self, async_client: AsyncDeepTable) -> None:
         structured_sheet = await async_client.structured_sheets.delete(
@@ -442,7 +442,7 @@ class TestAsyncStructuredSheets:
         )
         assert_matches_type(StructuredSheetDeleteResponse, structured_sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncDeepTable) -> None:
         response = await async_client.structured_sheets.with_raw_response.delete(
@@ -454,7 +454,7 @@ class TestAsyncStructuredSheets:
         structured_sheet = await response.parse()
         assert_matches_type(StructuredSheetDeleteResponse, structured_sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncDeepTable) -> None:
         async with async_client.structured_sheets.with_streaming_response.delete(
@@ -468,7 +468,7 @@ class TestAsyncStructuredSheets:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_delete(self, async_client: AsyncDeepTable) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `structured_sheet_id` but received ''"):
@@ -476,7 +476,7 @@ class TestAsyncStructuredSheets:
                 "",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_cancel(self, async_client: AsyncDeepTable) -> None:
         structured_sheet = await async_client.structured_sheets.cancel(
@@ -484,7 +484,7 @@ class TestAsyncStructuredSheets:
         )
         assert_matches_type(StructuredSheetResponse, structured_sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_cancel(self, async_client: AsyncDeepTable) -> None:
         response = await async_client.structured_sheets.with_raw_response.cancel(
@@ -496,7 +496,7 @@ class TestAsyncStructuredSheets:
         structured_sheet = await response.parse()
         assert_matches_type(StructuredSheetResponse, structured_sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_cancel(self, async_client: AsyncDeepTable) -> None:
         async with async_client.structured_sheets.with_streaming_response.cancel(
@@ -510,7 +510,7 @@ class TestAsyncStructuredSheets:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_cancel(self, async_client: AsyncDeepTable) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `structured_sheet_id` but received ''"):
