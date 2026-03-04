@@ -104,12 +104,17 @@ class DeepTable(SyncAPIClient):
 
     @cached_property
     def files(self) -> FilesResource:
+        """Upload and manage spreadsheet files. Files must be Excel (.xlsx) format."""
         from .resources.files import FilesResource
 
         return FilesResource(self)
 
     @cached_property
     def structured_sheets(self) -> StructuredSheetsResource:
+        """Convert uploaded spreadsheets into structured data.
+
+        Creates relational tables from messy spreadsheet data.
+        """
         from .resources.structured_sheets import StructuredSheetsResource
 
         return StructuredSheetsResource(self)
@@ -284,12 +289,17 @@ class AsyncDeepTable(AsyncAPIClient):
 
     @cached_property
     def files(self) -> AsyncFilesResource:
+        """Upload and manage spreadsheet files. Files must be Excel (.xlsx) format."""
         from .resources.files import AsyncFilesResource
 
         return AsyncFilesResource(self)
 
     @cached_property
     def structured_sheets(self) -> AsyncStructuredSheetsResource:
+        """Convert uploaded spreadsheets into structured data.
+
+        Creates relational tables from messy spreadsheet data.
+        """
         from .resources.structured_sheets import AsyncStructuredSheetsResource
 
         return AsyncStructuredSheetsResource(self)
@@ -415,12 +425,17 @@ class DeepTableWithRawResponse:
 
     @cached_property
     def files(self) -> files.FilesResourceWithRawResponse:
+        """Upload and manage spreadsheet files. Files must be Excel (.xlsx) format."""
         from .resources.files import FilesResourceWithRawResponse
 
         return FilesResourceWithRawResponse(self._client.files)
 
     @cached_property
     def structured_sheets(self) -> structured_sheets.StructuredSheetsResourceWithRawResponse:
+        """Convert uploaded spreadsheets into structured data.
+
+        Creates relational tables from messy spreadsheet data.
+        """
         from .resources.structured_sheets import StructuredSheetsResourceWithRawResponse
 
         return StructuredSheetsResourceWithRawResponse(self._client.structured_sheets)
@@ -434,12 +449,17 @@ class AsyncDeepTableWithRawResponse:
 
     @cached_property
     def files(self) -> files.AsyncFilesResourceWithRawResponse:
+        """Upload and manage spreadsheet files. Files must be Excel (.xlsx) format."""
         from .resources.files import AsyncFilesResourceWithRawResponse
 
         return AsyncFilesResourceWithRawResponse(self._client.files)
 
     @cached_property
     def structured_sheets(self) -> structured_sheets.AsyncStructuredSheetsResourceWithRawResponse:
+        """Convert uploaded spreadsheets into structured data.
+
+        Creates relational tables from messy spreadsheet data.
+        """
         from .resources.structured_sheets import AsyncStructuredSheetsResourceWithRawResponse
 
         return AsyncStructuredSheetsResourceWithRawResponse(self._client.structured_sheets)
@@ -453,12 +473,17 @@ class DeepTableWithStreamedResponse:
 
     @cached_property
     def files(self) -> files.FilesResourceWithStreamingResponse:
+        """Upload and manage spreadsheet files. Files must be Excel (.xlsx) format."""
         from .resources.files import FilesResourceWithStreamingResponse
 
         return FilesResourceWithStreamingResponse(self._client.files)
 
     @cached_property
     def structured_sheets(self) -> structured_sheets.StructuredSheetsResourceWithStreamingResponse:
+        """Convert uploaded spreadsheets into structured data.
+
+        Creates relational tables from messy spreadsheet data.
+        """
         from .resources.structured_sheets import StructuredSheetsResourceWithStreamingResponse
 
         return StructuredSheetsResourceWithStreamingResponse(self._client.structured_sheets)
@@ -472,12 +497,17 @@ class AsyncDeepTableWithStreamedResponse:
 
     @cached_property
     def files(self) -> files.AsyncFilesResourceWithStreamingResponse:
+        """Upload and manage spreadsheet files. Files must be Excel (.xlsx) format."""
         from .resources.files import AsyncFilesResourceWithStreamingResponse
 
         return AsyncFilesResourceWithStreamingResponse(self._client.files)
 
     @cached_property
     def structured_sheets(self) -> structured_sheets.AsyncStructuredSheetsResourceWithStreamingResponse:
+        """Convert uploaded spreadsheets into structured data.
+
+        Creates relational tables from messy spreadsheet data.
+        """
         from .resources.structured_sheets import AsyncStructuredSheetsResourceWithStreamingResponse
 
         return AsyncStructuredSheetsResourceWithStreamingResponse(self._client.structured_sheets)

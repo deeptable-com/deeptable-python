@@ -34,6 +34,11 @@ __all__ = ["TablesResource", "AsyncTablesResource"]
 
 
 class TablesResource(SyncAPIResource):
+    """Convert uploaded spreadsheets into structured data.
+
+    Creates relational tables from messy spreadsheet data.
+    """
+
     @cached_property
     def with_raw_response(self) -> TablesResourceWithRawResponse:
         """
@@ -211,6 +216,11 @@ class TablesResource(SyncAPIResource):
 
 
 class AsyncTablesResource(AsyncAPIResource):
+    """Convert uploaded spreadsheets into structured data.
+
+    Creates relational tables from messy spreadsheet data.
+    """
+
     @cached_property
     def with_raw_response(self) -> AsyncTablesResourceWithRawResponse:
         """

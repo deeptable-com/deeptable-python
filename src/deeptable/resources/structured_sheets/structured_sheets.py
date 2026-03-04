@@ -43,8 +43,17 @@ __all__ = ["StructuredSheetsResource", "AsyncStructuredSheetsResource"]
 
 
 class StructuredSheetsResource(SyncAPIResource):
+    """Convert uploaded spreadsheets into structured data.
+
+    Creates relational tables from messy spreadsheet data.
+    """
+
     @cached_property
     def tables(self) -> TablesResource:
+        """Convert uploaded spreadsheets into structured data.
+
+        Creates relational tables from messy spreadsheet data.
+        """
         return TablesResource(self._client)
 
     @cached_property
@@ -333,8 +342,17 @@ class StructuredSheetsResource(SyncAPIResource):
 
 
 class AsyncStructuredSheetsResource(AsyncAPIResource):
+    """Convert uploaded spreadsheets into structured data.
+
+    Creates relational tables from messy spreadsheet data.
+    """
+
     @cached_property
     def tables(self) -> AsyncTablesResource:
+        """Convert uploaded spreadsheets into structured data.
+
+        Creates relational tables from messy spreadsheet data.
+        """
         return AsyncTablesResource(self._client)
 
     @cached_property
@@ -648,6 +666,10 @@ class StructuredSheetsResourceWithRawResponse:
 
     @cached_property
     def tables(self) -> TablesResourceWithRawResponse:
+        """Convert uploaded spreadsheets into structured data.
+
+        Creates relational tables from messy spreadsheet data.
+        """
         return TablesResourceWithRawResponse(self._structured_sheets.tables)
 
 
@@ -677,6 +699,10 @@ class AsyncStructuredSheetsResourceWithRawResponse:
 
     @cached_property
     def tables(self) -> AsyncTablesResourceWithRawResponse:
+        """Convert uploaded spreadsheets into structured data.
+
+        Creates relational tables from messy spreadsheet data.
+        """
         return AsyncTablesResourceWithRawResponse(self._structured_sheets.tables)
 
 
@@ -706,6 +732,10 @@ class StructuredSheetsResourceWithStreamingResponse:
 
     @cached_property
     def tables(self) -> TablesResourceWithStreamingResponse:
+        """Convert uploaded spreadsheets into structured data.
+
+        Creates relational tables from messy spreadsheet data.
+        """
         return TablesResourceWithStreamingResponse(self._structured_sheets.tables)
 
 
@@ -735,4 +765,8 @@ class AsyncStructuredSheetsResourceWithStreamingResponse:
 
     @cached_property
     def tables(self) -> AsyncTablesResourceWithStreamingResponse:
+        """Convert uploaded spreadsheets into structured data.
+
+        Creates relational tables from messy spreadsheet data.
+        """
         return AsyncTablesResourceWithStreamingResponse(self._structured_sheets.tables)
