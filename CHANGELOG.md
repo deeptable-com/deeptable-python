@@ -1,5 +1,32 @@
 # Changelog
 
+## 0.1.0-beta.4 (2026-03-17)
+
+Full Changelog: [v0.1.0-beta.3...v0.1.0-beta.4](https://github.com/deeptable-com/deeptable-python/compare/v0.1.0-beta.3...v0.1.0-beta.4)
+
+### Bug Fixes
+
+* **deps:** bump minimum typing-extensions version ([2ff69c1](https://github.com/deeptable-com/deeptable-python/commit/2ff69c1d377cbef6bf4a9641277dde8c24b2a69b))
+* **pydantic:** do not pass `by_alias` unless set ([0e37c83](https://github.com/deeptable-com/deeptable-python/commit/0e37c835b61b29e912c106790e00997b4be9e0a8))
+
+
+### Chores
+
+* **api:** minor updates ([ad9326f](https://github.com/deeptable-com/deeptable-python/commit/ad9326f69976fc60b578298ceb833932cf586dd0))
+* **ci:** bump uv version ([204f9d5](https://github.com/deeptable-com/deeptable-python/commit/204f9d5ee8e55b4377247b665790c0b5b8338e57))
+* **ci:** skip uploading artifacts on stainless-internal branches ([4fd2dd5](https://github.com/deeptable-com/deeptable-python/commit/4fd2dd5ffd08a07b4605fea550ecc0d64a7d84ec))
+* format all `api.md` files ([f4314a5](https://github.com/deeptable-com/deeptable-python/commit/f4314a5175a16b8427c1ee0376b4c7561a97d12b))
+* **internal:** add request options to SSE classes ([4df5e12](https://github.com/deeptable-com/deeptable-python/commit/4df5e129245688ca89abc8b21bb8ece2f5315e94))
+* **internal:** bump dependencies ([8de81c0](https://github.com/deeptable-com/deeptable-python/commit/8de81c067d8afa18f079419c4bff16986654b4b0))
+* **internal:** codegen related update ([dc82876](https://github.com/deeptable-com/deeptable-python/commit/dc8287698edfb2d8d94221e173f15dd20087f1fb))
+* **internal:** fix lint error on Python 3.14 ([86b7765](https://github.com/deeptable-com/deeptable-python/commit/86b7765ca61d862c9e8d3199beb17acbee2556bb))
+* **internal:** make `test_proxy_environment_variables` more resilient ([61cd3a4](https://github.com/deeptable-com/deeptable-python/commit/61cd3a41d5f28295972b79fc4d343574abe588ff))
+* **internal:** make `test_proxy_environment_variables` more resilient to env ([134719a](https://github.com/deeptable-com/deeptable-python/commit/134719a29b9dd7f4b0a47711aae70cd13299b052))
+* **internal:** remove mock server code ([8459400](https://github.com/deeptable-com/deeptable-python/commit/8459400cfe8426bbe32eb3081b9f400ab016655e))
+* **internal:** tweak CI branches ([7043aad](https://github.com/deeptable-com/deeptable-python/commit/7043aad90e9503825527ed5a6b8a2d45478448ed))
+* update mock server docs ([3383c79](https://github.com/deeptable-com/deeptable-python/commit/3383c7931f23aa4e445ccd1b6a8f4fc29e4de621))
+* update placeholder string ([4cf041a](https://github.com/deeptable-com/deeptable-python/commit/4cf041ab16ff82196562cd656959be70703eddad))
+
 ## 0.1.0-beta.3 (2026-01-30)
 
 Full Changelog: [v0.1.0-beta.2...v0.1.0-beta.3](https://github.com/deeptable-com/deeptable-python/compare/v0.1.0-beta.2...v0.1.0-beta.3)
