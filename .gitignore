@@ -13,3 +13,6 @@ dist
 .envrc
 codegen.log
 Brewfile.lock.json
+
+# custom local ignores
+.DS_Store
