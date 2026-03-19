@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-beta.5 (2026-03-19)
+
+Full Changelog: [v0.1.0-beta.4...v0.1.0-beta.5](https://github.com/deeptable-com/deeptable-python/compare/v0.1.0-beta.4...v0.1.0-beta.5)
+
+### Chores
+
+* ignore macOS .DS_Store ([f001928](https://github.com/deeptable-com/deeptable-python/commit/f001928bf35641c543265f7318089d004881f502))
+
 ## 0.1.0-beta.4 (2026-03-17)
 
 Full Changelog: [v0.1.0-beta.3...v0.1.0-beta.4](https://github.com/deeptable-com/deeptable-python/compare/v0.1.0-beta.3...v0.1.0-beta.4)
