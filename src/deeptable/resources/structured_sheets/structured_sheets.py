@@ -17,7 +17,7 @@ from .tables import (
 )
 from ...types import structured_sheet_list_params, structured_sheet_create_params, structured_sheet_download_params
 from ..._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
-from ..._utils import maybe_transform, async_maybe_transform
+from ..._utils import path_template, maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
@@ -151,7 +151,7 @@ class StructuredSheetsResource(SyncAPIResource):
                 f"Expected a non-empty value for `structured_sheet_id` but received {structured_sheet_id!r}"
             )
         return self._get(
-            f"/v1/structured-sheets/{structured_sheet_id}",
+            path_template("/v1/structured-sheets/{structured_sheet_id}", structured_sheet_id=structured_sheet_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -240,7 +240,7 @@ class StructuredSheetsResource(SyncAPIResource):
                 f"Expected a non-empty value for `structured_sheet_id` but received {structured_sheet_id!r}"
             )
         return self._delete(
-            f"/v1/structured-sheets/{structured_sheet_id}",
+            path_template("/v1/structured-sheets/{structured_sheet_id}", structured_sheet_id=structured_sheet_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -279,7 +279,9 @@ class StructuredSheetsResource(SyncAPIResource):
                 f"Expected a non-empty value for `structured_sheet_id` but received {structured_sheet_id!r}"
             )
         return self._post(
-            f"/v1/structured-sheets/{structured_sheet_id}/cancel",
+            path_template(
+                "/v1/structured-sheets/{structured_sheet_id}/cancel", structured_sheet_id=structured_sheet_id
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -327,7 +329,9 @@ class StructuredSheetsResource(SyncAPIResource):
             )
         extra_headers = {"Accept": "application/x-sqlite3", **(extra_headers or {})}
         return self._get(
-            f"/v1/structured-sheets/{structured_sheet_id}/download",
+            path_template(
+                "/v1/structured-sheets/{structured_sheet_id}/download", structured_sheet_id=structured_sheet_id
+            ),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -450,7 +454,7 @@ class AsyncStructuredSheetsResource(AsyncAPIResource):
                 f"Expected a non-empty value for `structured_sheet_id` but received {structured_sheet_id!r}"
             )
         return await self._get(
-            f"/v1/structured-sheets/{structured_sheet_id}",
+            path_template("/v1/structured-sheets/{structured_sheet_id}", structured_sheet_id=structured_sheet_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -539,7 +543,7 @@ class AsyncStructuredSheetsResource(AsyncAPIResource):
                 f"Expected a non-empty value for `structured_sheet_id` but received {structured_sheet_id!r}"
             )
         return await self._delete(
-            f"/v1/structured-sheets/{structured_sheet_id}",
+            path_template("/v1/structured-sheets/{structured_sheet_id}", structured_sheet_id=structured_sheet_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -578,7 +582,9 @@ class AsyncStructuredSheetsResource(AsyncAPIResource):
                 f"Expected a non-empty value for `structured_sheet_id` but received {structured_sheet_id!r}"
             )
         return await self._post(
-            f"/v1/structured-sheets/{structured_sheet_id}/cancel",
+            path_template(
+                "/v1/structured-sheets/{structured_sheet_id}/cancel", structured_sheet_id=structured_sheet_id
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -626,7 +632,9 @@ class AsyncStructuredSheetsResource(AsyncAPIResource):
             )
         extra_headers = {"Accept": "application/x-sqlite3", **(extra_headers or {})}
         return await self._get(
-            f"/v1/structured-sheets/{structured_sheet_id}/download",
+            path_template(
+                "/v1/structured-sheets/{structured_sheet_id}/download", structured_sheet_id=structured_sheet_id
+            ),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
