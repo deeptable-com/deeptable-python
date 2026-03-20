@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-beta.6 (2026-03-20)
+
+Full Changelog: [v0.1.0-beta.5...v0.1.0-beta.6](https://github.com/deeptable-com/deeptable-python/compare/v0.1.0-beta.5...v0.1.0-beta.6)
+
+### Bug Fixes
+
+* sanitize endpoint path params ([f0a7e87](https://github.com/deeptable-com/deeptable-python/commit/f0a7e877fd807e5f19900eb189c02e355e706450))
+
 ## 0.1.0-beta.5 (2026-03-19)
 
 Full Changelog: [v0.1.0-beta.4...v0.1.0-beta.5](https://github.com/deeptable-com/deeptable-python/compare/v0.1.0-beta.4...v0.1.0-beta.5)
