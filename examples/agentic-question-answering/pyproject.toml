@@ -1,0 +1,13 @@
+[project]
+name = "deeptable-agentic-question-answering-example"
+version = "0.1.0"
+description = "Example project for comparing raw Excel question-answering with DeepTable structured outputs."
+requires-python = ">=3.9"
+dependencies = [
+  "deeptable",
+  "openai>=1.70.0",
+  "openpyxl>=3.1.5",
+]
+
+[tool.uv.sources]
+deeptable = { path = "../..", editable = true }
