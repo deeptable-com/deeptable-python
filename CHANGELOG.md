@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.1.0-beta.6 (2026-03-27)
+
+Full Changelog: [v0.1.0-beta.5...v0.1.0-beta.6](https://github.com/deeptable-com/deeptable-python/compare/v0.1.0-beta.5...v0.1.0-beta.6)
+
+### Features
+
+* **internal:** implement indices array format for query and form serialization ([4f3fedd](https://github.com/deeptable-com/deeptable-python/commit/4f3fedd110bcbe0ecc524d6df0bf7a956a804737))
+
+
+### Bug Fixes
+
+* sanitize endpoint path params ([f0a7e87](https://github.com/deeptable-com/deeptable-python/commit/f0a7e877fd807e5f19900eb189c02e355e706450))
+
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([e2766e6](https://github.com/deeptable-com/deeptable-python/commit/e2766e603c6e292fd8ae5cea87225bb614e77e82))
+* **internal:** update gitignore ([3966b6f](https://github.com/deeptable-com/deeptable-python/commit/3966b6fc0c3b5d81969996243a2669fd4ad59006))
+
 ## 0.1.0-beta.5 (2026-03-19)
 
 Full Changelog: [v0.1.0-beta.4...v0.1.0-beta.5](https://github.com/deeptable-com/deeptable-python/compare/v0.1.0-beta.4...v0.1.0-beta.5)
