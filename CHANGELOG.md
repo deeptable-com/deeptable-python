@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.1.0-beta.7 (2026-04-23)
+
+Full Changelog: [v0.1.0-beta.6...v0.1.0-beta.7](https://github.com/deeptable-com/deeptable-python/compare/v0.1.0-beta.6...v0.1.0-beta.7)
+
+### Bug Fixes
+
+* **client:** preserve hardcoded query params when merging with user params ([4e0488d](https://github.com/deeptable-com/deeptable-python/commit/4e0488d32849d2cf3d0055d5ee89cdfbd5d1cfec))
+* ensure file data are only sent as 1 parameter ([42eb3ab](https://github.com/deeptable-com/deeptable-python/commit/42eb3abc0e0e908b0d4e06ddc1a616dc458d982e))
+
+
+### Performance Improvements
+
+* **client:** optimize file structure copying in multipart requests ([9df5ac4](https://github.com/deeptable-com/deeptable-python/commit/9df5ac42c4ec28b038d0c6647e792484f7aff249))
+
+
+### Chores
+
+* **internal:** more robust bootstrap script ([4529175](https://github.com/deeptable-com/deeptable-python/commit/45291752380122bc1138917c3a0869896029cacf))
+
 ## 0.1.0-beta.6 (2026-03-27)
 
 Full Changelog: [v0.1.0-beta.5...v0.1.0-beta.6](https://github.com/deeptable-com/deeptable-python/compare/v0.1.0-beta.5...v0.1.0-beta.6)
