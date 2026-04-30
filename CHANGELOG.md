@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.0-beta.8 (2026-04-30)
+
+Full Changelog: [v0.1.0-beta.7...v0.1.0-beta.8](https://github.com/deeptable-com/deeptable-python/compare/v0.1.0-beta.7...v0.1.0-beta.8)
+
+### Features
+
+* support setting headers via env ([c29120a](https://github.com/deeptable-com/deeptable-python/commit/c29120aee44e9e1f7e8211ee19e2fb79bea06add))
+
+
+### Bug Fixes
+
+* use correct field name format for multipart file arrays ([97f102f](https://github.com/deeptable-com/deeptable-python/commit/97f102f92bcbf41167747b964df2737deb287c2e))
+
 ## 0.1.0-beta.7 (2026-04-23)
 
 Full Changelog: [v0.1.0-beta.6...v0.1.0-beta.7](https://github.com/deeptable-com/deeptable-python/compare/v0.1.0-beta.6...v0.1.0-beta.7)
