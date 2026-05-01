@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-beta.9 (2026-05-01)
+
+Full Changelog: [v0.1.0-beta.8...v0.1.0-beta.9](https://github.com/deeptable-com/deeptable-python/compare/v0.1.0-beta.8...v0.1.0-beta.9)
+
+### Chores
+
+* **internal:** reformat pyproject.toml ([d23a86e](https://github.com/deeptable-com/deeptable-python/commit/d23a86edacd94a89e38ff17c0844a746e40d135e))
+
 ## 0.1.0-beta.8 (2026-04-30)
 
 Full Changelog: [v0.1.0-beta.7...v0.1.0-beta.8](https://github.com/deeptable-com/deeptable-python/compare/v0.1.0-beta.7...v0.1.0-beta.8)
