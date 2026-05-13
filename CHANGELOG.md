@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.1.0-beta.9 (2026-05-13)
+
+Full Changelog: [v0.1.0-beta.8...v0.1.0-beta.9](https://github.com/deeptable-com/deeptable-python/compare/v0.1.0-beta.8...v0.1.0-beta.9)
+
+### Features
+
+* **internal/types:** support eagerly validating pydantic iterators ([1714c77](https://github.com/deeptable-com/deeptable-python/commit/1714c7706ea5f45a079651e8f6f50dce9c0dad14))
+
+
+### Bug Fixes
+
+* **client:** add missing f-string prefix in file type error message ([4bcbdcc](https://github.com/deeptable-com/deeptable-python/commit/4bcbdccce0f9ea7b7ca44d27023cee50b959f3ad))
+
+
+### Chores
+
+* **internal:** reformat pyproject.toml ([d23a86e](https://github.com/deeptable-com/deeptable-python/commit/d23a86edacd94a89e38ff17c0844a746e40d135e))
+
 ## 0.1.0-beta.8 (2026-04-30)
 
 Full Changelog: [v0.1.0-beta.7...v0.1.0-beta.8](https://github.com/deeptable-com/deeptable-python/compare/v0.1.0-beta.7...v0.1.0-beta.8)
