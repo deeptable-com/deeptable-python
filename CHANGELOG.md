@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.0-beta.10 (2026-07-18)
+
+Full Changelog: [v0.1.0-beta.9...v0.1.0-beta.10](https://github.com/deeptable-com/deeptable-python/compare/v0.1.0-beta.9...v0.1.0-beta.10)
+
+### Features
+
+* **stlc:** configurable CI runner and private-production-repo support in workflow templates ([c431f5b](https://github.com/deeptable-com/deeptable-python/commit/c431f5b987813bceb42e2277b23db4b8208970af))
+
+
+### Bug Fixes
+
+* **internal:** resolve build failures ([339076c](https://github.com/deeptable-com/deeptable-python/commit/339076c652b061ac88a42fdd662025db8c1c245d))
+
 ## 0.1.0-beta.9 (2026-05-13)
 
 Full Changelog: [v0.1.0-beta.8...v0.1.0-beta.9](https://github.com/deeptable-com/deeptable-python/compare/v0.1.0-beta.8...v0.1.0-beta.9)
